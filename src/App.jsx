@@ -1,0 +1,38 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Toaster } from 'react-hot-toast'
+import Home from  './pages/Home'
+import Browse from "./pages/Browse"
+import Collections from "./pages/Collections"
+import Navigation from "./components/Navigation"
+import ArtworkDetail from './pages/ArtworkDetail'
+import CollectionDetail from './pages/CollectionDetail'
+
+function App() {
+  // const [count, setCount] = useState(0)
+  return (
+   
+    <BrowserRouter>
+    <div className="min-h-screen" data-theme="dark" >
+      <Navigation />
+      <Toaster position='top-right' />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/browse" element={<Browse />} />
+          {/* protected route here */}
+          <Route path="/artwork/:id" element={<ArtworkDetail />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/collections/:id" element={<CollectionDetail />} />  
+        </Routes>   
+        </div>
+    </BrowserRouter>
+
+  )
+}
+
+export default App
+
+        {/* <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button> */}
+
+        // bg-gradient-to-br from-gray-900 to-gray-700 text-white
