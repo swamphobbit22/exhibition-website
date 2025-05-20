@@ -4,6 +4,7 @@ import Home from  './pages/Home'
 import Browse from "./pages/Browse"
 import Collections from "./pages/Collections"
 import Navigation from "./components/Navigation"
+import Showcase from "./pages/Showcase"
 import ArtworkDetail from './pages/ArtworkDetail'
 import CollectionDetail from './pages/CollectionDetail'
 
@@ -17,6 +18,7 @@ function App() {
       <Toaster position='top-right' />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/showcase" element={<Showcase />} />
           <Route path="/browse" element={<Browse />} />
           {/* protected route here */}
           <Route path="/artwork/:id" element={<ArtworkDetail />} />

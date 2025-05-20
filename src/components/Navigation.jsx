@@ -1,6 +1,9 @@
 import { useState} from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { GalleryVertical, BookMarked, Search, User, LogOut} from 'lucide-react'
+import { Images, User, LogOut} from 'lucide-react'
+import MuseumIcon from '@mui/icons-material/Museum';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import CollectionsIcon from '@mui/icons-material/Collections';
 import  AuthModal  from './AuthModal'
 
 const Navigation = () => {
@@ -17,14 +20,15 @@ const Navigation = () => {
 
               {/* logo */}
               <Link to="/" className="flex items-center space-x-2">
-                <GalleryVertical  className="w-8 h-8" />
+                <MuseumIcon fontSize="large"/>
                 <span className="text-xl font-bold">Virtual Exhibition Centre</span>
               </Link>
 
               {/* Nav links */}
               <div className="flex-1 flex justify-center space-x-8 text-gray-800">
-                <NavLink to="/browse">Browse</NavLink>
-                <NavLink to="/collections">Collections</NavLink>
+                <NavLink to="/showcase"  className='text-white'><Images /> Showcase</NavLink>
+                <NavLink to="/browse"  className='text-white'><ImageSearchIcon /> Browse</NavLink>
+                <NavLink to="/collections"  className='text-white'><CollectionsIcon /> Collections</NavLink>
                 {/* link to users collections here */}
               </div>
 

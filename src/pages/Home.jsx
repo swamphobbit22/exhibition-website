@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion"
 import { ArrowRight } from 'lucide-react';
 
 const Home = () => {
@@ -63,7 +63,11 @@ const Home = () => {
             </Link>
           </motion.div>
           </div>
+          
         </motion.div>
+        <div>
+          <span className='text-gray-400'>Painting: Heitere Gebirgslandschaft by Paul Klee, 1929</span>
+        </div>
     </section>
   )
 }
