@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { metApi, getArtWorks as getMetArtworks } from '../service/metApi';
 import { smithApi } from '../service/smithApi';
-import { chicagoApi } from '../service/chicagoApi';
+import { chicagoApi} from '../service/chicagoApi';
 import { Link } from 'react-router-dom'
 import { Search, Loader2Icon, Filter, X } from 'lucide-react';
 import  ArtCard  from '../components/ArtCard';
@@ -15,6 +15,8 @@ const Browse = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [artist, setArtist] = useState('');
   const [medium, setMedium] = useState('');
+
+  const imageUrl = 'https://www.artic.edu/iiif/2';
   // add state for source
 
 
@@ -39,24 +41,21 @@ const Browse = () => {
         getMetArtworks(metIds),
       ]);
 
+      const chicagoResults = chicagoSearch.map(artwork => ({
+        ...artwork,
+        repository: 'Art Institute of Chicago',
+        chicagoimageUrl: artwork.image_id ? `${imageUrl}/${artwork.image_id}/full/843,/0/default.jpg` : null
+      }));
 
-      const chicagoResults = chicagoSearch;
+
+    
+      
       const smithResults = smithSearch;
       const combinedResults = [...metResults, ...smithResults, ...chicagoResults];
 
       setSearchResults(combinedResults)
 
-      // replaced metApi with smithApi to test
-      // const searchResponse = await metApi(searchTerm);
-      // const ids = searchResponse.map(item => item.id);
-      // const artresults = await getArtWorks(ids)
-      // const artresults = await getArtWorks(searchResponse.objectIDs || [] );
 
-      // console.log(searchResponse, 'inside searchResponse browse.jsx')
-      // console.log(artresults, 'inside artResults browse.jsx')
-      
-
-      // setSearchResults(artresults);
     
     } catch (error) {
       console.error(error)
@@ -162,7 +161,6 @@ const clearFilters = () => {
                   className="w-full p-2 border rounded bg-gray-800"
                   />
                 </div>
-               
                 <div className='flex flex-wrap gap-2'>
                    <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
                   <button className='rounded-full transition-colors border px-2'>Metropolitan Museum</button>
@@ -170,9 +168,6 @@ const clearFilters = () => {
                   <button className='rounded-full transition-colors border px-2'>Harvard Museum</button>
                   <button></button>
                 </div>
-                 
-
-
                 <div className='md:col-span-3 flex justify-center'>
                   <button
                     type='button'
@@ -184,16 +179,13 @@ const clearFilters = () => {
                 </div>
                 </div> 
             )
-          }
-              
+          }             
             {/* do some error checking here */} 
              {error && (
               <div className='text-red-400'>
                 {error}
               </div>
             )}
-
-
 
             {/* map the search results in a grid pattern*/}
             <Masonry 
@@ -210,10 +202,6 @@ const clearFilters = () => {
             </form>
         </div>
 
-      {/* coming up too early */}
-      {/* {!loading && searchResults.length === 0 && searchTerm && (
-        <div>no artwork found. Try another search term</div>
-      )} */}
     </section> 
   )
 }
@@ -245,3 +233,21 @@ export default Browse
           //       </div>
           //       ))}
           // </div>   
+
+          
+      {/* coming up too early */}
+      {/* {!loading && searchResults.length === 0 && searchTerm && (
+        <div>no artwork found. Try another search term</div>
+      )} */}
+
+            // replaced metApi with smithApi to test
+      // const searchResponse = await metApi(searchTerm);
+      // const ids = searchResponse.map(item => item.id);
+      // const artresults = await getArtWorks(ids)
+      // const artresults = await getArtWorks(searchResponse.objectIDs || [] );
+
+      // console.log(searchResponse, 'inside searchResponse browse.jsx')
+      // console.log(artresults, 'inside artResults browse.jsx')
+      
+
+      // setSearchResults(artresults);
