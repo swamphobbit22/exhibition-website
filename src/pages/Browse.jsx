@@ -1,71 +1,33 @@
-import { useState, useCallback } from 'react'
-import { metApi, getArtWorks as getMetArtworks } from '../service/metApi';
-import { smithApi } from '../service/smithApi';
-import { chicagoApi} from '../service/chicagoApi';
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Loader2Icon, Filter, X } from 'lucide-react';
 import  ArtCard  from '../components/ArtCard';
 import  Masonry  from 'react-masonry-css';
+import { useQuery } from '@tanstack/react-query'
+import { fetchCombinedArtworks } from '../service/getAllArtworks'
+
 
 const Browse = () => {
   const [searchTerm, setsearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([])
-  const [loading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null);
   const [showFilters, setShowFilters] = useState(false)
   const [artist, setArtist] = useState('');
   const [medium, setMedium] = useState('');
 
-  const imageUrl = 'https://www.artic.edu/iiif/2';
-  // add state for source
+  const { data:searchResults, isLoading, error, refetch } = useQuery({
+    queryKey: ['artworks', searchTerm],
+    queryFn: () => fetchCombinedArtworks(searchTerm),
+    enabled: false, 
+  })
 
 
-  const handleSubmitSearch = useCallback(async () => {
+
+  const handleSubmitSearch =  (e) => {
+    e.preventDefault();
     if(!searchTerm.trim()) return; 
-
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      // combined search as default
-      const [metSearch, smithSearch, chicagoSearch] = await Promise.all([
-        metApi(searchTerm),
-        smithApi(searchTerm),
-        chicagoApi(searchTerm)
-      ])
-
-      const metIds = metSearch?.objectIDs || [];
-      // const smithIds = smithSearch.map(item => item.id);
-
-      const [metResults] = await Promise.all([
-        getMetArtworks(metIds),
-      ]);
-
-      const chicagoResults = chicagoSearch.map(artwork => ({
-        ...artwork,
-        repository: 'Art Institute of Chicago',
-        chicagoimageUrl: artwork.image_id ? `${imageUrl}/${artwork.image_id}/full/843,/0/default.jpg` : null
-      }));
+    refetch();
+  }
 
 
-    
-      
-      const smithResults = smithSearch;
-      const combinedResults = [...metResults, ...smithResults, ...chicagoResults];
-
-      setSearchResults(combinedResults)
-
-
-    
-    } catch (error) {
-      console.error(error)
-      setError('Unable to fetch artworks, please try again');
-      setSearchResults([]);
-    } finally {
-      setIsLoading(false);
-    }
-
-  }, [searchTerm, setIsLoading, setError, setSearchResults])
 
   const breakpointColumnsObj = {
   default: 3,
@@ -77,7 +39,7 @@ const Browse = () => {
 const clearFilters = () => {
   setArtist(''),
   setMedium('')
-
+  //also set the repository/museum - do it later
 }
 
   return (
@@ -93,7 +55,7 @@ const clearFilters = () => {
               Discover  Art From Around the World
             </h2>
             <p className="text-gray-200 max-w-2xl mx-auto">
-              Search across collections from The Metropolitan Museum of Art, Harvard Art Museums, 
+              Search across collections from The Metropolitan Museum of Art, The Smithsonian, 
               and the Art Institute of Chicago all in one place.
             </p>
           </div>
@@ -127,11 +89,11 @@ const clearFilters = () => {
             <button 
               type='submit' 
               onClick={handleSubmitSearch}
-              disabled={loading}
+              disabled={isLoading}
               className='flex items-center px-6 py-2 space-x-2 bg-amber-500 rounded-lg hover:bg-amber-200 transition-colors disabled:opacity-50'
               >
                 {/* add a spinner to the button when artworks load */}
-                {loading ? (
+                {isLoading ? (
                   <Loader2Icon className='w-5 h-5 animate-spin'/>
                 ): (
                   <span>Search</span>
@@ -163,9 +125,9 @@ const clearFilters = () => {
                 </div>
                 <div className='flex flex-wrap gap-2'>
                    <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
-                  <button className='rounded-full transition-colors border px-2'>Metropolitan Museum</button>
-                  <button className='rounded-full transition-colors border px-2'>Cleveland Museum</button>
-                  <button className='rounded-full transition-colors border px-2'>Harvard Museum</button>
+                  <button className='rounded-full transition-colors border px-2'>Metropolitan Museum of Art</button>
+                  <button className='rounded-full transition-colors border px-2'>Art Institute of Chicago</button>
+                  <button className='rounded-full transition-colors border px-2'>The Smithsonian</button>
                   <button></button>
                 </div>
                 <div className='md:col-span-3 flex justify-center'>
@@ -190,64 +152,19 @@ const clearFilters = () => {
             {/* map the search results in a grid pattern*/}
             <Masonry 
               breakpointCols = {breakpointColumnsObj}
-              className="flex -ml-4 w-auto"
+              className="flex -ml-4 w-auto gap-4"
               columnClassName='pl-4 bg-clip-padding'
             >
-              {searchResults.map((artwork) => (
-                <div key={artwork.objectID || artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-4'>
+              {searchResults?.map((artwork) => (
+                <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
                   <ArtCard artwork={artwork}/>
                 </div>
               ))}
             </Masonry>
             </form>
         </div>
-
     </section> 
   )
 }
 
-export default Browse
-
-
-
-
-
-          //        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>  
-          //       {searchResults.map((artwork) => (
-          //         <div key={artwork.objectID} className='bg-grey-200 rounded-lg overflow-hidden'>
-          //           <Link to={`/artwork/${artwork.objectID}`}
-          //           >
-          //             <div className='aspect-w-16 aspect-h-9'>
-          //               <img
-          //                 src={artwork.primaryImageSmall}
-          //                 alt={artwork.title}
-          //                 className="object-cover w-full h-full"
-          //               />
-          //           </div>
-          //           </Link>
-          //           {/* add styles */}
-          //           <div>
-          //             <h3>{artwork.title}</h3>
-          //             <p>{artwork.artistDisplayName || 'Unknown Artist'}</p>
-          //           </div>
-          //       </div>
-          //       ))}
-          // </div>   
-
-          
-      {/* coming up too early */}
-      {/* {!loading && searchResults.length === 0 && searchTerm && (
-        <div>no artwork found. Try another search term</div>
-      )} */}
-
-            // replaced metApi with smithApi to test
-      // const searchResponse = await metApi(searchTerm);
-      // const ids = searchResponse.map(item => item.id);
-      // const artresults = await getArtWorks(ids)
-      // const artresults = await getArtWorks(searchResponse.objectIDs || [] );
-
-      // console.log(searchResponse, 'inside searchResponse browse.jsx')
-      // console.log(artresults, 'inside artResults browse.jsx')
-      
-
-      // setSearchResults(artresults);
+export default Browse;
