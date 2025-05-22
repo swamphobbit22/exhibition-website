@@ -19,14 +19,11 @@ const Browse = () => {
     enabled: false, 
   })
 
-
-
   const handleSubmitSearch =  (e) => {
     e.preventDefault();
     if(!searchTerm.trim()) return; 
     refetch();
   }
-
 
 
   const breakpointColumnsObj = {
@@ -69,7 +66,7 @@ const clearFilters = () => {
               placeholder='Search for artwork'
               value={searchTerm} 
               onChange={(e) => setsearchTerm(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch()}
+              onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
               className="pl-10 px-4 py-2 bg-gray-800 rounded-lg w-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label='Search artwork'
               />
@@ -145,7 +142,7 @@ const clearFilters = () => {
             {/* do some error checking here */} 
              {error && (
               <div className='text-red-400'>
-                {error}
+                {error.message || 'An error occurred while searching'}
               </div>
             )}
 
@@ -155,8 +152,8 @@ const clearFilters = () => {
               className="flex -ml-4 w-auto gap-4"
               columnClassName='pl-4 bg-clip-padding'
             >
-              {searchResults?.map((artwork) => (
-                <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
+              {Array.isArray(searchResults) && searchResults.length > 0 && searchResults.map((artwork) => (
+                  <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
                   <ArtCard artwork={artwork}/>
                 </div>
               ))}

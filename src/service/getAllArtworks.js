@@ -6,11 +6,15 @@ import { transformMetApi, transformChicagoApi, transformSmithApi } from '../serv
 export async function fetchCombinedArtworks(searchTerm){
       //abstracted out from browse.js
       // combined search as default - filtered search can come later
-      const [metSearch, smithSearch, chicagoSearch] = await Promise.all([
+      const [metResult, smithResult, chicagoResult] = await Promise.allSettled([
         metApi(searchTerm),
         smithApi(searchTerm),
         chicagoApi(searchTerm)
       ])
+
+      const metSearch = metResult.status === 'fulfilled' ? metResult.value : { objectIDs: [] };
+      const smithSearch = smithResult.status === 'fulfilled' ? smithResult.value : [];
+      const chicagoSearch = chicagoResult.status === 'fulfilled' ? chicagoResult.value : [];
 
       const metIds = metSearch?.objectIDs || [];
       const [metRaw] = await Promise.all([

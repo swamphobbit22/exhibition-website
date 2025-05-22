@@ -5,10 +5,10 @@ const AuthModal = () => {
     
   return (
     <div>login/signup popup
-        {/* <form >
+        <form >
+        sign in form goes here
 
-
-        </form> */}
+        </form> 
     </div>
   )
 }
