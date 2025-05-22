@@ -23,10 +23,33 @@ export async function fetchCombinedArtworks(searchTerm){
 
       const smithRaw = smithSearch;
 
-      // use transformdata and combine the results
-      const smithResults = smithRaw.map(transformSmithApi)
-      const metResults = metRaw.map(transformMetApi)
-      const chicagoResults = chicagoSearch.map(transformChicagoApi);
+      // transformdata and filter out any null values
+      const smithResults = smithRaw.map(item => {
+        try {
+            return transformSmithApi(item)
+        } catch (error) {
+            console.warn('Failed to transform Smithsonian item:', error);
+            return null;
+        }
+      }).filter(Boolean);
+
+      const metResults = metRaw.map(item => {
+        try {
+            return transformMetApi(item)
+        } catch (error) {
+            console.warn('Failed to transform Met item:', error);
+            return null;
+        }
+      }).filter(Boolean);
+
+      const chicagoResults = chicagoSearch.map(item => {
+        try {
+            return transformChicagoApi(item)
+        } catch (error) {
+            console.warn('Failed to transform Chicago Art Institute item:', error);
+            return null;
+        }
+      }).filter(Boolean);
 
       return [...metResults, ...smithResults, ...chicagoResults];
 
