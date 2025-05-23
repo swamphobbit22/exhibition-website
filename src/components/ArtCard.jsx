@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 
 const ArtCard = ({ artwork }) => {
   const imageUrl = artwork.imageUrl;
@@ -17,24 +19,28 @@ const ArtCard = ({ artwork }) => {
         <div>
 
           {imageUrl ? (
-            <Link to={artwork.id}>
+            <Link to={`/detail/${artwork.id}?source=${artwork.source}`}>
               <img 
                 src={imageUrl} 
                 alt={artwork.title || 'untitled'} 
                 className='w-full h-64 object-cover'
-              />
+                 />
             </Link>
         ) : (
           <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
             <p className="text-gray-500">No image available</p>
           </div>
         )}
-         <div>
+         <div className='flex bg-amber-300'>
             <button className='bg-amber-300 w-full'>
-              <span className='font-bold text-white bg-amber-500'>{artwork.repository}</span>
+              <span className='font-bold text-white'>{artwork.repository}</span>
             </button>
-        <button>favourite</button>
-        <button>Share</button>
+          <button className='text-red-700 mr-2 cursor-pointer'>
+            <FavoriteIcon className='w-5 h-5'/>
+          </button>
+          <button className='text-blue-800 cursor-pointer'>
+            <ShareIcon className='w-5 h-5'/>
+          </button>
        </div>
         </div>
         <div className='text-gray-600 p-2'>

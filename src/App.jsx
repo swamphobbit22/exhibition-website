@@ -5,7 +5,7 @@ import Browse from "./pages/Browse"
 import Collections from "./pages/Collections"
 import Navigation from "./components/Navigation"
 import Showcase from "./pages/Showcase"
-// import ArtworkDetail from './pages/ArtworkDetail'
+import ArtworkDetail from './pages/ArtworkDetail'
 import CollectionDetail from './pages/CollectionDetail'
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           <Route path="/showcase" element={<Showcase />} />
           <Route path="/browse" element={<Browse />} />
           {/* protected route here */}
-          {/* <Route path="/artwork/:id" element={<ArtworkDetail />} /> */}
+          <Route path="/detail/:id" element={<ArtworkDetail />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/collections/:id" element={<CollectionDetail />} />  
         </Routes>   

@@ -5,12 +5,13 @@ const baseUrl = 'https://api.si.edu/openaccess/api/v1.0';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const smithApi = async(query) => {
+
       const searchResults = await axios.get(`${baseUrl}/category/art_design/search`, {
         params: {
           api_key: API_KEY,
           q: query,
-          start: 0,
-          rows: 10,
+          start:0,
+          rows: 20,
           fq: 'online_media_type:Images',
           museum: 'NMAH, NPG, SAAM, FSG'
         }
@@ -46,7 +47,19 @@ const smithApi = async(query) => {
 
     console.log('results with images:', resultsWithImages.length) 
     // console.log("Processed Smithsonian results:", processedResults)
-    return processedResults;
+    //return processedResults;
+    return resultsWithImages;
 };
 
-export{ smithApi }
+const getSmithArtWorkById = async(id) => {
+  try {
+    const response = await axios.get(`${baseUrl}/content/${id}`);
+    return response;
+  } catch (error) {
+    console.warn(`Failed to fetch artwork ${id}:`, error.message);
+    return null;
+  }
+}
+
+export{ smithApi, getSmithArtWorkById }
+

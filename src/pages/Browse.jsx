@@ -5,6 +5,8 @@ import  ArtCard  from '../components/ArtCard';
 import  Masonry  from 'react-masonry-css';
 import { useQuery } from '@tanstack/react-query'
 import { fetchCombinedArtworks } from '../service/getAllArtworks'
+import { getPaginationData, getPageNumbers } from "../utils/pagination";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 const Browse = () => {
@@ -12,6 +14,10 @@ const Browse = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [artist, setArtist] = useState('');
   const [medium, setMedium] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 20;
+
+
 
   const { data:searchResults, isLoading, error, refetch } = useQuery({
     queryKey: ['artworks', searchTerm],
@@ -19,19 +25,30 @@ const Browse = () => {
     enabled: false, 
   })
 
+    const paginationData = searchResults ? getPaginationData(searchResults, currentPage, ITEMS_PER_PAGE)
+    : {
+      currentItems: [],
+      totalPages: 0,
+      hasNextPage: false, 
+      hasPreviousPage: false,
+    }
+
+    // const pageNumbers = getPageNumbers(paginationData.totalPages, currentPage)
+
   const handleSubmitSearch =  (e) => {
     e.preventDefault();
     if(!searchTerm.trim()) return; 
+    setCurrentPage(1)
     refetch();
   }
 
 
   const breakpointColumnsObj = {
-  default: 3,
-  1100: 3,
-  700: 2,
-  500: 1
-};
+    default: 3,
+    1100: 3,
+    700: 2,
+    500: 1
+  };
 
 const clearFilters = () => {
   setArtist(''),
@@ -96,7 +113,9 @@ const clearFilters = () => {
                   <span>Search</span>
                 )}
             </button>
+
           </div>
+
 
 
             {/* display the filters */}
@@ -152,12 +171,43 @@ const clearFilters = () => {
               className="flex -ml-4 w-auto gap-4"
               columnClassName='pl-4 bg-clip-padding'
             >
-              {Array.isArray(searchResults) && searchResults.length > 0 && searchResults.map((artwork) => (
-                  <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
-                  <ArtCard artwork={artwork}/>
+              {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) => (
+                <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
+                <ArtCard artwork={artwork}/>
                 </div>
               ))}
             </Masonry>
+
+           {paginationData.totalPages > 1 && (
+            <div className='flex justify-center items-center gap-2 mt-6 mb-6'>
+              <button 
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={!paginationData.hasPreviousPage}
+              className='px-3 py-2 bg-amber-400 rounded disabled:opacity-50 font-bold'
+              >
+                Previous
+              </button>
+
+              {/* works but not quite right
+              {pageNumbers.map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setCurrentPage(num)}
+                  className={`px-3 py-2 rounded border-2 border-amber-500 ${num === currentPage ? 'bg-amber-00' : 'bg-amber-00'}`}
+                >
+                  {num}
+                </button>
+              ))} */}
+
+              <button 
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={!paginationData.hasNextPage}
+                className="px-3 py-2 bg-amber-400 rounded disabled:opacity-50 font-bold"
+              >
+                Next
+              </button>
+            </div>
+           )}
             </form>
         </div>
     </section> 
