@@ -4,6 +4,7 @@ import { fetchCombinedArtworks } from "../service/getAllArtworks";
 import  ArtCard  from '../components/ArtCard';
 import  Masonry from 'react-masonry-css';
 import themesArray from '../data/themes';
+import { Carousel } from "../components/Carousel";
 
 
 const theme = themesArray[new Date().getDate() % themesArray.length];
@@ -16,33 +17,44 @@ const Showcase = () => {
     queryKey: ['showcaseTheme'],
     queryFn: async () => {  
       const results = await fetchCombinedArtworks(`${theme}`);
-      return shuffleArray(results).slice(0,12)
+      return shuffleArray(results).slice(0,20)
     }
   })
-
-  const breakpointColumnsObj = {
-  default: 3,
-  1100: 3,
-  700: 2,
-  500: 1
-};
 
 
   return (
     <div className="relative min-h-screen pt-20 flex items-center flex-col mx-20">
-      <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4">Welcome to our Daily Showcase</h2> 
-      <h3 className="font-serif text-2xl sm:text-3xl font-bold mb-4">Discover Art and Antiquities from Across the Globe</h3>
-      <span className="text-gray-300 max-w-3xl mx-auto mb-8">
-            Explore a handpicked theme from The Met’s vast collection. Each day, we select a new topic — 
+      <h2 className="font-serif text-4xl sm:text-4xl font-bold mb-4">Welcome to our Daily Showcase</h2> 
+      <h3 className="font-serif text-xl sm:text-3xl font-bold mb-4">Discover Art and Antiquities from Across the Globe</h3>
+      <span className="text-gray-300 max-w-4xl mx-auto mb-8">
+            Explore our handpicked themes. Each day, we select a new topic — 
             like “Impressionism” or “Ancient Egypt” — and display a random 
             set of artworks connected to it. No search needed — just scroll and discover.
       </span>
-      <h3 className="mb-6">
+      <h3 className="mb-6 text-3xl">
         Todays theme is {`${theme}`}
       </h3>
-      <div>
-        
-            {/* map the search results in a grid pattern*/}
+      <div className="mb-10">
+        {Array.isArray(showcaseResults) && showcaseResults.length > 0 && (
+          <Carousel items={showcaseResults}/>
+        )}      
+      </div>
+    </div>
+  )
+}
+
+export default Showcase
+
+
+
+//   const breakpointColumnsObj = {
+//   default: 3,
+//   1100: 3,
+//   700: 2,
+//   500: 1
+// };
+
+            {/* map the search results in a grid pattern
             <Masonry 
               breakpointCols = {breakpointColumnsObj}
               className="flex -ml-4 w-auto gap-4"
@@ -53,10 +65,4 @@ const Showcase = () => {
                   <ArtCard artwork={artwork}/>
                 </div>
               ))}
-            </Masonry>
-      </div>
-    </div>
-  )
-}
-
-export default Showcase
+            </Masonry> */}

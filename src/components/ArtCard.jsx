@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
+import { stripHtmlTags } from '../utils/stripHtml';
 
 const ArtCard = ({ artwork }) => {
   const imageUrl = artwork.imageUrl;
@@ -44,7 +45,7 @@ const ArtCard = ({ artwork }) => {
        </div>
         </div>
         <div className='text-gray-600 p-2'>
-            <h3>Title: {artwork.title || 'Unknown Title'}</h3>
+            <h3>Title: {stripHtmlTags(artwork.title || 'Unknown Title')}</h3>
             <p>Artist: {artwork.artist || 'Unknown Artist'}</p>
             <p>Medium: {artwork.medium || 'N/A'}</p>
             <p></p>

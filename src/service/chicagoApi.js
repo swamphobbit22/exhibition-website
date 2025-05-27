@@ -8,7 +8,7 @@ const chicagoApi = async(query) => {
         params: {
             q: query,
             fields: 
-            'id,title,artist_title,date_display,medium_display,dimensions,image_id,alt_image_ids,api_link',
+            'id,title,artist_title,date_display,medium_display,dimensions,image_id,alt_image_ids,api_link,description',
             limit: 10
         }
     })
@@ -35,7 +35,7 @@ const getApiImageUrl = (image_id, alt_image_ids) => {
 const getChicagoArtWorkById = async (id) => {
     try {
      const response = await axios.get(`${baseUrl}/artworks/${id}`);
-     return response.data;       
+     return response.data.data;       
     } catch (error) {
       console.warn(`Failed to fetch artwork ${id}:`, error.message);
     return null;

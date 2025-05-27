@@ -53,8 +53,12 @@ const smithApi = async(query) => {
 
 const getSmithArtWorkById = async(id) => {
   try {
-    const response = await axios.get(`${baseUrl}/content/${id}`);
-    return response;
+    const response = await axios.get(`${baseUrl}/content/${id}`, {
+      params: {
+        api_key: API_KEY
+      }
+    });
+    return response.data;
   } catch (error) {
     console.warn(`Failed to fetch artwork ${id}:`, error.message);
     return null;

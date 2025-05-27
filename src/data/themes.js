@@ -6,7 +6,26 @@
     'Silk Road',
     'Ancient Egypt',
     'China',
-    'Mesopotamia'
+    'Mesopotamia',
+    'Norse Mythology',
+    'Byzantine',
+    'Aztec',
+    'Inuit',
+    'Medieval Europe',
+    'Aboriginal Australia',
+    'Baroque',
+    'Mayan',
+    'Rococo',
+    'Native American',
+    'Mughal India',
+    'Gothic',
+    'Persian Empire',
+    'Art Nouveau',
+    'Caribbean',
+    'Industrial Revolution',
+    'Celtic',
+    'Colonial America',
+    'Edo Japan'
 ];
 
 export default themesArray;
