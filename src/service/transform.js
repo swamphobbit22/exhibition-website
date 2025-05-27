@@ -7,7 +7,9 @@ function transformMetApi(data) {
         imageUrl: data.primaryImageSmall,
         artist: data.artistDisplayName,
         medium: data.medium,
-        source: 'met'
+        source: 'met',
+        period: data.period,
+        description: data.elementDescription,
     }
 }
 

@@ -14,7 +14,7 @@ const { data, isLoading, error} = useQuery({
     queryKey: ['artwork', id, source],
     queryFn: async () => {
       const results = await fetchArtworkById(id, source);
-      console.log(results, 'results from artwork detail')
+      // console.log(results, 'results from artwork detail')
       return results;
     }
   })
@@ -26,22 +26,24 @@ const { data, isLoading, error} = useQuery({
 
   return (
     <section id='detail'>
-      <div className="relative min-h-screen pt-20 flex items-center flex-col mx-20">
-        <span className="text-left"><Link to={`/browse${window.location.search}`}><ArrowBackIcon />Back to Search</Link></span>
-        <div className="mt-6 flex flex-col max-w-md md:max-w-3xl">
+      <div className="relative min-h-screen pt-20 mb-10 flex items-center flex-col mx-20 bg-gray-800">
+        
+        <span><Link to={`/browse${window.location.search}`}><ArrowBackIcon className="mr-1 text-amber-400"/>Back to Search</Link></span>
+        <div className="mt-6 flex flex-col max-w-md md:max-w-3xl ">
           <img 
           className=""
           src={data.imageUrl} alt={data.title || 'Artwork'} />  
         </div>
         <div className="max-w-4xl mt-6 mb-6">
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center">{stripHtmlTags(data.title)}</h2> 
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold mb-6 text-center">{stripHtmlTags(data.artist)}</h3>
-          <hr className="mb-2 mt-2"/>
-         {/* <span className="text-gray-300 max-w-3xl mx-auto mb-8 mt-8">
-          {data.period || 'No details available '}
-          </span>  */}
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center text-gray-200">{stripHtmlTags(data.title)}</h2> 
+          <h3 className="font-serif md:text-xl sm:text-3xl font-bold mb-6 text-center italic text-gray-200">{stripHtmlTags(data.artist)}</h3>
+          <hr className="mb-1 mt-2 text-amber-400"/>
+          <span className="text-gray-300 max-w-3xl mx-auto mb-8 mt-8">
+            {data.period || 'No date available '}
+          </span> 
        </div>
-        <span className="max-w-4xl mb-10">{data.description || 'no description available'}</span>
+        <span className="max-w-4xl mb-10 text-gray-200">{data.description || 'no description available'}</span>
+        
       </div>
     </section>
   )

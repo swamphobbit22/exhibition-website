@@ -27,7 +27,16 @@ const Navigation = () => {
               {/* Nav links */}
               <div className="flex-1 flex justify-center space-x-8 text-gray-800">
                 <NavLink to="/showcase"  className='text-white'><Images /> Showcase</NavLink>
-                <NavLink to="/browse"  className='text-white'><ImageSearchIcon /> Browse</NavLink>
+                
+                {/* remove any remaining query strings from search in url */}
+                <NavLink 
+                  to="/browse"  
+                  className='text-white'
+
+                  >
+                  <ImageSearchIcon /> 
+                  Browse
+                </NavLink>
                 <NavLink to="/collections"  className='text-white'><CollectionsIcon /> Collections</NavLink>
                 {/* link to users collections here */}
               </div>
@@ -65,3 +74,11 @@ const Navigation = () => {
 }
 
 export default Navigation
+
+
+//                   onClick={(e) => {
+                  //   if (window.location.search) {
+                  //     e.preventDefault();
+                  //     window.history.replaceState(null, '', '/browse');
+                  //   }  
+                  // }}    

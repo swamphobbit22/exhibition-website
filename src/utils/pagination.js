@@ -17,20 +17,14 @@ export const getPaginationData = (items, currentPage, itemsPerPage) => {
   };
 };
 
-export const getPageNumbers = (currentPage, totalPages, maxVisible = 5) => {
-    if(totalPages <= maxVisible) {
-        return Array.from({ length:totalPages }, (_, i) => i + 1);
-    }
+export const getPageNumbers = (totalPages, currentPage, pagesPerGroup = 10) => {
+  if (totalPages <= 0) return [];
 
-    const half = Math.florr(maxVisible / 2);
-    let start = Math.max(1, currentPage - half);
-    let end = Math.min(totalPages, start + maxVisible - 1);
+  const groupIndex = Math.floor((currentPage - 1) / pagesPerGroup);
+  const startPage = groupIndex * pagesPerGroup + 1;
+  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
-    if(end - start + 1 < maxVisible) {
-        start = Math.max(1, end - maxVisible + 1);
-    }
-
-    return Array.from({ length: end - start +1}, (_, i) => start + i)
+  return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 };
 
- 
+

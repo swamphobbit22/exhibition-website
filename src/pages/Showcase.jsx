@@ -5,6 +5,7 @@ import  ArtCard  from '../components/ArtCard';
 import  Masonry from 'react-masonry-css';
 import themesArray from '../data/themes';
 import { Carousel } from "../components/Carousel";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 const theme = themesArray[new Date().getDate() % themesArray.length];
@@ -13,7 +14,7 @@ const theme = themesArray[new Date().getDate() % themesArray.length];
 
 const Showcase = () => {
   
-    const { data:showcaseResults} = useQuery({
+    const { data:showcaseResults, isLoading, error} = useQuery({
     queryKey: ['showcaseTheme'],
     queryFn: async () => {  
       const results = await fetchCombinedArtworks(`${theme}`);
@@ -21,18 +22,21 @@ const Showcase = () => {
     }
   })
 
+  if(isLoading) return <div className="pt-20 flex justify-center items-center min-h-screen"><ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>Un moment s'il vous plait</div>;
+  if(error) return <div className="pt-20 flex justify-center">Error loading artwork: {error.message}</div>
+  if(!showcaseResults) return <div className="pt-20 flex justify-center">No artwork found</div>;
+
 
   return (
-    <div className="relative min-h-screen pt-20 flex items-center flex-col mx-20">
+    <div className="relative min-h-screen pt-20 flex items-center flex-col mx-20 ">
       <h2 className="font-serif text-4xl sm:text-4xl font-bold mb-4">Welcome to our Daily Showcase</h2> 
-      <h3 className="font-serif text-xl sm:text-3xl font-bold mb-4">Discover Art and Antiquities from Across the Globe</h3>
-      <span className="text-gray-300 max-w-4xl mx-auto mb-8">
-            Explore our handpicked themes. Each day, we select a new topic — 
-            like “Impressionism” or “Ancient Egypt” — and display a random 
+      {/* <h3 className="font-serif text-xl sm:text-3xl font-bold mb-4">Discover Art and Antiquities from Across the Globe</h3> */}
+      <span className="text-gray-300 max-w-4xl mx-auto mb-4">
+            Explore our handpicked themes. Each day, we select a new topic and display a random 
             set of artworks connected to it. No search needed — just scroll and discover.
       </span>
-      <h3 className="mb-6 text-3xl">
-        Todays theme is {`${theme}`}
+      <h3 className="mb-8 text-2xl text-center font-light">
+        Todays theme is... <br /><span className="text-4xl font-semibold">{`${theme}`}</span>
       </h3>
       <div className="mb-10">
         {Array.isArray(showcaseResults) && showcaseResults.length > 0 && (

@@ -25,9 +25,39 @@ const getMetArtWorkById = async(objectId) => {
 const getArtWorks = async(objectIds) => {
   if(!Array.isArray(objectIds)) return [];
 
-  const artworks = await Promise.all(objectIds.slice(0, 20).map((id) => getMetArtWorkById(id)));
-  return artworks.filter((artwork) => artwork && artwork.primaryImage)
- }
+  const BATCH_SIZE = 10;
+  const results = [];
+  
+  for (let i = 0; i < objectIds.length; i += BATCH_SIZE) {
+    const batch = objectIds.slice(i, i + BATCH_SIZE);
+    const batchResults = await Promise.allSettled(
+      batch.map(id => getMetArtWorkById(id))
+    );
+    
+    // Only keep successful results with images
+    const validArtworks = batchResults
+      .filter(result => result.status === 'fulfilled' && result.value?.primaryImage)
+      .map(result => result.value);
+    
+    results.push(...validArtworks);
+    
+    if (results.length >= 500) break; 
+  }
+  
+  return results;
+}
 
 
 export{metApi, getMetArtWorkById, getArtWorks}
+
+
+
+// const artworks = await Promise.all(objectIds.slice(0, 20).map((id) => getMetArtWorkById(id)));
+
+
+// const getArtWorks = async(objectIds) => {
+//   if(!Array.isArray(objectIds)) return [];
+
+//   const artworks = await Promise.all(objectIds.map((id) => getMetArtWorkById(id)));
+//   return artworks.filter((artwork) => artwork && artwork.primaryImage)
+//  }

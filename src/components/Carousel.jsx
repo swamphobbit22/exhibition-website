@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { stripHtmlTags } from '../utils/stripHtml'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 
 export const Carousel = ({ items }) => {
@@ -18,14 +20,16 @@ export const Carousel = ({ items }) => {
       return (current + offset + total) % total;
     };
 
+    console.log(items)
+
   return (
-    <div className="relative w-full max-w-4xl mx-auto flex items-center justify-center mt-10 mb-10 px-12 md:px-4">
+    <div className="relative w-full md:max-w-4xl mx-auto flex items-center justify-center mt-10 mb-10 px-12 md:px-4 bg-gray-900">
       {/* previous button */}
       <button 
         onClick={prevSlide}
-        className="absolute left-2 md:left-0 z-10 bg-amber-500 text-white p-2 rounded font-extrabold  hover:bg-amber-600 transition-colors duration-200 ease-in-out"
+        className="absolute left-2 top-16 md:top-38 md:left-[-2] z-15 bg-amber-500 text-white p-2 rounded font-extrabold  hover:bg-amber-600 transition-colors duration-200 ease-in-out"
       >
-        &#8592;
+        <ArrowBackIcon />
       </button>
 
       <div className='flex items-center justify-center gap-2 md:gap-4'> 
@@ -34,7 +38,7 @@ export const Carousel = ({ items }) => {
           return (
             <div
             key={artwork.id}
-            className={`text-center transition-all duration-500 ease-in-out transition-discrete flex flex-col
+            className={`text-center md:transition-all md:duration-500 md:ease-in-out transition-discrete flex flex-col
               ${i === 1 ? 'scale-125 z-10 opacity-100 shadow-2xl brightness-110' 
               : 'scale-90 opacity-30 brightness-75 hidden md:block'
               }`}
@@ -47,7 +51,10 @@ export const Carousel = ({ items }) => {
               />
               </div>
 
+              {/* check positioning of details and teh forward/back arrows */}
+
               <div className='bg-amber-600 rounded-md max-w-96 h-auto flex flex-col justify-start mt-2'>
+                {/* title/artist data */}
                 <h4 className='mt-2 text-sm font-medium text-grat-900 p-2'>
                   Title:  
                   <span className='font-semibold'> {stripHtmlTags(artwork.title)}</span>
@@ -59,6 +66,15 @@ export const Carousel = ({ items }) => {
                 </p>
               </div>
 
+              {/* description box */}
+              <div className='bg-gray-600 mt-2 rounded-sm text-sm flex flex-col items-center max-w-96 p-2'> 
+                <div>{artwork.period || 'No date available'}</div>
+                <br />
+                <div>{artwork.description || 'No description available for this item'}</div>
+                <br />
+                <div className='text-xs italic'>{artwork.repository || 'Source unavailable'}</div>
+              </div>
+
             </div>
           );
         })}
@@ -66,9 +82,9 @@ export const Carousel = ({ items }) => {
       {/* next button */}
       <button
        onClick={nextSlide}
-       className='absolute right-2 md:right-0 z-10 bg-amber-500 text-white font-extrabold p-2 rounded hover:bg-amber-600 transition-colors duration-200 ease-in-out'
+       className='absolute right-2 md:right-2 top-16 md:top-38 z-15 bg-amber-500 text-white font-extrabold p-2 rounded hover:bg-amber-600 transition-colors duration-200 ease-in-out'
        >
-        &#8594;
+        <ArrowForwardIcon />
       </button>
     </div>
    

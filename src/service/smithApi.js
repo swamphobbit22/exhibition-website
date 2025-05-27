@@ -10,8 +10,8 @@ const smithApi = async(query) => {
         params: {
           api_key: API_KEY,
           q: query,
-          start:0,
-          rows: 20,
+          // start:0,
+          // rows: 20,
           fq: 'online_media_type:Images',
           museum: 'NMAH, NPG, SAAM, FSG'
         }
@@ -45,7 +45,7 @@ const smithApi = async(query) => {
   
     const resultsWithImages = processedResults.filter(item => item.smithsonianImageUrl);
 
-    console.log('results with images:', resultsWithImages.length) 
+    // console.log('results with images:', resultsWithImages.length) 
     // console.log("Processed Smithsonian results:", processedResults)
     //return processedResults;
     return resultsWithImages;

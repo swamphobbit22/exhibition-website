@@ -1,22 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo} from 'react'
+import { useSearchParams, Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query'
 import { Search, Loader2Icon, Filter, X } from 'lucide-react';
 import  ArtCard  from '../components/ArtCard';
 import  Masonry  from 'react-masonry-css';
-import { useQuery } from '@tanstack/react-query'
 import { fetchCombinedArtworks } from '../service/getAllArtworks'
-
-// import { getPaginationData, getPageNumbers } from "../utils/pagination";
+import { getPaginationData, getPageNumbers } from "../utils/pagination";
 import ClipLoader from "react-spinners/ClipLoader";
 
 
 const Browse = () => {
-  const [searchTerm, setsearchTerm] = useState('');
-  const [showFilters, setShowFilters] = useState(false)
-  const [artist, setArtist] = useState('');
-  const [medium, setMedium] = useState('');
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const ITEMS_PER_PAGE = 20;
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const [searchTerm, setsearchTerm] = useState(searchParams.get('q') || '');
+  const [showFilters, setShowFilters] = useState(false)
+  const [artist, setArtist] = useState(searchParams.get('artist') || '');
+  const [medium, setMedium] = useState(searchParams.get('medium') || '');
+  const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
+  // const [itemsPerPage, setItemsPerPage] = useState(5);
+  const ITEMS_PER_PAGE = 5;
 
 
   const { data:searchResults, isLoading, error, refetch } = useQuery({
@@ -26,24 +28,47 @@ const Browse = () => {
     staleTime: 5 * 60* 1000,
   })
 
-    // const paginationData = searchResults ? getPaginationData(searchResults, currentPage, ITEMS_PER_PAGE)
-    // : {
-    //   currentItems: [],
-    //   totalPages: 0,
-    //   hasNextPage: false, 
-    //   hasPreviousPage: false,
-    // }
+  // for search persistence
+  useEffect(() => {
+    const params = {};
+    if (searchTerm) params.q = searchTerm;
+    if(artist) params.artist = artist;
+    if(medium) params.medium = medium;
+    if(currentPage > 1) params.page = currentPage;
 
-    // const pageNumbers = getPageNumbers(paginationData.totalPages, currentPage)
+    setSearchParams(params);
+
+  }, [searchTerm, artist, medium, currentPage, setSearchParams])
+
+
+  const paginationData = useMemo(() => {
+    if(!searchResults) {
+      return {
+        currentItems: [],
+        totalPages: 0,
+        hasNextPage: false, 
+        hasPreviousPage: false,
+      }
+    }
+
+    return getPaginationData(searchResults, currentPage, ITEMS_PER_PAGE);
+  }, [searchResults, currentPage, ITEMS_PER_PAGE])
+  
+
+  const pageNumbers = useMemo(() => {
+    return getPageNumbers(paginationData.totalPages, currentPage);
+  }, [paginationData, currentPage])
+
+  // console.log('Page numbers group:', pageNumbers);
 
   const handleSubmitSearch =  (e) => {
     e.preventDefault();
     if(!searchTerm.trim()) return; 
-    // setCurrentPage(1)
+    setCurrentPage(1)
     refetch();
   }
 
-
+  // breakpoints for my masonry grid
   const breakpointColumnsObj = {
     default: 3,
     1100: 3,
@@ -56,6 +81,11 @@ const clearFilters = () => {
   setMedium('')
   //also set the repository/museum - do it later
 }
+
+
+  // if(isLoading) return <div className="pt-20 flex justify-center items-center "><ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>Un moment s'il vous plait</div>;
+  // if(error) return <div className="pt-20 flex justify-center">Error loading artwork: {error.message}</div>
+  // if(!searchResults) return <div className="pt-20 flex justify-center">No artwork found</div>;
 
   return (
     <section>
@@ -166,49 +196,69 @@ const clearFilters = () => {
               </div>
             )}
 
+            {paginationData.totalItems > 0 && (
+              <div className="text-sm text-gray-400 mb-4">
+                Returning {paginationData.totalItems} results
+              </div>
+            )}
+
             {/* map the search results in a grid pattern*/}
             <Masonry 
               breakpointCols = {breakpointColumnsObj}
               className="flex -ml-4 w-auto gap-4"
               columnClassName='pl-4 bg-clip-padding'
             >
-              {Array.isArray(searchResults) && searchResults.length > 0 && searchResults.map((artwork) => (
+              {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) => (
                 <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
-                <ArtCard artwork={artwork}/>
+                  <Link 
+                    to={`/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}`}
+                  >
+                    <ArtCard 
+                      artwork={artwork}
+                      searchTerm={searchTerm}
+                      artist={artist}
+                      medium={medium}
+                      page={currentPage}
+                    />
+                  </Link>
                 </div>
               ))}
             </Masonry>
 
-           {/* {paginationData.totalPages > 1 && (
+           {paginationData.totalPages > 1 && (
             <div className='flex justify-center items-center gap-2 mt-6 mb-6'>
               <button 
+              type='button'
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={!paginationData.hasPreviousPage}
               className='px-3 py-2 bg-amber-400 rounded disabled:opacity-50 font-bold'
               >
                 Previous
-              </button> */}
+              </button> 
 
-              {/* works but not quite right
+              
               {pageNumbers.map((num) => (
                 <button
+                type='button'
                   key={num}
                   onClick={() => setCurrentPage(num)}
-                  className={`px-3 py-2 rounded border-2 border-amber-500 ${num === currentPage ? 'bg-amber-00' : 'bg-amber-00'}`}
+                  className={`px-3 py-2 rounded border-2 ${num === currentPage ? 'bg-amber-500 text-black' : 'bg-gray-800 text-white'}`}
+
                 >
                   {num}
                 </button>
-              ))} */}
+              ))}
 
-              {/* <button 
+                <button 
+                type='button'
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={!paginationData.hasNextPage}
                 className="px-3 py-2 bg-amber-400 rounded disabled:opacity-50 font-bold"
               >
                 Next
-              </button> */}
-            {/* </div>
-           )} */}
+              </button> 
+            </div>
+           )}
             </form>
         </div>
     </section> 
@@ -216,3 +266,12 @@ const clearFilters = () => {
 }
 
 export default Browse;
+
+
+  // const [searchTerm, setsearchTerm] = useState('');
+  // const [showFilters, setShowFilters] = useState(false)
+  // const [artist, setArtist] = useState('');
+  // const [medium, setMedium] = useState('');
+  // const [currentPage, setCurrentPage] = useState(1);
+  // // const [itemsPerPage, setItemsPerPage] = useState(5);
+  // const ITEMS_PER_PAGE = 5;

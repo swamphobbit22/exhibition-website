@@ -5,9 +5,9 @@ import ShareIcon from '@mui/icons-material/Share';
 import { stripHtmlTags } from '../utils/stripHtml';
 
 const ArtCard = ({ artwork }) => {
+
   const imageUrl = artwork.imageUrl;
-  // console.log("Artwork source:", artwork.repository || "unknown source")
-  console.log(artwork)
+  // console.log(artwork)
 
   return (
     <motion.div
@@ -20,13 +20,12 @@ const ArtCard = ({ artwork }) => {
         <div>
 
           {imageUrl ? (
-            <Link to={`/detail/${artwork.id}?source=${artwork.source}`}>
+            
               <img 
                 src={imageUrl} 
                 alt={artwork.title || 'untitled'} 
                 className='w-full h-64 object-cover'
-                 />
-            </Link>
+              ></img>
         ) : (
           <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
             <p className="text-gray-500">No image available</p>
@@ -55,4 +54,32 @@ const ArtCard = ({ artwork }) => {
   )
 }
 
-export default ArtCard
+export default ArtCard;
+
+            // <Link to={`/detail/${artwork.id}?source=${artwork.source}`}>
+            //   <img 
+            //     src={imageUrl} 
+            //     alt={artwork.title || 'untitled'} 
+            //     className='w-full h-64 object-cover'
+            //      />
+            // </Link>#
+
+
+
+
+
+              // const queryParams = new URLSearchParams({
+  //   source: artwork.source,
+  //   q: searchTerm || '',
+  //   artist: artist || '',
+  //   medium: medium || '',
+  //   page: page || 1,
+  // })
+
+            //             <Link to={`/detail/${artwork.id}?${queryParams.toString()}`}>
+            //   <img 
+            //     src={imageUrl} 
+            //     alt={artwork.title || 'untitled'} 
+            //     className='w-full h-64 object-cover'
+            //      />
+            // </Link>

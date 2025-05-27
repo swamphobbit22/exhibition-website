@@ -9,10 +9,11 @@ const chicagoApi = async(query) => {
             q: query,
             fields: 
             'id,title,artist_title,date_display,medium_display,dimensions,image_id,alt_image_ids,api_link,description',
-            limit: 10
+            
         }
     })
 
+    // limit: 10
     return response.data.data;
 }
 
