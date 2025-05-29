@@ -17,7 +17,7 @@ const Browse = () => {
   const [artist, setArtist] = useState(searchParams.get('artist') || '');
   const [medium, setMedium] = useState(searchParams.get('medium') || '');
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
-  // const [itemsPerPage, setItemsPerPage] = useState(5);
+  // const [itemsPerPage, setItemsPerPage] = useState(5); change to this if user decides to change the number returned
   const ITEMS_PER_PAGE = 5;
 
 
@@ -89,7 +89,7 @@ const clearFilters = () => {
 
   return (
     <section>
-      <div className="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <form 
           action=""
           onSubmit={handleSubmitSearch}

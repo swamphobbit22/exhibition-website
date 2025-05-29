@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { stripHtmlTags } from '../utils/stripHtml'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import {truncate} from '../utils/truncate'
 
 
 export const Carousel = ({ items }) => {
@@ -23,7 +23,7 @@ export const Carousel = ({ items }) => {
     console.log(items)
 
   return (
-    <div className="relative w-full md:max-w-4xl mx-auto flex items-center justify-center mt-10 mb-10 px-12 md:px-4 bg-gray-900">
+    <div className="relative w-full md:max-w-7xl mx-auto flex items-center justify-center mt-10 mb-24 px-12 md:px-4 bg-gray-900">
       {/* previous button */}
       <button 
         onClick={prevSlide}
@@ -40,7 +40,7 @@ export const Carousel = ({ items }) => {
             key={artwork.id}
             className={`text-center md:transition-all md:duration-500 md:ease-in-out transition-discrete flex flex-col
               ${i === 1 ? 'scale-125 z-10 opacity-100 shadow-2xl brightness-110' 
-              : 'scale-90 opacity-30 brightness-75 hidden md:block'
+              : 'scale-90 opacity-15 brightness-65 hidden md:block'
               }`}
             >
               <div className='flex-shrink-0'>
@@ -57,23 +57,28 @@ export const Carousel = ({ items }) => {
                 {/* title/artist data */}
                 <h4 className='mt-2 text-sm font-medium text-grat-900 p-2'>
                   Title:  
-                  <span className='font-semibold'> {stripHtmlTags(artwork.title)}</span>
+                  <span className='font-semibold'> {artwork.title}</span>
                 </h4>
                 <hr className='w-1/2 text-center mx-auto text-amber-300'/>
                 <p className='text-xs text-white p-2 '>
                   Artist: 
                   <span className='font-semibold'> {artwork.artist || 'Unknown'}</span>
                 </p>
+                <div>{artwork.period || 'No date available'}</div>
+                <br />
+                <div>{artwork.description ? truncate(artwork.description) : 'No description available for this item'}</div>
+                <br />
+                <div className='text-xs italic mb-4'>{artwork.repository || 'Source unavailable'}</div>
               </div>
 
               {/* description box */}
-              <div className='bg-gray-600 mt-2 rounded-sm text-sm flex flex-col items-center max-w-96 p-2'> 
+              {/* <div className='bg-gray-600 mt-2 rounded-sm text-sm flex flex-col items-center max-w-96 p-2 mb-10'> 
                 <div>{artwork.period || 'No date available'}</div>
                 <br />
-                <div>{artwork.description || 'No description available for this item'}</div>
+                <div>{artwork.description ? truncate(artwork.description) : 'No description available for this item'}</div>
                 <br />
                 <div className='text-xs italic'>{artwork.repository || 'Source unavailable'}</div>
-              </div>
+              </div> */}
 
             </div>
           );
