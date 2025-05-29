@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { stripHtmlTags } from '../utils/stripHtml';
+import  useUserStore  from '../store/useUserStore'
 
 const ArtCard = ({ artwork }) => {
-
+  const { user, isAuthenticated} = useUserStore()
   const imageUrl = artwork.imageUrl;
   // console.log(artwork)
 
@@ -47,7 +48,19 @@ const ArtCard = ({ artwork }) => {
             <h3>Title: {stripHtmlTags(artwork.title || 'Unknown Title')}</h3>
             <p>Artist: {artwork.artist || 'Unknown Artist'}</p>
             <p>Medium: {artwork.medium || 'N/A'}</p>
-            <p></p>
+        </div>
+        <div>
+          {isAuthenticated ? (
+            <button 
+             className='w-full bg-green-400'>
+              Add to Collection
+            </button>
+    
+          ) : ( 
+            <button
+             className='hidden'>
+            </button>
+          )}
         </div>
 
     </motion.div>

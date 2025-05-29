@@ -18,7 +18,7 @@ const Browse = () => {
   const [medium, setMedium] = useState(searchParams.get('medium') || '');
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
   // const [itemsPerPage, setItemsPerPage] = useState(5); change to this if user decides to change the number returned
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 9;
 
 
   const { data:searchResults, isLoading, error, refetch } = useQuery({

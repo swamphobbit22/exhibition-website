@@ -25,7 +25,11 @@
     'Industrial Revolution',
     'Celtic',
     'Colonial America',
-    'Edo Japan'
+    'Edo Japan',
+    'Baseball',
+    'Football',
+    'Horses',
+    'Animals',
 ];
 
 export default themesArray;

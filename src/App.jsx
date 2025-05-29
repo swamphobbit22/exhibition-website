@@ -3,11 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Toaster } from 'react-hot-toast'
 import Home from  './pages/Home'
 import Browse from "./pages/Browse"
-import Collections from "./pages/Collections"
+import UserCollections from "./pages/dashboard/UserCollections"
 import Navigation from "./components/Navigation"
 import Showcase from "./pages/Showcase"
 import ArtworkDetail from './pages/ArtworkDetail'
-import CollectionDetail from './pages/CollectionDetail'
+import CollectionDetail from './pages/dashboard/CollectionDetail'
+import UserHome from "./pages/dashboard/UserHome"
 import useUserStore from "./store/useUserStore"
 
 function App() {
@@ -28,10 +29,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/showcase" element={<Showcase />} />
           <Route path="/browse" element={<Browse />} />
-          {/* protected route here */}
+          
           <Route path="/detail/:id" element={<ArtworkDetail />} />
-          <Route path="/collections" element={<Collections />} />
-          <Route path="/collections/:id" element={<CollectionDetail />} />  
+          <Route path="/dashboard/home" element={<UserHome />} />
+          <Route path="/dashboard/collections" element={<UserCollections />} />
+          <Route path="/dashboard/collections/:id" element={<CollectionDetail />} />  
         </Routes>   
         </div>
     </BrowserRouter>
