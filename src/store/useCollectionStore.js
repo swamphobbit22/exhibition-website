@@ -85,6 +85,35 @@ const useCollectionStore = create((set, get) => ( {
             return false;
         }
     },
+
+    addArtworkToCollection: async (collectionId, artworkData) => {
+        set({ collectionsLoading: true, error: null})
+
+        try {
+            const { data, error } = await supabase 
+            .from('collection_artwork')
+            .insert([{
+                collection_id: collectionId,
+                object_id: artworkData.object_id,
+                object_title: artworkData.object_title,
+                source_url: artworkData.source_url,
+                thumbnail_url: artworkData.thumbnail_url,
+                notes: artworkData.notes || null
+            }])
+
+            if(error) {
+                throw error;
+            }
+
+            set({collectionsLoading: false});
+            return true;
+        } catch (error) {
+            if (error) {
+                set({error: 'Failed to add artwork to collection', collectionsLoading: false});
+                return false;
+            }
+        }
+    },
 }))
 
 

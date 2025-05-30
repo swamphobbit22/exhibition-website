@@ -205,24 +205,20 @@ const clearFilters = () => {
             {/* map the search results in a grid pattern*/}
             <Masonry 
               breakpointCols = {breakpointColumnsObj}
-              className="flex -ml-4 w-auto gap-4"
+              className="flex -ml-4 w-auto gap-4 "
               columnClassName='pl-4 bg-clip-padding'
             >
-              {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) => (
-                <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
-                  <Link 
-                    to={`/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}`}
-                  >
-                    <ArtCard 
+              {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) =>  {
+                const detailUrl = `/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}`;
+                return (
+                  <div key={artwork.id}>
+                    <ArtCard
                       artwork={artwork}
-                      searchTerm={searchTerm}
-                      artist={artist}
-                      medium={medium}
-                      page={currentPage}
+                      detailUrl={detailUrl}  // pass URL as a prop to card component for search string persistence
                     />
-                  </Link>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </Masonry>
 
            {paginationData.totalPages > 1 && (
@@ -275,3 +271,18 @@ export default Browse;
   // const [currentPage, setCurrentPage] = useState(1);
   // // const [itemsPerPage, setItemsPerPage] = useState(5);
   // const ITEMS_PER_PAGE = 5;
+
+
+                //   <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
+                //   <Link 
+                //     to={`/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}`}
+                //   >
+                //     <ArtCard 
+                //       artwork={artwork}
+                //       searchTerm={searchTerm}
+                //       artist={artist}
+                //       medium={medium}
+                //       page={currentPage}
+                //     />
+                //   </Link>
+                // </div>

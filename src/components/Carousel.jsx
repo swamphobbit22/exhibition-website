@@ -66,7 +66,7 @@ export const Carousel = ({ items }) => {
                 </p>
                 <div>{artwork.period || 'No date available'}</div>
                 <br />
-                <div>{artwork.description ? truncate(artwork.description) : 'No description available for this item'}</div>
+                <div className='p-2'>{artwork.description ? truncate(artwork.description) : 'No description available for this item'}</div>
                 <br />
                 <div className='text-xs italic mb-4'>{artwork.repository || 'Source unavailable'}</div>
               </div>

@@ -70,7 +70,7 @@ const UserCollections = () => {
           {collectionsLoading ? ( 
             <p>Loading collections...</p>
           ): (
-            <div className="grid grid-cols-5 mt-6 gap-4 mx-20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6 gap-4 mx-4 sm:mx-10">
               {collections.length === 0 ? ( 
                 <p>There are no collections yet</p>
               ) : (
@@ -78,11 +78,15 @@ const UserCollections = () => {
                 collections.map(collection => (
                   <div 
                   key={collection.id}
-                  className="border-2 w-64 h-64 rounded-lg p-2"
+                  className="border-2 w-64 h-64 rounded-lg p-4 flex flex-col justify-between"
                   >
-                    <h4>{collection.name}</h4>
-                    <p>Created: {new Date(collection.created_at).toLocaleDateString()}</p>
-
+                  <div>
+                    <h4 className="text-lg font-semibold text-center">{collection.name}</h4>
+                    <p className="text-sm text-center text-gray-500 mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
+                  </div>
+                    <button className="self-center mt-4 px-4 py-1 border rounded text-sm">
+                      Delete Collection
+                    </button>
                   </div>
                 ))
                 
