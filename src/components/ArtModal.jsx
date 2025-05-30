@@ -4,6 +4,7 @@ import useUserStore from '../store/useUserStore';
 import useCollectionStore from '../store/useCollectionStore';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-hot-toast';
+import  AddCollection  from './AddCollection'
 
 const ArtModal = ({ isOpen, onClose, artwork}) => {
     const { user, isAuthenticated} = useUserStore();
@@ -64,7 +65,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         e.preventDefault();
       }}
     >
-      <div className='bg-gray-800 rounded-lg w-full max-w-md p-6 relative h-64 flex flex-col items-center border-2 border-amber-300'
+      <div className='bg-gray-800 rounded-lg w-full max-w-md p-6 relative min-h-80 flex flex-col items-center border-2 border-amber-300'
         onClick={(e) => {
         e.stopPropagation(); 
       }}
@@ -88,18 +89,47 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         <CloseIcon className='w-5 h-5'/>
         </button>
 
-        <button 
+        
+
+
+         <button 
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             handleSubmit();
           }} 
-          className='w-2/3 bg-green-600 rounded-3xl absolute bottom-4 mb-6'
+          className='w-2/3 bg-green-600 rounded-3xl absolute bottom-10 mb-6'
         > 
           Add to collection
         </button>
-       </div>
-      </motion.div>
+
+
+
+        {/* <button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSubmit();
+          }} 
+          className='w-2/3 bg-amber-600 rounded-3xl absolute bottom-0 mb-6'
+        > 
+          Create New Collection
+        </button>
+
+        <input 
+          type="text"
+          id='name'
+          // value={newName}
+          // onChange={(e) => {setNewName(e.target.value)}}
+          placeholder='collection name'
+          className='absolute bottom-0' 
+        >
+        </input>  */}
+        
+        <AddCollection />
+
+      </div>
+    </motion.div>
   )
 }
 

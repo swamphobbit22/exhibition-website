@@ -114,6 +114,15 @@ const useCollectionStore = create((set, get) => ( {
             }
         }
     },
+
+    removeFromCollection: async() => {
+
+    },
+
+    deleteCollection: async () => {
+
+    },
+
 }))
 
 

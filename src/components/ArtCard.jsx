@@ -8,7 +8,7 @@ import  useUserStore  from '../store/useUserStore'
 import ArtModal from './ArtModal';
 
 const ArtCard = ({ artwork, detailUrl }) => {
-  const { user, isAuthenticated} = useUserStore()
+  const {isAuthenticated} = useUserStore()
   const [inCollection, setInCollection] = useState(false)
   const [showArtModal, setShowArtModal] = useState(false);
   const imageUrl = artwork.imageUrl;
