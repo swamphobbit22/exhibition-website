@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 import useUserStore from "../../store/useUserStore";
 import useCollectionStore from "../../store/useCollectionStore";
 import { toast } from 'react-hot-toast';
+
+// This needs to be refactored to use the new component
 
 const UserCollections = () => {
     const { user, isAuthenticated} = useUserStore();
     const { createCollection, collections, collectionsLoading, fetchUserCollections } = useCollectionStore();
     const [newName, setNewName] = useState('')
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -77,14 +81,25 @@ const UserCollections = () => {
                
                 collections.map(collection => (
                   <div 
-                  key={collection.id}
-                  className="border-2 w-64 h-64 rounded-lg p-4 flex flex-col justify-between"
+                    key={collection.id}
+                    className="border-2 w-64 h-64 rounded-lg p-4 flex flex-col justify-between relative overflow-hidden cursor-pointer"
+                    onClick={() => navigate(`/dashboard/collection/${collection.id}`)}
+                    style={{
+                      backgroundImage: collection.previewArtwork?.imageUrl 
+                        ? `url(${collection.previewArtwork.imageUrl})` 
+                        : 'none',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }}
                   >
-                  <div>
-                    <h4 className="text-lg font-semibold text-center">{collection.name}</h4>
-                    <p className="text-sm text-center text-gray-500 mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
+
+                  {/* <div className="absolute inset-0 bg-black bg-opacity-10"></div> */}
+
+                  <div className='relative z-10'>
+                    <h4 className="text-lg font-bold text-center text-white ">{collection.name}</h4>
+                    <p className="text-sm text-center text-gray-200 mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
                   </div>
-                    <button className="self-center mt-4 px-4 py-1 border rounded text-sm">
+                    <button className="relative z-10 self-center mt-4 px-4 py-1 border rounded text-sm">
                       Delete Collection
                     </button>
                   </div>

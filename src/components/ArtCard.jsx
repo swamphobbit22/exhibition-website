@@ -11,21 +11,9 @@ const ArtCard = ({ artwork, detailUrl }) => {
   const {isAuthenticated} = useUserStore()
   const [inCollection, setInCollection] = useState(false)
   const [showArtModal, setShowArtModal] = useState(false);
+
   const imageUrl = artwork.imageUrl;
   // console.log(artwork)
-
-  if(!isAuthenticated) return null;
-
-  
-  // NO LONGER NEEDED CAN REMOVE
-  // const handleClick = (e) => {
-  //   // open the modal
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   setShowArtModal(true)
-  // }
-
-  
 
   return (
     <>

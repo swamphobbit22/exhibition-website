@@ -41,7 +41,7 @@ const getArtWorks = async(objectIds) => {
     
     results.push(...validArtworks);
     
-    if (results.length >= 500) break; 
+    if (results.length >= 200) break; 
   }
   
   return results;

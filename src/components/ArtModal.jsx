@@ -35,12 +35,14 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         source_url: artwork.source_url || null ,
         thumbnail_url: artwork.imageUrl,
         notes: '',
+        source: artwork.source,
       });
 
       if (success) {
         toast.success('Artwork added to collection')
         onClose();
       } else {
+        toast.error('Unable to add artwork')
         console.error('Failed to add artwork');
       }
     };

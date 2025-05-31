@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { supabase } from '../lib/supabaseClient';
+import  { fetchArtworkById }  from '../service/getArtworkById'
 
 const useCollectionStore = create((set, get) => ( {
     collections: [],
+    currentCollectionArtworks: [],
     collectionsLoading: false,
     error: null,
 
@@ -60,10 +62,13 @@ const useCollectionStore = create((set, get) => ( {
 
         
         try {
-            // returning the ddata
+            // returning the ddata with the source from the collection_artwork table
             const { data, error } = await supabase
                 .from('collections')
-                .select('*')
+                .select(`
+                    *, 
+                    collection_artwork(object_id, source)
+                `)
                 .eq('user_id', userId)     
                 .order('created_at', {ascending: false});    
             
@@ -71,20 +76,43 @@ const useCollectionStore = create((set, get) => ( {
                 set({error: 'Failed to fetch collections', collectionsLoading: false});
                 return false;
             }
+
+            const collectionsWithPreview = await Promise.all(
+                data.map(async (collection) => {
+                    if(collection.collection_artwork?.length > 0) {
+                        const firstArtwork = collection.collection_artwork[0];
+                        try {
+                            const artworkData = await fetchArtworkById(firstArtwork.object_id, firstArtwork.source);
+                            return {
+                                ...collection,
+                                previewArtwork: artworkData
+                            };
+                        } catch (error) {
+                            console.error('Failed to fetch artwork for collection:', error);
+                            return collection; //without preview if none
+                        }
+                    }
+                    return collection;
+                })
+            );
         
             // setting the data
             set({
-                collections: data || [],
+                collections: collectionsWithPreview || [],
                 collectionsLoading: false
             });
 
             return true;
 
         } catch (error) {
-            set({error: 'Failed to fetch collections', collectionsLoading: false});
-            return false;
+            if(error) {
+              set({error: 'Failed to fetch collections', collectionsLoading: false});
+              return false;
+            }
         }
     },
+
+
 
     addArtworkToCollection: async (collectionId, artworkData) => {
         set({ collectionsLoading: true, error: null})
@@ -98,7 +126,8 @@ const useCollectionStore = create((set, get) => ( {
                 object_title: artworkData.object_title,
                 source_url: artworkData.source_url,
                 thumbnail_url: artworkData.thumbnail_url,
-                notes: artworkData.notes || null
+                notes: artworkData.notes || null,
+                source: artworkData.source || null,
             }])
 
             if(error) {
@@ -115,17 +144,63 @@ const useCollectionStore = create((set, get) => ( {
         }
     },
 
-    removeFromCollection: async() => {
+    fetchCollectionArtworks: async(collectionId) => {
+        set({ collectionsLoading: true, error: null})
+
+        try {
+            const { data, error } = await supabase
+                .from('collection_artwork')
+                .select('*')
+                .eq('collection_id', collectionId)
+
+                if(error) {
+                  set({error: 'Failed to fetch collection artworks', collectionsLoading: false})
+                return false;
+                }
+
+                //get the artwork data from the api
+                const artworkWithDetails = await Promise.all(
+                    data.map(async (artwork) => {
+                        try {
+                            const fullArtwork = await fetchArtworkById(artwork.object_id, artwork.source);
+                            return {
+                                ...fullArtwork,
+                                collectionArtworkId: artwork.id,
+                                notes: artwork.notes
+                            };
+                        } catch (error) {
+                            console.error('Failed to fetch artwork details:', error)
+                        }
+                    })
+                );
+                // filter nulls
+                const validArtworks = artworkWithDetails.filter(artwork => artwork !== null);
+
+                set({
+                    currentCollectionArtworks: validArtworks,
+                    collectionsLoading: false
+                })
+
+                return true;
+
+        } catch (error) {
+            set({ error: 'failed to fetch collection artworks', collectionsLoading: false});
+            return false;
+        }
+    },
+
+
+
+    removeArtworkFromCollection: async() => {
 
     },
+
+
 
     deleteCollection: async () => {
 
     },
 
 }))
-
-
-
 
 export default useCollectionStore

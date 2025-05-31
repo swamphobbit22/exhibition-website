@@ -7,7 +7,7 @@ import UserCollections from "./pages/dashboard/UserCollections"
 import Navigation from "./components/Navigation"
 import Showcase from "./pages/Showcase"
 import ArtworkDetail from './pages/ArtworkDetail'
-import CollectionDetail from './pages/dashboard/CollectionDetail'
+import Collection from './pages/dashboard/Collection'
 import UserHome from "./pages/dashboard/UserHome"
 import useUserStore from "./store/useUserStore"
 
@@ -33,7 +33,7 @@ function App() {
           <Route path="/detail/:id" element={<ArtworkDetail />} />
           <Route path="/dashboard/home" element={<UserHome />} />
           <Route path="/dashboard/collections" element={<UserCollections />} />
-          <Route path="/dashboard/collections/:id" element={<CollectionDetail />} />  
+          <Route path="/dashboard/collection/:id" element={<Collection />} />  
         </Routes>   
         </div>
     </BrowserRouter>

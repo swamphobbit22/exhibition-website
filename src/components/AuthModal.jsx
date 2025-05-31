@@ -12,6 +12,8 @@ const [loading, setLoading] = useState(false);
 // const [message, setMessage] = useState('');
 
 
+
+
 const handleSubmit = async(e) => {
   e.preventDefault();
   setLoading(true)
@@ -47,6 +49,7 @@ const handleSubmit = async(e) => {
     onClose('');
     setEmail('');
     setPassword('');
+
     
   } catch (error) {
     toast.error(error.message);

@@ -1,5 +1,5 @@
 import { useState} from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Images, User, LogOut} from 'lucide-react'
 // import MuseumIcon from '@mui/icons-material/Museum';
 // import ImageSearchIcon from '@mui/icons-material/ImageSearch';
@@ -13,10 +13,13 @@ import logo from '../assets/logo.png'
 const Navigation = () => {
   const { user, isAuthenticated, signOut } = useUserStore()
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut()
     toast.success('You have successfully signed out!') 
+    // return to homepage
+    navigate('/')
   }
 
   return (
