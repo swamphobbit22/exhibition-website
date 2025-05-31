@@ -99,7 +99,7 @@ const UserCollections = () => {
                     <h4 className="text-lg font-bold text-center text-white ">{collection.name}</h4>
                     <p className="text-sm text-center text-gray-200 mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
                   </div>
-                    <button className="relative z-10 self-center mt-4 px-4 py-1 border rounded text-sm">
+                    <button className="relative z-10 self-center mt-4 px-4 py-1 border rounded text-sm border-red-600 bg-red-500">
                       Delete Collection
                     </button>
                   </div>

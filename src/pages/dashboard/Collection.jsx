@@ -61,16 +61,18 @@ const Collection = () => {
                     </button>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-10 border-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-10">
                     {currentCollectionArtworks.map((artwork) => (
-                        <div key={artwork.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div key={artwork.id} className="bg-amber-400 rounded-lg shadow-md overflow-hidden border-2 border-amber-400">
+                            
                             <img 
                                 src={artwork.imageUrl} 
                                 alt={artwork.title}
                                 className="w-full h-72 object-cover"
                             />
+                            
                             <div className="p-4">
-                                <h3 className="font-semibold text-lg truncate">{artwork.title}</h3>
+                                <h3 className="font-semibold text-lg truncate text-gray-600">{artwork.title}</h3>
                                 <p className="text-gray-600 truncate">{artwork.artist}</p>
                                 <p className="text-sm text-gray-500">{artwork.repository}</p>
                             </div>
