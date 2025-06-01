@@ -7,6 +7,7 @@ import  Masonry  from 'react-masonry-css';
 import { fetchCombinedArtworks } from '../service/getAllArtworks'
 import { getPaginationData, getPageNumbers } from "../utils/pagination";
 import ClipLoader from "react-spinners/ClipLoader";
+import  SourcesDropdown  from '../components/SourcesDropdown'
 
 
 const Browse = () => {
@@ -88,8 +89,8 @@ const clearFilters = () => {
   // if(!searchResults) return <div className="pt-20 flex justify-center">No artwork found</div>;
 
   return (
-    <section>
-      <div className="pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className='min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]'>
+      <div className="pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto ">
         <form 
           action=""
           onSubmit={handleSubmitSearch}
@@ -99,7 +100,7 @@ const clearFilters = () => {
             <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
               Discover  Art From Around the World
             </h2>
-            <p className="text-gray-200 max-w-2xl mx-auto">
+            <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               Search across collections from The Metropolitan Museum of Art, The Smithsonian, 
               and the Art Institute of Chicago all in one place.
             </p>
@@ -108,14 +109,14 @@ const clearFilters = () => {
           <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8'>
             {/* search box */}
             <div className='relative flex-1'>
-              <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 '/>
+              <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-primary)] w-5 h-5 '/>
               <input 
               type="search"
               placeholder='Search for artwork'
               value={searchTerm} 
               onChange={(e) => setsearchTerm(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
-              className="pl-10 px-4 py-2 bg-gray-800 rounded-lg w-full text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-10 px-4 py-2 bg-[var(--bg-accent)] border-[var(--border-accent)] border-2 rounded-lg w-full text-[var(--primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)]"
               aria-label='Search artwork'
               />
             </div>
@@ -135,7 +136,7 @@ const clearFilters = () => {
               type='submit' 
               onClick={handleSubmitSearch}
               disabled={isLoading}
-              className='flex items-center px-6 py-2 space-x-2 bg-amber-500 rounded-lg hover:bg-amber-200 transition-colors disabled:opacity-50'
+              className='flex items-center px-6 py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
               >
                 {/* add a spinner to the button when artworks load */}
                 {isLoading ? (
@@ -151,7 +152,7 @@ const clearFilters = () => {
 
             {/* display the filters */}
             {showFilters && (
-              <div className="bg-gray-700 p-4 rounded-b shadow-md mt-1 grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
+              <div className="bg-[var(--bg-secondary)] p-4 rounded-b shadow-md mt-1 grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
                 <div>
                   <label htmlFor="" className="block text-sm font-semibold mb-1">Artist</label>
                   <input 
@@ -159,7 +160,7 @@ const clearFilters = () => {
                   value={artist}
                   onChange={(e) => setArtist(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch()}
-                  className="w-full p-2 border rounded bg-gray-800"
+                  className="w-full p-2 border rounded bg-[var(--bg-accent)]"
                   />
                 </div>
                 <div>
@@ -167,16 +168,24 @@ const clearFilters = () => {
                   <input type="text" 
                   value={medium}
                   onChange={(e) => setMedium(e.target.value)}
-                  className="w-full p-2 border rounded bg-gray-800"
+                  className="w-full p-2 border rounded bg-[var(--bg-accent)]"
                   />
                 </div>
-                <div className='flex flex-wrap gap-2'>
-                   <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
-                  <button className='rounded-full transition-colors border px-2'>Metropolitan Museum of Art</button>
-                  <button className='rounded-full transition-colors border px-2'>Art Institute of Chicago</button>
-                  <button className='rounded-full transition-colors border px-2'>The Smithsonian</button>
-                  <button></button>
+                <div className='flex flex-col gap-2'>
+                  <SourcesDropdown />
+                  {/* <label htmlFor="source-select" className='text-sm block semi-bold px-1'>Sources</label>
+                  <select id="source-select" className='border rounded px-2 py-1 bg-[var(--bg-accent)]'>--Slect a source--
+                    <option value="Metropolitan Museum of Art">Metropolitan Museum of Art</option>
+                    <option value="Art Institute of Chicago">Art Institute of Chicago</option>
+                    <option value="The Smithsonian">The Smithsonian</option>
+                  </select> */}
                 </div>
+                {/* <div className='flex flex-wrap gap-2'>
+                   <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
+                  <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Metropolitan Museum of Art</button>
+                  <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Art Institute of Chicago</button>
+                  <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>The Smithsonian</button>
+                </div> */}
                 <div className='md:col-span-3 flex justify-center'>
                   <button
                     type='button'

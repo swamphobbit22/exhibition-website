@@ -22,7 +22,7 @@ function App() {
   return (
    
     <BrowserRouter>
-    <div className="min-h-screen" data-theme="dark" >
+    <div className="min-h-screen --bg-primary dark:--bg-primary" >
       <Navigation />
       <Toaster position='top-right' />
         <Routes>

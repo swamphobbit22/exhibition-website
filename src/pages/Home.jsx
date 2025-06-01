@@ -6,7 +6,7 @@ const Home = () => {
 
 
   return (
-    <section id="hero">
+    <section id="hero" className='bg-[var(--bg-primary)]'>
       {/* main section */}
         <motion.div 
         initial={{ opacity: 0}}
@@ -31,11 +31,10 @@ const Home = () => {
           initial={{ y:20, opacity:0 }}
           animate={{y:0, opacity:1 }}
           transition={{ delay: 0.2}}
-          className='text-5xl md:text-7xl font-bold mb-6 text-white'
+          className='text-5xl md:text-7xl font-bold mb-6 text-[var(--text-primary)]'
           >
             Art & Artifacts 
             <p></p>A Journey Through Time
-            {/* Explore Art Through the Ages */}
           </motion.h1>
 
           {/* Sub-heading */}
@@ -43,7 +42,7 @@ const Home = () => {
           initial={{ y:20, opacity:0 }}
           animate={{y:0, opacity:1 }}
           transition={{ delay: 0.4}}
-          className='text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto'
+          className='text-xl md:text-2xl text-[var(--text-primary)] mb-12 max-w-2xl mx-auto'
           >
             Explore art & antiquities and build your own collections
           </motion.p>
@@ -56,7 +55,7 @@ const Home = () => {
           >
             <Link
               to='/browse'
-              className='inline-flex items-center space-x-2 bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-200 transition-colors'
+              className='inline-flex items-center space-x-2 bg-[var(--accent-primary)] text-[var(--button-text)] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[var(--accent-secondary)] transition-colors'
             >
             <span>Explore</span>
             <ArrowRight className='w-5 h-5'/>
@@ -66,7 +65,7 @@ const Home = () => {
           
         </motion.div>
         <div>
-          <span className='text-gray-400'>Painting: Heitere Gebirgslandschaft by Paul Klee, 1929</span>
+          <span className='text-[var(--text-primary)]'>Painting: Heitere Gebirgslandschaft by Paul Klee, 1929</span>
         </div>
     </section>
   )
