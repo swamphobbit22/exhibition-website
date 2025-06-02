@@ -13,9 +13,9 @@ const SourcesDropdown = () => {
         id="slect-source"
         value={selected}
         onChange={(e) => setSelected(e.target.value)}
-        className='border rounded px-2 py-1 bg-[var(--bg-accent)]'
+        className='border rounded px-2 py-1 bg-[var(--bg-accent)] hover:bg-[var(--accent-secondary)]'
         >
-         <option value="" disabled>--Select a Source--</option>
+         <option value="" disabled>-- Select a Source --</option>
          {sources.map((source) => (
             <option key={source} value={source}>{source}</option>
          ))}

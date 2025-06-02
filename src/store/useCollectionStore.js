@@ -5,6 +5,7 @@ import  { fetchArtworkById }  from '../service/getArtworkById'
 const useCollectionStore = create((set, get) => ( {
     collections: [],
     currentCollectionArtworks: [],
+    selectedArtworks: [],
     collectionsLoading: false,
     error: null,
 
@@ -112,6 +113,12 @@ const useCollectionStore = create((set, get) => ( {
         }
     },
 
+    isArtworkInCollection: (objectId) => {
+        const collections = get().collections;
+        return collections.some(col =>
+            col.collection_artwork?.some(art => art.object_id === objectId)
+        );
+    },
 
 
     addArtworkToCollection: async (collectionId, artworkData) => {
@@ -191,14 +198,33 @@ const useCollectionStore = create((set, get) => ( {
 
 
 
-    removeArtworkFromCollection: async() => {
+    removeArtworkFromCollection: async(collectionId, artworkId) => {
+        set({ collectionsLoading: true, error: null})
 
+        try {
+            const {error} = await supabase
+            .from('collection_artwork')
+            .delete()
+            .eq('collection_id', collectionId)
+            .eq('object_id', artworkId)
+
+            if(error) {
+                throw error;
+            }
+
+            set({collectionsLoading: false});
+            return true;
+
+        } catch (error) {
+            set({error: 'Failed to remove artwork from collection', collectionsLoading: false});
+            return false;
+        }
     },
 
 
 
-    deleteCollection: async () => {
-
+    deleteCollection: async (collectionId) => {
+        
     },
 
 }))

@@ -5,20 +5,28 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import { stripHtmlTags } from '../utils/stripHtml';
 import  useUserStore  from '../store/useUserStore'
+import useCollectionStore from '../store/useCollectionStore';
 import ArtModal from './ArtModal';
+import {removeArtworkFromAllCollections} from '../utils/collectionUtils'
 
 const ArtCard = ({ artwork, detailUrl }) => {
-  const {isAuthenticated} = useUserStore()
-  const [inCollection, setInCollection] = useState(false)
+  const {user, isAuthenticated} = useUserStore();
+  const { isArtworkInCollection, collections } = useCollectionStore();
   const [showArtModal, setShowArtModal] = useState(false);
 
+  // Debug
+  // console.log('User:', user?.id)
+  // console.log('Collections:', collections)
+  // console.log('Artwork ID:', artwork.object_id)
+
+  const inCollection = isArtworkInCollection(artwork.id)
+  // console.log('In collection result:', inCollection)
   const imageUrl = artwork.imageUrl;
-  // console.log(artwork)
+  // console.log(artwork, '<<<<artwork')
 
   return (
     <>
-
-        <div className='bg-white rounded-lg mb-6 overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
+        <div className='bg-[var(--bg-primary)] rounded-lg mb-6 dark:border-2 border-[var(--border-secondary)] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
           {imageUrl ? (
             <Link to={detailUrl}>
               <motion.img 
@@ -31,50 +39,61 @@ const ArtCard = ({ artwork, detailUrl }) => {
               />
             </Link>
             ) : (
-            <div className="w-full h-64 bg-gray-200 flex items-center justify-center">
-              <p className="text-gray-500">No image available</p>
+            <div className="w-full h-64 bg-[var(--bg-primary)] flex items-center justify-center">
+              <p className="text-[var(--text-primary)]">No image available</p>
             </div>
             )}
-          <div className='flex bg-amber-300'>
-              <button className='bg-amber-300 w-full'>
-              <span className='font-bold text-white'>{artwork.repository}</span>
+          <div className='flex bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)]'>
+              <button className='bg-[var(--bg-accent)] w-full border-r-2 border-[var(--border-accent)]'>
+              <span className='font-bold text-[var(--text-primary)] '>{artwork.repository}</span>
               </button>
 
-              <button className='text-red-700 mr-2 cursor-pointer'>
+              <button className='text-red-500 hover:text-red-700 mx-2 cursor-pointer'>
                 <FavoriteIcon className='w-5 h-5'/>
                 {/* add to favourites */}
 
               </button>
 
-              <button className='text-blue-800 cursor-pointer'>
+              <button className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] cursor-pointer'>
                 <ShareIcon className='w-5 h-5'/>
                 {/* add share */}
 
               </button>
 
               </div>
-                <div className='bg-white text-gray-600 p-2'>
+                <div className='bg-[var(--bg-primary)] text-[var(--text-primary)] p-2'>
                 <h3>Title: {stripHtmlTags(artwork.title || 'Unknown Title')}</h3>
                 <p>Artist: {artwork.artist || 'Unknown Artist'}</p>
                 <p>Medium: {artwork.medium || 'N/A'}</p>
               </div>
-              <button
-                className={`w-full ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
-                onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setShowArtModal(true);
-                }}
+
+              {isAuthenticated ? (
+                <div className='flex justify-center'>
+                <button
+                  className={`place-self-center w-1/2 my-4 rounded-full py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                  onClick={async(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  if(inCollection) {
+                      await removeArtworkFromAllCollections(artwork.id, user.id)
+                    } else {
+                      setShowArtModal(true);
+                    }
+                  }}
                 >
                 {inCollection ? 'Remove from Collection' : 'Add to Collection'}
               </button>
+              </div>
+               ): (
+                <div></div>
+               )}
             </div>
           <div>
         </div>
       <ArtModal 
-       isOpen={showArtModal} 
-       onClose={() => setShowArtModal(false)}
-       artwork={artwork}
+        isOpen={showArtModal} 
+        onClose={() => setShowArtModal(false)}
+        artwork={artwork}
        />
     </>
   )

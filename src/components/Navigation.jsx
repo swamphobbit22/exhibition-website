@@ -1,14 +1,14 @@
-import { useState} from 'react'
+import { useState, useRef, useEffect} from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Images, User, LogOut, X, Menu} from 'lucide-react'
-// import MuseumIcon from '@mui/icons-material/Museum';
+import { Images, User, LogOut, X, Menu, ChevronDown} from 'lucide-react'
+import MuseumTwoToneIcon from '@mui/icons-material/MuseumTwoTone';
 // import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import HomeIcon from '@mui/icons-material/Home';
 import  AuthModal  from './AuthModal'
 import  useUserStore  from '../store/useUserStore'
 import { toast } from 'react-hot-toast'
-import logo from '../assets/logo.png'
+import logo from '../assets/Logo1.png'
 import { ThemeToggle } from './ThemeToggle';
 
 
@@ -16,156 +16,251 @@ const Navigation = () => {
   const { user, isAuthenticated, signOut } = useUserStore();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [isMobOpen, setIsMobOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState();
   const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
 
   const handleSignOut = async () => {
     await signOut()
     toast.success('You have successfully signed out!') 
     // return to homepage
     navigate('/')
+    setIsUserDropdownOpen(false);
   }
 
+  const closeMobileNav = () => {
+    setIsMobOpen(false);
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if(dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsUserDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, []);
+
+
   return (
-    <>
-       <nav className="fixed hidden md:flex  top-0 w-full backdrop-blur-lg z-50  py-2 border-b-2 border-[var(--border-secondary)]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <Link to="/" className="flex items-center space-x-2 mt-2 mb-2">
-                {/* <MuseumIcon fontSize="large" color=''/> */}
-                <span className="text-2xl font-bold text-[var(--text-primary)]">Virtual</span>
-                <img src={logo} alt="logo" className='w-14 h-10 md:w-28 md:h-16 max-w-full max-h-full'/>
-                <span className="text-2xl font-bold text-[var(--text-primary)]">Museum</span>
-              </Link>
-              <div className="flex-1 flex justify-center space-x-8 text-[var(--text-primary)]">
-                {/* <Images />  */}
-                <NavLink 
-                  to="/showcase" 
-                  style={({ isActive }) => {return isActive ? { color: '--text-accent' } : {};}}  
-                  className='text-[var(--text-primary)] text-xl'
-                >
-                  Daily Showcase
-                </NavLink>
-                
-                {/* need to remove any remaining query strings from search in url    <ImageSearchIcon /> */}
-                <NavLink 
-                 to="/browse"  
-                 style={({ isActive }) => {return isActive ? { color: '--text-accent' } : {};}}  
-                 className='text-[var(--text-primary)] text-xl'
-                 >
-                  Search
-                </NavLink>
-              </div>
+   <>
+      <nav className="fixed hidden md:flex top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex items-center justify-between h-16">
+            
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-2 mt-2 mb-2 flex-shrink-0">
+              <MuseumTwoToneIcon fontSize='large' color='inherit'/>
+              <span className="text-2xl font-bold text-[var(--text-primary)]">MuseoNet</span>
+              {/* <img src={logo} alt="logo" className='w-14 h-10 md:w-38 md:h-20 max-w-full max-h-full'/> */}
+              <span className="text-2xl font-bold text-[var(--text-primary)]">Virtual</span>
+              <span className="text-2xl font-bold text-[var(--text-primary)]">Museum</span>
+            </Link>
+            
+            <div className="flex items-center space-x-8 text-[var(--text-primary)]">
+              <NavLink 
+                to="/showcase" 
+                className={({ isActive }) => 
+                  `text-xl transition-colors ${isActive 
+                    ? 'text-[var(--text-accent)]' 
+                    : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
+                  }`
+                }
+              >
+                Daily Showcase
+              </NavLink>
+              
+              <NavLink 
+                to="/browse"  
+                className={({ isActive }) => 
+                  `text-xl transition-colors ${isActive 
+                    ? 'text-[var(--text-accent)]' 
+                    : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
+                  }`
+                }
+              >
+                Search
+              </NavLink>
+            </div>
 
-              {/* toggle switch */}
-              <div className='mr-2 '>
-                <ThemeToggle className=""/>
-              </div>
-
-              {/* user email and sign out */}
+            <div className="flex items-center space-x-4">
+              <ThemeToggle />
+              
               {isAuthenticated ? (
-              <div className="flex items-center space-x-4 text-[var(--text-primary)]">
-                <NavLink to="/dashboard/home"  className='text-[var(--text-accent)] hover:text-[var(--accent-hover)] text-lg'><HomeIcon /></NavLink>
-                <NavLink to="/dashboard/collections"  className='text-[var(--text-accent)] hover:text-[var(--accent-hover)] text-lg'><CollectionsIcon /></NavLink>
-                <span className="text-md text-[var(--text-primary)]">
-                  {user?.email}
-                </span>
-                <button
-                  onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
-                >
-                <LogOut className="w-8 h-8 text-[var(--text-primary)] hover:text-[var(--accent-hover)]"/>
-                <span className="text-md font-semibold text-[var(--text-primary)]  cursor-pointer hover:text-[var(--accent-hover)]">Sign Out</span>
-                </button>
-              </div>
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                    className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors p-2 rounded-md"
+                  >
+                    <User className="w-6 h-6" />
+                    <span className="text-md">{user?.email}</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {/* User menuDropdown */}
+                  {isUserDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-[var(--bg-primary)] border border-[var(--border-secondary)] rounded-md shadow-lg py-1 z-50">
+                      <NavLink 
+                        to="/dashboard/home" 
+                        className="flex items-center gap-2 px-4 py-2 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                        onClick={() => setIsUserDropdownOpen(false)}
+                      >
+                        <HomeIcon className="w-4 h-4" />
+                        Dashboard
+                      </NavLink>
+                      <NavLink 
+                        to="/dashboard/collections" 
+                        className="flex items-center gap-2 px-4 py-2 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                        onClick={() => setIsUserDropdownOpen(false)}
+                      >
+                        <CollectionsIcon className="w-4 h-4" />
+                        Collections
+                      </NavLink>
+                      <hr className="my-1 border-[var(--border-secondary)]" />
+                      <button
+                        onClick={handleSignOut}
+                        className="flex items-center gap-2 w-full px-4 py-2 text-left text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
-                // Show when user is not logged in
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-1 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
+                  className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors p-2 rounded-md"
                 >
-                <User className="w-8 h-8 text-[var(--text-primary)]"/>
-                <span className="text-lg text-[var(--text-primary)] cursor-pointer hover:text-[var(--accent-hover)]">Sign In</span>
+                  <User className="w-6 h-6" />
+                  <span className="text-lg">Sign In</span>
                 </button>
               )}
+            </div>
+
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Nav */}
+      <div className="md:hidden">
+        <div className="fixed top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]/80">
+          <div className="flex items-center justify-between px-4 h-16">
+            <Link to="/" className="flex items-center space-x-1" onClick={closeMobileNav}>
+              <span className="text-lg font-bold text-[var(--text-primary)]">Virtual</span>
+              <img src={logo} alt="logo" className='w-8 h-6'/>
+              <span className="text-lg font-bold text-[var(--text-primary)]">Museum</span>
+            </Link>
+            
+            <button
+              onClick={() => setIsMobOpen(!isMobOpen)}
+              className="p-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMobOpen ? <X className='w-6 h-6'/> : <Menu className='w-6 h-6'/>}
+            </button>
           </div>
         </div>
 
+        {/* Mobile nav backdrop */}
+        {isMobOpen && (
+          <div 
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            onClick={closeMobileNav}
+          />
+        )}
 
-      </nav>
-      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}/>
-
-        {/* mobile nav */}
-        <div className='md:hidden'>
-          <button
-            onClick={() => setIsMobOpen(!isMobOpen)}
-            className="p-2 text-[var(--text-primary)] "
-            aria-label="Toggle menu"
-          >
-          {isMobOpen ? (
-            <X className='w-5 h-5'/>
-          ) : (
-            <Menu className='w-5 h-5'/>
-          )}
-          </button>
-
-          {/* overlay */}
-          <div
-          className={`fixed w-full top-0 right-0 z-50 h-screen bg-white  shadow-bg transform transition-transform ease-in-out duration-300 ${
+        {/* Mobile nav overlay */}
+        <div
+          className={`fixed top-0 right-0 z-50 h-full w-3/4 bg-[var(--bg-primary)] shadow-lg transform transition-transform ease-in-out duration-300 ${
             isMobOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
-          >
-            <nav className='flex flex-col space-y-4 p-4 w-full'>
-              <NavLink
-                  to="/showcase" 
-                  style={({ isActive }) => {return isActive ? { color: '--text-accent' } : {};}}  
-                  className='text-[var(--text-primary)] text-xl'
-                  >
-                  Showcase
-              </NavLink>
-              <NavLink 
-                 to="/browse"  
-                 style={({ isActive }) => {return isActive ? { color: '--text-accent' } : {};}}  
-                 className='text-[var(--text-primary)] text-xl'
+        >
+          <nav className='flex flex-col p-6 pt-20'>
+            <NavLink
+              to="/showcase" 
+              className={({ isActive }) => 
+                `py-3 text-xl transition-colors ${isActive 
+                  ? 'text-[var(--text-accent)]' 
+                  : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
+                }`
+              }
+              onClick={closeMobileNav}
+            >
+              Daily Showcase
+            </NavLink>
+            
+            <NavLink 
+              to="/browse"  
+              className={({ isActive }) => 
+                `py-3 text-xl transition-colors ${isActive 
+                  ? 'text-[var(--text-accent)]' 
+                  : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
+                }`
+              }
+              onClick={closeMobileNav}
+            >
+              Search
+            </NavLink>
+
+            {isAuthenticated ? (
+              <div className="flex flex-col space-y-3 mt-6 pt-6 border-t border-[var(--border-secondary)]">
+                <div className="text-sm text-[var(--text-secondary)] mb-2">
+                  {user?.email}
+                </div>
+                
+                <NavLink 
+                  to="/dashboard/home" 
+                  className="flex items-center gap-3 py-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
+                  onClick={closeMobileNav}
                 >
-                Search
-              </NavLink>
- {/* user email and sign out */}
-              {isAuthenticated ? (
-              <div className="flex flex-col space-y-2 text-[var(--text-primary)]">
-                <NavLink to="/dashboard/home" className="flex items-center gap-2 text-[var(--text-accent)] hover:text-[var(--accent-hover)] text-lg">
                   <HomeIcon className="w-5 h-5" />
                   Dashboard
                 </NavLink>
-                <NavLink to="/dashboard/collections"  className='flex items-center gap-2 text-[var(--text-accent)] hover:text-[var(--accent-hover)] text-lg'><CollectionsIcon />Collections</NavLink>
-                <span className="text-md text-[var(--text-primary)]">
-                  {user?.email}
-                </span>
+                
+                <NavLink 
+                  to="/dashboard/collections"  
+                  className='flex items-center gap-3 py-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors'
+                  onClick={closeMobileNav}
+                >
+                  <CollectionsIcon className="w-5 h-5" />
+                  Collections
+                </NavLink>
+                
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-1 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
+                  className="flex items-center gap-3 py-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors text-left"
                 >
-                <LogOut className="w-8 h-8 text-[var(--text-primary)] hover:text-[var(--accent-hover)]"/>
-                <span className="text-md font-semibold text-[var(--text-primary)]  cursor-pointer hover:text-[var(--accent-hover)]">Sign Out</span>
+                  <LogOut className="w-5 h-5" />
+                  Sign Out
                 </button>
               </div>
-              ) : (
-                // Show when user is not logged in
-                <button
-                  onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-1 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
-                >
-                <User className="w-8 h-8 text-[var(--text-primary)]"/>
-                <span className="text-lg text-[var(--text-primary)] cursor-pointer hover:text-[var(--accent-hover)]">Sign In</span>
-                </button>
-              )}
-              
-              {/* toggle switch */}
-              <div className='mr-2 '>
-                <ThemeToggle className=""/>
-              </div>
-            </nav>
-          </div>
+            ) : (
+              <button
+                onClick={() => {
+                  setShowAuthModal(true);
+                  closeMobileNav();
+                }}
+                className="flex items-center gap-3 py-3 mt-6 pt-6 border-t border-[var(--border-secondary)] text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors text-left"
+              >
+                <User className="w-5 h-5" />
+                Sign In
+              </button>
+            )}
+            
+            <div className='mt-6 pt-6 border-t border-[var(--border-secondary)]'>
+              <ThemeToggle />
+            </div>
+          </nav>
         </div>
+      </div>
+
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)}/>
     </>
   )
 }

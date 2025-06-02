@@ -10,9 +10,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import  SourcesDropdown  from '../components/SourcesDropdown'
 
 
+
 const Browse = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [searchTerm, setsearchTerm] = useState(searchParams.get('q') || '');
   const [showFilters, setShowFilters] = useState(false)
   const [artist, setArtist] = useState(searchParams.get('artist') || '');
@@ -22,12 +22,15 @@ const Browse = () => {
   const ITEMS_PER_PAGE = 9;
 
 
+
   const { data:searchResults, isLoading, error, refetch } = useQuery({
     queryKey: ['artworks', searchTerm, artist, medium],
     queryFn: () => fetchCombinedArtworks(searchTerm, artist, medium),
     enabled: !!searchTerm.trim(), 
     staleTime: 5 * 60* 1000,
   })
+
+
 
   // for search persistence
   useEffect(() => {
@@ -60,7 +63,10 @@ const Browse = () => {
     return getPageNumbers(paginationData.totalPages, currentPage);
   }, [paginationData, currentPage])
 
-  // console.log('Page numbers group:', pageNumbers);
+
+  useEffect(() => {
+    window.scrollTo({ top:0, behavior: 'smooth'});
+  }, [currentPage])
 
   const handleSubmitSearch =  (e) => {
     e.preventDefault();
@@ -173,24 +179,12 @@ const clearFilters = () => {
                 </div>
                 <div className='flex flex-col gap-2'>
                   <SourcesDropdown />
-                  {/* <label htmlFor="source-select" className='text-sm block semi-bold px-1'>Sources</label>
-                  <select id="source-select" className='border rounded px-2 py-1 bg-[var(--bg-accent)]'>--Slect a source--
-                    <option value="Metropolitan Museum of Art">Metropolitan Museum of Art</option>
-                    <option value="Art Institute of Chicago">Art Institute of Chicago</option>
-                    <option value="The Smithsonian">The Smithsonian</option>
-                  </select> */}
                 </div>
-                {/* <div className='flex flex-wrap gap-2'>
-                   <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
-                  <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Metropolitan Museum of Art</button>
-                  <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Art Institute of Chicago</button>
-                  <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>The Smithsonian</button>
-                </div> */}
                 <div className='md:col-span-3 flex justify-center'>
                   <button
                     type='button'
                     onClick={clearFilters}
-                    className='text-gray-400 text-sm flex items-center gap-1 hover:text-amber-500 transition-colors'
+                    className='text-[var(--text-primary)] text-sm flex items-center gap-1 hover:text-[var(--accent-hover)] transition-colors'
                   >
                     <X className='w-4 h-4'/>Clear Filters
                   </button>
@@ -206,10 +200,13 @@ const clearFilters = () => {
             )}
 
             {paginationData.totalItems > 0 && (
-              <div className="text-sm text-gray-400 mb-4">
+              <div className="text-sm text-[var(--text-secondary)] mb-4">
                 Returning {paginationData.totalItems} results
               </div>
             )}
+
+            </form>
+            <div>
 
             {/* map the search results in a grid pattern*/}
             <Masonry 
@@ -223,7 +220,7 @@ const clearFilters = () => {
                   <div key={artwork.id}>
                     <ArtCard
                       artwork={artwork}
-                      detailUrl={detailUrl}  // pass URL as a prop to card component for search string persistence
+                      detailUrl={detailUrl}  // pass URL as a prop to card component for search string persistence!!
                     />
                   </div>
                 );
@@ -231,12 +228,12 @@ const clearFilters = () => {
             </Masonry>
 
            {paginationData.totalPages > 1 && (
-            <div className='flex justify-center items-center gap-2 mt-6 mb-6'>
+            <div className='w-full flex flex-wrap justify-center items-center gap-2 pb-4'>
               <button 
               type='button'
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={!paginationData.hasPreviousPage}
-              className='px-3 py-2 bg-amber-400 rounded disabled:opacity-50 font-bold'
+              className='text-xs md:text-md px-2 py-1 md:px-3 md:py-2 bg-[var(--accent-primary)] rounded disabled:opacity-50 font-bold cursor-pointer'
               >
                 Previous
               </button> 
@@ -247,7 +244,7 @@ const clearFilters = () => {
                 type='button'
                   key={num}
                   onClick={() => setCurrentPage(num)}
-                  className={`px-3 py-2 rounded border-2 ${num === currentPage ? 'bg-amber-500 text-black' : 'bg-gray-800 text-white'}`}
+                  className={`text-xs md:text-md px-2 py-1 md:px-3 md:py-2 rounded cursor-pointer border-2 ${num === currentPage ? 'bg-[var(--accent-primary)] text-[var(--text-primary)]' : 'bg-[var(--bg-accent)] text-[var(--text-secondary)]'}`}
 
                 >
                   {num}
@@ -258,13 +255,14 @@ const clearFilters = () => {
                 type='button'
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={!paginationData.hasNextPage}
-                className="px-3 py-2 bg-amber-400 rounded disabled:opacity-50 font-bold"
+                className="text-xs md:text-md px-2 py-1 md:px-3 md:py-2 bg-[var(--accent-primary)] rounded disabled:opacity-50 font-bold cursor-pointer"
               >
                 Next
               </button> 
             </div>
            )}
-            </form>
+           </div>
+            
         </div>
     </section> 
   )
@@ -295,3 +293,17 @@ export default Browse;
                 //     />
                 //   </Link>
                 // </div>
+
+                //                   {/* <label htmlFor="source-select" className='text-sm block semi-bold px-1'>Sources</label>
+                //   <select id="source-select" className='border rounded px-2 py-1 bg-[var(--bg-accent)]'>--Slect a source--
+                //     <option value="Metropolitan Museum of Art">Metropolitan Museum of Art</option>
+                //     <option value="Art Institute of Chicago">Art Institute of Chicago</option>
+                //     <option value="The Smithsonian">The Smithsonian</option>
+                //   </select> */}
+
+                //                   {/* <div className='flex flex-wrap gap-2'>
+                //    <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
+                //   <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Metropolitan Museum of Art</button>
+                //   <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Art Institute of Chicago</button>
+                //   <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>The Smithsonian</button>
+                // </div> */}

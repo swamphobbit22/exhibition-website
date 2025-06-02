@@ -9,9 +9,6 @@ const [isLogin, setisLogin] = useState(true);
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [loading, setLoading] = useState(false);
-// const [message, setMessage] = useState('');
-
-
 
 
 const handleSubmit = async(e) => {
@@ -69,15 +66,15 @@ if (!isOpen) return null;
       exit={{ opacity: 0 }}
       className='fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50'
     >
-      <div className='bg-gray-800 rounded-lg w-full max-w-md p-6 relative'>
+      <div className='bg-[var(--bg-primary)] rounded-lg w-full max-w-md p-6 relative'>
         <button
           onClick={onClose}
-          className='absolute top-4 right-4 text-gray-400 hover:text-white'
+          className='absolute top-4 right-4 font-bold text-[var(--text-primary)] hover:text-[var(--accent-secondary)]'
         >
           <CloseIcon className='w-5 h-5'/>
         </button>
 
-        <h2>
+        <h2 className='text-center font-semibold mb-4 text-[var(--text-primary)]'>
           {isLogin ? 'Sign In' : 'Create Account'}
         </h2>
 
@@ -93,7 +90,7 @@ if (!isOpen) return null;
               id='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className='w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500'
+              className='w-full px-4 py-2 bg-[var(--bg-accent)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] border-2 border-[var(--border-primary)]'
               required
             />
           </div>
@@ -105,14 +102,14 @@ if (!isOpen) return null;
               id='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className='w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500'
+              className='w-full px-4 py-2 bg-[var(--bg-accent)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] border-2 border-[var(--border-primary)]'
               required/>
           </div>
 
           <button 
             type='submit'
             disabled={loading}
-            className='w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700 transition-colors disabled:opacity-50'
+            className='w-full bg-[var(--accent-primary)] font-bold text-[var(--button-text)] py-2 rounded-lg hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
             >
             {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Create Account'}  
           </button>
@@ -120,7 +117,7 @@ if (!isOpen) return null;
 
         <button
           onClick={() => setisLogin(!isLogin)}
-          className='mt-4 text-sm text-gray-400 hover:text-white'
+          className='mt-4 text-sm text-[var(--text-primary)] hover:text-[var(--text-accent)]'
         >
           {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
         </button>

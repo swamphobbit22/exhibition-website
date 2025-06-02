@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { supabase } from '../lib/supabaseClient'
+import useCollectionStore from './useCollectionStore'
 
 const useUserStore = create((set, get) => ({
   user: null,
@@ -13,7 +14,13 @@ const useUserStore = create((set, get) => ({
         isAuthenticated: !!session?.user,
         loading: false
       })
-    })
+
+    // get the collections if user already signedin
+    if(session?.user) {
+      useCollectionStore.getState().fetchUserCollections(session.user.id)
+    }
+  })
+
 
   // listening for auth changes
   const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -23,6 +30,10 @@ const useUserStore = create((set, get) => ({
         isAuthenticated: !!session?.user,
         loading: false
       })
+
+      if(session?.user && event === 'SIGNED_IN') {
+        useCollectionStore.getState().fetchUserCollections(session.user.id)
+      }
     }
   )
 
@@ -32,6 +43,8 @@ const useUserStore = create((set, get) => ({
 
   signOut: async () => {
     await supabase.auth.signOut()
+    // clear it out
+    useCollectionStore.getState().clearCollection?.()
   }
 }))
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {truncate} from '../utils/truncate'
@@ -44,13 +45,15 @@ export const Carousel = ({ items }) => {
               }`}
             >
               <div className='flex-shrink-0'>
+                <Link to={`/detail/${artwork.id}?source=${artwork.source}&from=showcase`}>
               <img 
                 src={artwork.imageUrl} 
                 alt={artwork.title}
                 className='w-60 h-48 md:w-96 md:h-72 object-cover rounded shadow object-center'
               />
+              </Link>
               </div>
-
+              
               {/* check positioning of details and teh forward/back arrows */}
 
               <div className='bg-[var(--bg-card)] max-w-96 h-auto flex flex-col justify-start '>
