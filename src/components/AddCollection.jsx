@@ -49,12 +49,12 @@ const AddCollection = () => {
            value={newName}
            onChange={(e) => {setNewName(e.target.value)}}
            placeholder="new collection name"
-           className="bg-gray-600 mr-4 mb-6 pl-2 rounded-md absolute bottom-0 left-4"
+           className="bg-[var(--bg-primary)] text-[var(--text-primary)] border-2 border-[var(--border-secondary)] mr-4 mb-6 pl-2 rounded-md absolute bottom-0 left-4"
           />
           <button
             type='button'
             onClick={handleCreateNewCollection}
-            className='w-52 bg-amber-600 rounded-md absolute bottom-0 mb-6 right-4'
+            className='w-52 bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] rounded-full px-2 py-1 absolute bottom-0 mb-6 right-4'
           >
             Create New Collection
           </button>

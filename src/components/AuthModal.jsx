@@ -84,25 +84,25 @@ if (!isOpen) return null;
           className='space-y-4'
           >
           <div>
-            <label htmlFor="email" className='block text-sm font-medium mb-1'>Email</label>
+            <label htmlFor="email" className='block text-sm font-medium mb-1 text-[var(--text-primary)]'>Email</label>
             <input 
               type="email"
               id='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className='w-full px-4 py-2 bg-[var(--bg-accent)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] border-2 border-[var(--border-primary)]'
+              className='w-full px-4 py-2 bg-[var(--bg-accent)] text-[var(--text-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] border-2 border-[var(--border-primary)]'
               required
             />
           </div>
 
           <div>
-            <label htmlFor="password" className='block text-sm font-medium mb-1'>Password</label>
+            <label htmlFor="password" className='block text-sm font-medium mb-1 text-[var(--text-primary)]'>Password</label>
             <input               
               type="password"
               id='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className='w-full px-4 py-2 bg-[var(--bg-accent)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] border-2 border-[var(--border-primary)]'
+              className='w-full px-4 py-2 bg-[var(--bg-accent)] text-[var(--text-primary)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] border-2 border-[var(--border-primary)]'
               required/>
           </div>
 

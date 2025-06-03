@@ -12,7 +12,7 @@ const Home = () => {
         initial={{ opacity: 0}}
         animate={{ opacity: 1}}
         exit={{ opacity: 0}}
-        className="relative min-h-screen flex items-center justify-center "
+        className="relative min-h-screen flex items-center justify-center bg-[var(--bg-primary)] "
         >
           {/* background */}
           {/* 

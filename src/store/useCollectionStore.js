@@ -143,6 +143,7 @@ const useCollectionStore = create((set, get) => ( {
 
             set({collectionsLoading: false});
             return true;
+            
         } catch (error) {
             if (error) {
                 set({error: 'Failed to add artwork to collection', collectionsLoading: false});
@@ -224,7 +225,24 @@ const useCollectionStore = create((set, get) => ( {
 
 
     deleteCollection: async (collectionId) => {
-        
+        set({ collectionsLoading: true, error: null})
+
+        try {
+            const {error} = await supabase
+            .from('collections')
+            .delete()
+            .eq('id', collectionId)
+
+            if(error) {
+                throw error;
+            }
+
+            set({collectionsLoading: false});
+            return true;
+        } catch (error) {
+            set({error: 'Failed to delete collection', collectionsLoading: false});
+            return false;
+        }
     },
 
 }))

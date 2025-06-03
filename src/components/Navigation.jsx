@@ -50,16 +50,16 @@ const Navigation = () => {
   return (
    <>
       <nav className="fixed hidden md:flex top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 w-full">
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 mt-2 mb-2 flex-shrink-0">
-              <MuseumTwoToneIcon fontSize='large' color='inherit'/>
-              <span className="text-2xl font-bold text-[var(--text-primary)]">MuseoNet</span>
+              <MuseumTwoToneIcon fontSize='large' color='inherit' text='white'/>
+              <span className="text-3xl font-bold text-[var(--text-primary)]">MuseoNet</span>
               {/* <img src={logo} alt="logo" className='w-14 h-10 md:w-38 md:h-20 max-w-full max-h-full'/> */}
-              <span className="text-2xl font-bold text-[var(--text-primary)]">Virtual</span>
-              <span className="text-2xl font-bold text-[var(--text-primary)]">Museum</span>
+              <span className="text-3xl font-bold text-[var(--text-primary)]">Virtual</span>
+              <span className="text-3xl font-bold text-[var(--text-primary)]">Museum</span>
             </Link>
             
             <div className="flex items-center space-x-8 text-[var(--text-primary)]">
@@ -152,8 +152,10 @@ const Navigation = () => {
         <div className="fixed top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]/80">
           <div className="flex items-center justify-between px-4 h-16">
             <Link to="/" className="flex items-center space-x-1" onClick={closeMobileNav}>
+              <MuseumTwoToneIcon fontSize='large' color='inherit' text='white'/>
+              <span className="text-lg font-bold text-[var(--text-primary)]">MuseoNet</span>
+              {/* <img src={logo} alt="logo" className='w-14 h-10 md:w-38 md:h-20 max-w-full max-h-full'/> */}
               <span className="text-lg font-bold text-[var(--text-primary)]">Virtual</span>
-              <img src={logo} alt="logo" className='w-8 h-6'/>
               <span className="text-lg font-bold text-[var(--text-primary)]">Museum</span>
             </Link>
             

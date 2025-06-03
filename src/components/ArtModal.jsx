@@ -48,13 +48,13 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
     };
 
 
-    console.log(selectCollection, 'selected collection')
+    // console.log(selectCollection, 'selected collection')
 
-    console.log(artwork?.id, 'artwork ID in modal');
+    // console.log(artwork?.id, 'artwork ID in modal');
 
 
     if (!isOpen) return null;
-    console.log(collections, 'collections in art modal')
+    // console.log(collections, 'collections in art modal')
 
   return (
     <motion.div
@@ -67,15 +67,15 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         e.preventDefault();
       }}
     >
-      <div className='bg-gray-800 rounded-lg w-full max-w-md p-6 relative min-h-80 flex flex-col items-center border-2 border-amber-300'
+      <div className='bg-[var(--bg-primary)] rounded-lg w-full max-w-md p-6 relative min-h-80 flex flex-col items-center border-2 border-[var(--border-accent)]'
         onClick={(e) => {
         e.stopPropagation(); 
       }}
       >
-        <h4 className='text-center mb-2'>Add Selected Artwork to Collection</h4>
+        <h4 className='text-center mb-2 text-[var(--text-primary)] font-semibold'>Add Selected Artwork to Collection</h4>
         <hr className='mb-2'/>
 
-        <select onChange={handleSelect} className='bg-amber-500 text-white w-full rounded-md font-semibold'>
+        <select onChange={handleSelect} className=' text-[var(--text-primary)] bg-[var(--bg-accent)] hover:bg-[var(--accent-secondary)] w-full rounded-md font-semibold border-2 border-[var(--border-accent)]'>
           <option value="Select_collection"> -- Select a collection -- </option>
           {collections.map((collection) => (<option value={collection.id}>{collection.name}</option>))}
         </select>
@@ -86,7 +86,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
             e.stopPropagation();
             onClose();
           }}
-          className='absolute top-4 right-4 text-gray-400 hover:text-white cursor-pointer'
+          className='absolute top-4 right-4 text-[var(--text-primary)] hover:text-[var(--accent-hover)] cursor-pointer'
         >
         <CloseIcon className='w-5 h-5'/>
         </button>
@@ -100,33 +100,11 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
             e.stopPropagation();
             handleSubmit();
           }} 
-          className='w-2/3 bg-green-600 rounded-3xl absolute bottom-10 mb-6'
+          className='w-1/3 px-2 py-1 font-semibold text-[var(--button-text)] bg-green-600 hover:bg-green-700 rounded-full absolute bottom-20 mb-6'
         > 
           Add to collection
         </button>
 
-
-
-        {/* <button 
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleSubmit();
-          }} 
-          className='w-2/3 bg-amber-600 rounded-3xl absolute bottom-0 mb-6'
-        > 
-          Create New Collection
-        </button>
-
-        <input 
-          type="text"
-          id='name'
-          // value={newName}
-          // onChange={(e) => {setNewName(e.target.value)}}
-          placeholder='collection name'
-          className='absolute bottom-0' 
-        >
-        </input>  */}
         
         <AddCollection />
 

@@ -1,9 +1,59 @@
+import  { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { stripHtmlTags } from '../utils/stripHtml';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArtModal from './ArtModal';
+import useCollectionStore from '../store/useCollectionStore';
+import  useUserStore  from '../store/useUserStore'
+import useFavouritesStore from '../store/useFavouritesStore';
+import {removeArtworkFromAllCollections} from '../utils/collectionUtils'
+import{removeFavourite} from '../utils/favouritesUtils'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import { toast } from 'react-hot-toast';
 
 const ArtworkDisplay = ({data, backLink}) => {
+  const {user, isAuthenticated} = useUserStore();
+  const { isArtworkInCollection } = useCollectionStore();
+  const { addToFavourites, isFavourited, fetchUserFavourites } = useFavouritesStore();
+  const [showArtModal, setShowArtModal] = useState(false);
+      
+  const inCollection = isArtworkInCollection(data.id)
+  const isInFavourites = isFavourited(data.id)
+
+  // console.log('Current favourites array:', useFavouritesStore.getState().favourites); 
+  // console.log('Looking for object_id:', data.id); 
+  // console.log(isInFavourites, '<<< is in favourites')
+
+  useEffect(() => {
+  if (user?.id) {
+    fetchUserFavourites(user.id);
+  }
+  }, [user?.id, fetchUserFavourites]);
+
   if(!data) return null;
+  if (!isAuthenticated) return null;    
+
+
+  
+  const handleAddToFavourites = async () => {
+  
+    if(!user) {
+      toast.error('Please sign in to create add to favourites')
+      return;
+    }
+      
+    const success = await addToFavourites(data.id, user.id, data.source);
+      
+    if(success) {
+      await fetchUserFavourites(user.id);
+      toast.success('Favourite item added successfully'); 
+    } else {
+      const { error } = useFavouritesStore.getState();
+      toast.error( error || 'Failed to add to favourites');
+    }
+  };
+
 
   return (
     <section id='detail' className="min-h-screen pt-28 bg-[var(--bg-primary)] ">
@@ -39,15 +89,76 @@ const ArtworkDisplay = ({data, backLink}) => {
             <p className="max-w-4xl mb-10 text-[var(--text-primary)] pl-2 mt-6">
               {data.description || 'no description available'}
             </p>
+
           </div>
+          
           <div className="p-2 border-2 border-[var(--border-secondary)]">
             <img 
             className="bg-shadow place-self-center"
             src={data.imageUrl} alt={data.title || 'Artwork'} />  
           </div>
+
+          <div className="w-full text-[var(--text-primary)] px-4 flex flex-row">
+            <div className="mr-4">
+              {isAuthenticated && (
+                <div className='flex justify-center'>
+                  <button
+                    className={`place-self-center w-52 my-4 rounded-full py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                      onClick={async (e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      if (inCollection) {
+                        await removeArtworkFromAllCollections(data.id, user.id);
+                      } else {
+                        setShowArtModal(true);
+                      }
+                      }}
+                      >
+                      {inCollection ? 'Remove from Collection' : 'Add to Collection'}
+                  </button>
+
+                  {/* add to favourites */}
+                  <button className='mx-2 cursor-pointer'>
+                    <FavoriteIcon 
+                      fontSize='large'
+                      onClick={async() => {
+                        const currentlyFavourited = isFavourited(data.id);
+
+                        if(currentlyFavourited) {
+                          await removeFavourite(data.id, user.id)
+                        } else {
+                          const success = await handleAddToFavourites(data.id, user.id, data.source)
+                          if(success) {
+                            await fetchUserFavourites(user.id)
+                            toast.success('Item added to favourites')
+                          } else {
+                            toast.error('Failed to add to favourites')
+                          }
+                          
+                        }
+                      }}
+                    style={{ color: isInFavourites ? 'red' : 'gray' }}
+                    />    
+                  </button>
+                </div>
+              )}
+            </div>  
+            <div>
+
+
+              <button className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] cursor-pointer'>
+                <ShareIcon className='w-5 h-5'/>
+              {/* add share */}
+              </button>
+            </div>
+          </div>
         </div>
-        
       </div>
+        <ArtModal 
+          isOpen={showArtModal} 
+          onClose={() => setShowArtModal(false)}
+          artwork={data}
+        />
     </section>
   )
 }

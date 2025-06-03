@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -6,24 +6,55 @@ import ShareIcon from '@mui/icons-material/Share';
 import { stripHtmlTags } from '../utils/stripHtml';
 import  useUserStore  from '../store/useUserStore'
 import useCollectionStore from '../store/useCollectionStore';
+import useFavouritesStore from '../store/useFavouritesStore';
 import ArtModal from './ArtModal';
-import {removeArtworkFromAllCollections} from '../utils/collectionUtils'
+import {removeArtworkFromAllCollections} from '../utils/collectionUtils';
+import{removeFavourite} from '../utils/favouritesUtils'
+import { toast } from 'react-hot-toast';
+import ShareButton  from './ShareButton';
+
 
 const ArtCard = ({ artwork, detailUrl }) => {
   const {user, isAuthenticated} = useUserStore();
   const { isArtworkInCollection, collections } = useCollectionStore();
+  const { addToFavourites, isFavourited, fetchUserFavourites } = useFavouritesStore();
   const [showArtModal, setShowArtModal] = useState(false);
-
-  // Debug
-  // console.log('User:', user?.id)
-  // console.log('Collections:', collections)
-  // console.log('Artwork ID:', artwork.object_id)
-
   const inCollection = isArtworkInCollection(artwork.id)
-  // console.log('In collection result:', inCollection)
   const imageUrl = artwork.imageUrl;
-  // console.log(artwork, '<<<<artwork')
 
+
+ 
+    const isInFavourites = isFavourited(artwork.id)
+  
+  
+    useEffect(() => {
+    if (user?.id) {
+      fetchUserFavourites(user.id);
+    }
+    }, [user?.id, fetchUserFavourites]);
+  
+    if(!artwork) return null;
+    if (!isAuthenticated) return null;    
+  
+  
+    
+    const handleAddToFavourites = async () => {
+    
+      if(!user) {
+        toast.error('Please sign in to create add to favourites')
+        return;
+      }
+        
+      const success = await addToFavourites(artwork.id, user.id, artwork.source);
+        
+      if(success) {
+        toast.success('Favourite item added successfully'); 
+      } else {
+        const { error } = useFavouritesStore.getState();
+        toast.error( error || 'Failed to add to favourites');
+      }
+    };
+  
   return (
     <>
         <div className='bg-[var(--bg-primary)] rounded-lg mb-6 dark:border-2 border-[var(--border-secondary)] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
@@ -48,17 +79,35 @@ const ArtCard = ({ artwork, detailUrl }) => {
               <span className='font-bold text-[var(--text-primary)] '>{artwork.repository}</span>
               </button>
 
-              <button className='text-red-500 hover:text-red-700 mx-2 cursor-pointer'>
-                <FavoriteIcon className='w-5 h-5'/>
-                {/* add to favourites */}
+                  {/* add to favourites */}
+                  <button className='mx-2 cursor-pointer'>
+                    <FavoriteIcon 
+                      fontSize='large'
+                      onClick={async() => {
+                        const currentlyFavourited = isFavourited(artwork.id);
 
-              </button>
+                        if(currentlyFavourited) {
+                          await removeFavourite(artwork.id, user.id)
+                        } else {
+                          const success = await handleAddToFavourites(artwork.id, user.id, artwork.source)
+                          if(success) {
+                            await fetchUserFavourites(user.id)
+                            toast.success('Item added to favourites')
+                          } else {
+                            toast.error('Failed to add to favourites in ArtCard')
+                          }
+                          
+                        }
+                      }}
+                    style={{ color: isInFavourites ? 'red' : 'gray' }}
+                    />    
+                  </button>
 
-              <button className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] cursor-pointer'>
-                <ShareIcon className='w-5 h-5'/>
+              {/* <button className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] cursor-pointer'> */}
+                {/* <ShareButton /> */}
                 {/* add share */}
 
-              </button>
+              {/* </button> */}
 
               </div>
                 <div className='bg-[var(--bg-primary)] text-[var(--text-primary)] p-2'>
@@ -67,26 +116,24 @@ const ArtCard = ({ artwork, detailUrl }) => {
                 <p>Medium: {artwork.medium || 'N/A'}</p>
               </div>
 
-              {isAuthenticated ? (
+              {isAuthenticated && (
                 <div className='flex justify-center'>
-                <button
-                  className={`place-self-center w-1/2 my-4 rounded-full py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
-                  onClick={async(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  if(inCollection) {
-                      await removeArtworkFromAllCollections(artwork.id, user.id)
-                    } else {
-                      setShowArtModal(true);
-                    }
-                  }}
-                >
-                {inCollection ? 'Remove from Collection' : 'Add to Collection'}
-              </button>
-              </div>
-               ): (
-                <div></div>
-               )}
+                  <button
+                    className={`place-self-center w-1/2 my-4 rounded-full py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      if (inCollection) {
+                        await removeArtworkFromAllCollections(artwork.id, user.id);
+                      } else {
+                        setShowArtModal(true);
+                      }
+                    }}
+                  >
+                    {inCollection ? 'Remove from Collection' : 'Add to Collection'}
+                  </button>
+                </div>
+              )}
             </div>
           <div>
         </div>
@@ -100,40 +147,3 @@ const ArtCard = ({ artwork, detailUrl }) => {
 }
 
 export default ArtCard;
-
-            // <Link to={`/detail/${artwork.id}?source=${artwork.source}`}>
-            //   <img 
-            //     src={imageUrl} 
-            //     alt={artwork.title || 'untitled'} 
-            //     className='w-full h-64 object-cover'
-            //      />
-            // </Link>#
-
-
-
-
-
-              // const queryParams = new URLSearchParams({
-  //   source: artwork.source,
-  //   q: searchTerm || '',
-  //   artist: artist || '',
-  //   medium: medium || '',
-  //   page: page || 1,
-  // })
-
-            //             <Link to={`/detail/${artwork.id}?${queryParams.toString()}`}>
-            //   <img 
-            //     src={imageUrl} 
-            //     alt={artwork.title || 'untitled'} 
-            //     className='w-full h-64 object-cover'
-            //      />
-            // </Link>
-
-
-    //             <motion.div
-    // initial={{ y:20, opacity: 0 }}
-    // animate={{ y:0,  opacity: 1 }}
-    // transition={{ duratation: 0.3 }}
-    // className='bg-white rounded-lg mb-6 overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'
-    // onClick={() => {}}
-    // ></motion.div>

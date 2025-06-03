@@ -4,12 +4,11 @@ import useUserStore from "../../store/useUserStore";
 import useCollectionStore from "../../store/useCollectionStore";
 import { toast } from 'react-hot-toast';
 
-// This needs to be refactored to use the new component
 
 const UserCollections = () => {
     const { user, isAuthenticated} = useUserStore();
-    const { createCollection, collections, collectionsLoading, fetchUserCollections } = useCollectionStore();
-    const [newName, setNewName] = useState('')
+    const { createCollection, collections, collectionsLoading, fetchUserCollections, deleteCollection } = useCollectionStore();
+    const [newName, setNewName] = useState('');
     const navigate = useNavigate();
 
 
@@ -46,11 +45,34 @@ const UserCollections = () => {
       }
   };
 
+
+  const handleDeleteCollection = async (collection, e) => {
+      e.stopPropagation();
+
+      if(collection.collection_artwork && collection.collection_artwork.length > 0) {
+        toast.error(`Cannot delete collection. Please remove all ${collection.collection_artwork.length} artwork(s) first.`);
+        return;
+      }
+    
+
+      if(window.confirm(`Are you sure you want to delete "${collection.name}"? This action cannot be undone`)) {
+
+      const success = await deleteCollection(collection.id);
+
+      if(success) {
+        toast.success('Collection was deleted sucessfully')
+        console.log('Deleting collection: ', collection.id)
+      } else {
+        const { error } = useCollectionStore.getState();
+        toast.error(error || 'Failed to delete the collection');
+      }  
+    }
+  }
+
+
   return (
     <section className='min-h-screen bg-[var(--bg-primary)] pb-10 pt-28'>
-     
-      <h2 className='text-center text-3xl mb-8 text-[var(--text-primary)]'>Collections</h2>  
-
+      <h2 className='text-center text-4xl font-semibold mb-8 text-[var(--text-primary)]'>Collections</h2>  
         <div className='flex flex-col md:flex-row justify-center items-center gap-4 text-[var(--text-primary)] mb-10'>
           <input 
            type="text"
@@ -82,7 +104,7 @@ const UserCollections = () => {
                 collections.map(collection => (
                   <div 
                     key={collection.id}
-                    className="border-2  text-[var(--text-secondary)] w-full h-64 md:w-64 md:h-64 rounded-lg p-4 flex flex-col justify-between relative overflow-hidden cursor-pointer"
+                    className="border-2 text-[var(--text-secondary)] bg-shadow w-full h-64 md:w-64 md:h-64 rounded-lg p-4 flex flex-col justify-between relative overflow-hidden cursor-pointer"
                     onClick={() => navigate(`/dashboard/collection/${collection.id}`)}
                     style={{
                       backgroundImage: collection.previewArtwork?.imageUrl 
@@ -96,10 +118,13 @@ const UserCollections = () => {
                   {/* <div className="absolute inset-0 bg-black bg-opacity-10"></div> */}
 
                   <div className='relative z-10'>
-                    <h4 className="text-lg font-bold text-center text-white ">{collection.name}</h4>
-                    <p className="text-sm text-center text-gray-200 mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
+                    <h4 className="text-lg font-bold text-center text-[var(--text-primary)] ">{collection.name}</h4>
+                    <p className="text-sm text-center text-[var(--text-primary)] font-semibold mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
                   </div>
-                    <button className="relative z-10 self-center mt-4 px-4 py-1 border rounded text-sm border-red-600 bg-red-500 cursor-pointer">
+                    <button
+                    type='button' 
+                    onClick={(e) => handleDeleteCollection(collection, e)}
+                    className="relative z-10 self-center text-[var(--button-text)] mt-4 px-4 py-1 border rounded-full text-sm border-red-600 bg-red-500 hover:bg-red-800 cursor-pointer">
                       Delete Collection
                     </button>
                   </div>

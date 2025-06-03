@@ -8,6 +8,8 @@ import { fetchCombinedArtworks } from '../service/getAllArtworks'
 import { getPaginationData, getPageNumbers } from "../utils/pagination";
 import ClipLoader from "react-spinners/ClipLoader";
 import  SourcesDropdown  from '../components/SourcesDropdown'
+import ViewListIcon from '@mui/icons-material/ViewList';
+import Grid4x4Icon from '@mui/icons-material/Grid4x4';
 
 
 
@@ -88,11 +90,6 @@ const clearFilters = () => {
   setMedium('')
   //also set the repository/museum - do it later
 }
-
-
-  // if(isLoading) return <div className="pt-20 flex justify-center items-center "><ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>Un moment s'il vous plait</div>;
-  // if(error) return <div className="pt-20 flex justify-center">Error loading artwork: {error.message}</div>
-  // if(!searchResults) return <div className="pt-20 flex justify-center">No artwork found</div>;
 
   return (
     <section className='min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]'>
@@ -200,12 +197,23 @@ const clearFilters = () => {
             )}
 
             {paginationData.totalItems > 0 && (
-              <div className="text-sm text-[var(--text-secondary)] mb-4">
+              <div className="text-sm text-[var(--text-secondary)]">
                 Returning {paginationData.totalItems} results
               </div>
             )}
 
             </form>
+            <div>
+
+            {/* toggle view */}
+            {/* <div className='cursor-pointer mb-4 place-self-end'>
+              {toggleView ? (
+                <ViewListIcon fontSize="large" onClick="setListView"/>
+                ) : (
+                <Grid4x4Icon fontSize="large" onClick="setGridView"/>
+                )}
+            </div> */}
+
             <div>
 
             {/* map the search results in a grid pattern*/}
@@ -226,6 +234,8 @@ const clearFilters = () => {
                 );
               })}
             </Masonry>
+
+            </div>
 
            {paginationData.totalPages > 1 && (
             <div className='w-full flex flex-wrap justify-center items-center gap-2 pb-4'>
