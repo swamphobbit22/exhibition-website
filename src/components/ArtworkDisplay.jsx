@@ -43,7 +43,7 @@ const ArtworkDisplay = ({data, backLink}) => {
       return;
     }
       
-    const success = await addToFavourites(data.id, user.id, data.source);
+    const success = await addToFavourites(data.id, user.id, data.source, data.title, data.imageUrl);
       
     if(success) {
       await fetchUserFavourites(user.id);
@@ -127,14 +127,7 @@ const ArtworkDisplay = ({data, backLink}) => {
                         if(currentlyFavourited) {
                           await removeFavourite(data.id, user.id)
                         } else {
-                          const success = await handleAddToFavourites(data.id, user.id, data.source)
-                          if(success) {
-                            await fetchUserFavourites(user.id)
-                            toast.success('Item added to favourites')
-                          } else {
-                            toast.error('Failed to add to favourites')
-                          }
-                          
+                          await handleAddToFavourites()                         
                         }
                       }}
                     style={{ color: isInFavourites ? 'red' : 'gray' }}

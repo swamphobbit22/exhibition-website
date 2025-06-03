@@ -23,7 +23,6 @@ const ArtworkDetail = () => {
         queryFn: async () => await fetchArtworkById(id, source)
         // console.log(results, 'results from artwork detail')
         // return results;
-        
     })
 
     if(isLoading) return <div className="pt-20 flex justify-center">Loading...</div>;

@@ -45,7 +45,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
         return;
       }
         
-      const success = await addToFavourites(artwork.id, user.id, artwork.source);
+      const success = await addToFavourites(artwork.id, user.id, artwork.source, artwork.title, artwork.imageUrl);
         
       if(success) {
         toast.success('Favourite item added successfully'); 
@@ -89,14 +89,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
                         if(currentlyFavourited) {
                           await removeFavourite(artwork.id, user.id)
                         } else {
-                          const success = await handleAddToFavourites(artwork.id, user.id, artwork.source)
-                          if(success) {
-                            await fetchUserFavourites(user.id)
-                            toast.success('Item added to favourites')
-                          } else {
-                            toast.error('Failed to add to favourites in ArtCard')
-                          }
-                          
+                          await handleAddToFavourites()                         
                         }
                       }}
                     style={{ color: isInFavourites ? 'red' : 'gray' }}
