@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+// import ShareIcon from '@mui/icons-material/Share';
 import { stripHtmlTags } from '../utils/stripHtml';
 import  useUserStore  from '../store/useUserStore'
 import useCollectionStore from '../store/useCollectionStore';
@@ -11,7 +11,7 @@ import ArtModal from './ArtModal';
 import {removeArtworkFromAllCollections} from '../utils/collectionUtils';
 import{removeFavourite} from '../utils/favouritesUtils'
 import { toast } from 'react-hot-toast';
-import ShareButton  from './ShareButton';
+// import ShareButton  from './ShareButton';
 
 
 const ArtCard = ({ artwork, detailUrl }) => {
@@ -34,7 +34,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
     }, [user?.id, fetchUserFavourites]);
   
     if(!artwork) return null;
-    if (!isAuthenticated) return null;    
+    // if (!isAuthenticated) return null;    
   
   
     

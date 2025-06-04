@@ -14,6 +14,8 @@ const ArtworkDetail = () => {
         backLink = {to: '/dashboard/collections', label: 'Back to Collections'};
     } else if (from === 'showcase') {
         backLink = {to: '/showcase', label: 'Back to Showcase'};
+    } else if (from === 'userhome') {
+        backLink = {to: '/dashboard/home', label: 'Back to Favourites'};
     } else {
         backLink = {to: `/browse${window.location.search}`, label: 'Back to Search'};
     }

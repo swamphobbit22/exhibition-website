@@ -42,24 +42,23 @@ const AddCollection = () => {
   };
 
   return (
-        <div className='flex justify-center'>
-          <input 
-           type="text"
-           id="name"
-           value={newName}
-           onChange={(e) => {setNewName(e.target.value)}}
-           placeholder="new collection name"
-           className="bg-[var(--bg-primary)] text-[var(--text-primary)] border-2 border-[var(--border-secondary)] mr-4 mb-6 pl-2 rounded-md absolute bottom-0 left-4"
-          />
-          <button
-            type='button'
-            onClick={handleCreateNewCollection}
-            className='w-52 bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] rounded-full px-2 py-1 absolute bottom-0 mb-6 right-4'
-          >
-            Create New Collection
-          </button>
-        </div>
+  
+    <form id="collection" onSubmit={handleCreateNewCollection} className="w-full flex flex-col gap-2 mt-4">
+      <input
+        type="text"
+        value={newName}
+        onChange={(e) => setNewName(e.target.value)}
+        placeholder="New collection name"
+        className="w-full rounded-md font-semibold border-2 border-[var(--border-accent)] bg-[var(--bg-accent)] text-[var(--text-primary)] pl-2 py-1"
+      />
+      <button
+        type="submit"
+        className="w-full rounded-full bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] px-2 py-1"
+      >
+        Create Collection
+      </button>
+    </form>
   )
 }
 
-export default AddCollection
+export default AddCollection;

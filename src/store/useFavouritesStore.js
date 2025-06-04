@@ -108,8 +108,30 @@ const useFavouritesStore = create ((set, get) => ({
             set({favouritesLoading: false});
             return true;
         } catch (error) {
-            set({error: 'Failed to delete favourite in useFavouritesStore', favouritesLoading: false});
+            set({error: 'Failed to delete favourite - in useFavouritesStore', favouritesLoading: false});
             return false;           
+        }
+    },
+
+    clearAllFavourites: async(userId) => {
+        set({ favouritesLoading: true, error: null})
+
+        try {
+            const {error} = await supabase
+            .from('favourites')
+            .delete()
+            .eq('user_id', userId)
+
+            if(error) {
+                throw error;
+            }
+
+            set({favouritesLoading: false});
+            return true;
+
+        } catch (error) {
+            set({error: 'Failed to clear all favourites -  in useFavouritesStore', favouritesLoading: false});
+            return false;    
         }
     },
 

@@ -148,7 +148,7 @@ const Navigation = () => {
       </nav>
 
       {/* Mobile Nav */}
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <div className="fixed top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]/80">
           <div className="flex items-center justify-between px-4 h-16">
             <Link to="/" className="flex items-center space-x-1" onClick={closeMobileNav}>

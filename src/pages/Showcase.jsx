@@ -42,7 +42,7 @@ const Showcase = () => {
       </span>
       <hr className="[var(--bg-primary)]"/>
       <h3 className=" text-2xl text-center font-light mb-2">
-        Todays theme is... <span className="text-4xl font-semibold ">{`${theme.name}`}</span>
+        Todays theme is... <span className="text-4xl font-semibold text-[var(--text-accent)]">{`${theme.name}`}</span>
       </h3>
       <div className="text-[var(--text-primary)] leading-6 max-w-4xl mx-auto mb-20">
         {theme.description}

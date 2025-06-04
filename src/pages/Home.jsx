@@ -54,7 +54,7 @@ const Home = () => {
           transition={{ delay: 0.6 }}
           >
             <Link
-              to='/browse'
+              to='/showcase'
               className='inline-flex items-center space-x-2 bg-[var(--accent-primary)] text-[var(--button-text)] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[var(--accent-secondary)] transition-colors'
             >
             <span>Explore</span>

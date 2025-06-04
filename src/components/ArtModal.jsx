@@ -67,17 +67,19 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         e.preventDefault();
       }}
     >
-      <div className='bg-[var(--bg-primary)] rounded-lg w-full max-w-md p-6 relative min-h-80 flex flex-col items-center border-2 border-[var(--border-accent)]'
-        onClick={(e) => {
-        e.stopPropagation(); 
-      }}
-      >
-        <h4 className='text-center mb-2 text-[var(--text-primary)] font-semibold'>Add Selected Artwork to Collection</h4>
+
+      <div className='relative flex w-full max-w-md flex-col gap-4 rounded-lg border-2 border-[var(--border-accent)] bg-[var(--bg-primary)] p-6'
+        onClick={(e) => {e.stopPropagation(); }}>
+          
+        <h4 className='text-center text-lg font-semibold text-[var(--text-primary)]'>Add Selected Artwork to Collection</h4>
         <hr className='mb-2'/>
 
-        <select onChange={handleSelect} className=' text-[var(--text-primary)] bg-[var(--bg-accent)] hover:bg-[var(--accent-secondary)] w-full rounded-md font-semibold border-2 border-[var(--border-accent)]'>
-          <option value="Select_collection"> -- Select a collection -- </option>
-          {collections.map((collection) => (<option value={collection.id}>{collection.name}</option>))}
+        <select 
+          onChange={handleSelect} 
+          className=' text-[var(--text-primary)] bg-[var(--bg-accent)] hover:bg-[var(--accent-secondary)] w-full pl-2 py-1 rounded-md font-semibold border-2 border-[var(--border-accent)]'
+          >
+            <option value="Select_collection"> -- Select a collection -- </option>
+            {collections.map((collection) => (<option value={collection.id}>{collection.name}</option>))}
         </select>
     
         <button
@@ -91,26 +93,21 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         <CloseIcon className='w-5 h-5'/>
         </button>
 
-        
-
-
-         <button 
-          onClick={(e) => {
+          <button 
+            onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             handleSubmit();
           }} 
-          className='w-1/3 px-2 py-1 font-semibold text-[var(--button-text)] bg-green-600 hover:bg-green-700 rounded-full absolute bottom-20 mb-6'
-        > 
+          className='w-full rounded-full bg-[var(--accent-secondary)] py-1 font-semibold text-[var(--button-text)] hover:bg-[var(--accent-primary)]'
+          > 
           Add to collection
-        </button>
-
-        
+          </button>
+          <hr />       
         <AddCollection />
-
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
 export default ArtModal

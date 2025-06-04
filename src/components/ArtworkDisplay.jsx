@@ -9,7 +9,8 @@ import useFavouritesStore from '../store/useFavouritesStore';
 import {removeArtworkFromAllCollections} from '../utils/collectionUtils'
 import{removeFavourite} from '../utils/favouritesUtils'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+// import ShareIcon from '@mui/icons-material/Share';
+import ShareButton from './ShareButton';
 import { toast } from 'react-hot-toast';
 
 const ArtworkDisplay = ({data, backLink}) => {
@@ -32,7 +33,7 @@ const ArtworkDisplay = ({data, backLink}) => {
   }, [user?.id, fetchUserFavourites]);
 
   if(!data) return null;
-  if (!isAuthenticated) return null;    
+  // if (!isAuthenticated) return null;    
 
 
   
@@ -71,7 +72,7 @@ const ArtworkDisplay = ({data, backLink}) => {
         </div>
 
         <div className="mt-6 grid gird-cols-1 md:grid-cols-2 max-w-md md:max-w-4xl lg:max-w-5xl bg-[var(--bg-elevated)] border-2 border-[var(--border-primary)] gap-4 ">
-          <div className="max-w-4xl m-2 bg-[var(--bg-card)]">
+          <div className="max-w-4xl p-4 bg-[var(--bg-card)] border-2 border-[var(--border-secondary)] relative">
             <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center text-[var(--text-primary)]">
               {stripHtmlTags(data.title)}
             </h2> 
@@ -86,13 +87,14 @@ const ArtworkDisplay = ({data, backLink}) => {
               {data.medium || 'Medium unknown'}
             </p>
             {/* <hr className="mb-4 mt-4 text-[var(--text-accent)] w-2/3 mx-auto"/>  */}
-            <p className="max-w-4xl mb-10 text-[var(--text-primary)] pl-2 mt-6">
+            <p className="max-w-4xl  text-[var(--text-primary)] pl-2 mt-6">
               {data.description || 'no description available'}
             </p>
-
+            
+            <p className='absolute bottom-2 text-[var(--text-primary)]'>{data.repository}</p>
           </div>
           
-          <div className="p-2 border-2 border-[var(--border-secondary)]">
+          <div className="p-2 border-2 border-[var(--border-secondary)] flex justify-center items-center">
             <img 
             className="bg-shadow place-self-center"
             src={data.imageUrl} alt={data.title || 'Artwork'} />  
@@ -115,34 +117,43 @@ const ArtworkDisplay = ({data, backLink}) => {
                       }}
                       >
                       {inCollection ? 'Remove from Collection' : 'Add to Collection'}
-                  </button>
+                    </button>
 
-                  {/* add to favourites */}
-                  <button className='mx-2 cursor-pointer'>
-                    <FavoriteIcon 
-                      fontSize='large'
-                      onClick={async() => {
-                        const currentlyFavourited = isFavourited(data.id);
+                      {/* add to favourites */}
+                      <button className='ml-3 cursor-pointer'>
+                        <FavoriteIcon 
+                          fontSize='large'
+                          onClick={async() => {
+                            const currentlyFavourited = isFavourited(data.id);
 
-                        if(currentlyFavourited) {
-                          await removeFavourite(data.id, user.id)
-                        } else {
-                          await handleAddToFavourites()                         
-                        }
-                      }}
-                    style={{ color: isInFavourites ? 'red' : 'gray' }}
-                    />    
-                  </button>
-                </div>
-              )}
-            </div>  
-            <div>
+                            if(currentlyFavourited) {
+                              await removeFavourite(data.id, user.id)
+                            } else {
+                              await handleAddToFavourites()                         
+                            }
+                          }}
+                        style={{ color: isInFavourites ? 'red' : 'gray' }}
+                        />    
+                      </button>
+                    </div>
+                  )}
+                </div> 
 
+                {/* share link */}
+                {/* <button 
+                onClick={() => {}}
+                className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] '> */}
+                  
+                  {/* <ShareButton /> */}
 
-              <button className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] cursor-pointer'>
-                <ShareIcon className='w-5 h-5'/>
-              {/* add share */}
-              </button>
+                  {/* <ShareIcon fontSize='large'/> */}
+                {/* add share */}
+                {/* </button> */}
+                <ShareButton 
+                  title={data.title}
+                  url={`${window.location.origin}/detail/${data.id}?source=${data.source}`}
+                />
+              <div>
             </div>
           </div>
         </div>

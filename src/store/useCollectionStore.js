@@ -239,6 +239,7 @@ const useCollectionStore = create((set, get) => ( {
 
             set({collectionsLoading: false});
             return true;
+            
         } catch (error) {
             set({error: 'Failed to delete collection', collectionsLoading: false});
             return false;
