@@ -8,7 +8,7 @@ const useUserStore = create((set, get) => ({
   isAuthenticated: false,
 
   initialise: () => {
-    supabase.auth.getSession().then(({ date: {session}}) => {
+    supabase.auth.getSession().then(({ data: {session}}) => {
       set({
         user: session?.user ?? null,
         isAuthenticated: !!session?.user,

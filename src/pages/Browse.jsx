@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'
 import { Search, Loader2Icon, Filter, X } from 'lucide-react';
 import  ArtCard  from '../components/ArtCard';
+import ArtList from '../components/ArtList';
 import  Masonry  from 'react-masonry-css';
 import { fetchCombinedArtworks } from '../service/getAllArtworks'
 import { getPaginationData, getPageNumbers } from "../utils/pagination";
@@ -20,6 +21,8 @@ const Browse = () => {
   const [artist, setArtist] = useState(searchParams.get('artist') || '');
   const [medium, setMedium] = useState(searchParams.get('medium') || '');
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
+  const [viewMode, setViewMode] = useState(searchParams.get('view') || 'grid');
+  const [loadingMessage, setLoadingMessage] = useState("Loading...")
   // const [itemsPerPage, setItemsPerPage] = useState(5); change to this if user decides to change the number returned
   const ITEMS_PER_PAGE = 9;
 
@@ -34,17 +37,38 @@ const Browse = () => {
 
 
 
-  // for search persistence
+  // for search persistence + to stop viewMode resetting each time
   useEffect(() => {
     const params = {};
     if (searchTerm) params.q = searchTerm;
     if(artist) params.artist = artist;
     if(medium) params.medium = medium;
     if(currentPage > 1) params.page = currentPage;
+    if(viewMode !== 'grid') params.view = viewMode;
 
     setSearchParams(params);
 
-  }, [searchTerm, artist, medium, currentPage, setSearchParams])
+  }, [searchTerm, artist, medium, currentPage, setSearchParams, viewMode])
+
+  useEffect(() => {
+    let timers = [];
+
+    if (isLoading) {
+      setLoadingMessage("Artworks loading...");
+
+      timers.push(setTimeout(() => {
+        setLoadingMessage("Hold on... nearly there!");
+      }, 10000));
+
+      timers.push(setTimeout(() => {
+        setLoadingMessage("Still working... not long now.");
+      }, 20000));
+    }
+
+    return () => {
+      timers.forEach(clearTimeout)
+    };
+  },[isLoading]);
 
 
   const paginationData = useMemo(() => {
@@ -80,8 +104,8 @@ const Browse = () => {
   // breakpoints for my masonry grid
   const breakpointColumnsObj = {
     default: 3,
-    1100: 3,
-    700: 2,
+    1024: 2,
+    700: 1,
     500: 1
   };
 
@@ -90,6 +114,7 @@ const clearFilters = () => {
   setMedium('')
   //also set the repository/museum - do it later
 }
+
 
   return (
     <section className='min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]'>
@@ -103,10 +128,12 @@ const clearFilters = () => {
             <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
               Discover  Art From Around the World
             </h2>
-            <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
+            <p className="text-[var(--text-secondary)] max-w-2xl mx-auto font-semibold text-lg mb-4">
               Search across collections from The Metropolitan Museum of Art, The Smithsonian, 
               and the Art Institute of Chicago all in one place.
             </p>
+
+            <span className='text-[var(--text-secondary)] font-semibold text-lg italic'>Create an account or sign in to create your own collections and your favourite artworks</span>
           </div>
 
           <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8'>
@@ -114,24 +141,31 @@ const clearFilters = () => {
             <div className='relative flex-1'>
               <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-primary)] w-5 h-5 '/>
               <input 
-              type="search"
-              placeholder='Search for artwork'
-              value={searchTerm} 
-              onChange={(e) => setsearchTerm(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
-              className="pl-10 px-4 py-2 bg-[var(--bg-accent)] border-[var(--border-accent)] border-2 rounded-lg w-full text-[var(--primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)]"
-              aria-label='Search artwork'
+                type="text"
+                placeholder='Search for artwork'
+                value={searchTerm} 
+                onChange={(e) => setsearchTerm(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
+                className="pl-10 px-4 py-2 bg-[var(--bg-accent)] border-[var(--border-accent)] border-2 rounded-lg w-full text-[var(--primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)]"
+                aria-label='Search artwork'
               />
+            {searchTerm && (
+                <button
+                onClick={() => setsearchTerm('')}
+                className='absolute right-3 top-1/2 -translate-y-1/2 px-3 py-1 rounded-full font-semibold text-[var(--text-secondary)] bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)] hover:bg-[var(--accent-accent)]'
+                aria-label='clear search'
+                >clear</button>
+              )}
             </div>
 
             {/* filter button */}
             <button
-            type='button'
-            onClick={() => setShowFilters(!showFilters)}
-            className=''
-            aria-label='Show filters'
-            >
-            <Filter className='w-5 h-5'/>
+              type='button'
+              onClick={() => setShowFilters(!showFilters)}
+              className=''
+              aria-label='Show filters'
+              >
+              <Filter className='w-5 h-5'/>
             </button>
 
             {/* search button */}
@@ -148,10 +182,7 @@ const clearFilters = () => {
                   <span>Search</span>
                 )}
             </button>
-
           </div>
-
-
 
             {/* display the filters */}
             {showFilters && (
@@ -189,52 +220,83 @@ const clearFilters = () => {
                 </div> 
             )
           }             
-            {/* do some error checking here */} 
-             {error && (
+            
+            {error && (
               <div className='text-red-400'>
                 {error.message || 'An error occurred while searching'}
               </div>
             )}
+            </form>
 
-            {paginationData.totalItems > 0 && (
-              <div className="text-sm text-[var(--text-secondary)]">
-                Returning {paginationData.totalItems} results
+            {/* results */}
+            <div className='flex flex-row justify-between mx-4 lg:mx-auto'>
+              {paginationData.totalItems > 0 && (
+                <div className="text-sm text-[var(--text-secondary)]">
+                  Showing {paginationData.totalItems} results
+                </div>
+              )}
+
+              {/* toggle view */}
+              <div className='cursor-pointer mb-4 flex justify-end'> 
+                {viewMode === 'grid' ? (
+                  <ViewListIcon 
+                    fontSize="large" 
+                    onClick={() => setViewMode('list')}
+                    className="text-[var(--text-accent)] hover:text-[var(--accent-secondary)]"
+                  />
+                  ) : (
+                  <Grid4x4Icon 
+                    fontSize="large" 
+                    onClick={() => setViewMode('grid')}
+                    className="text-[var(--text-accent)] hover:text-[var(--accent-secondary)]"
+                  />
+                  )}
+              </div>
+            </div>
+
+          <div>
+            {isLoading && (
+              <div className="flex flex-col pt-10 justify-center items-center text-[var(--text-primary)]">
+                <ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>
+                <p className='text-lg font-medium'>{loadingMessage}</p>
               </div>
             )}
-
-            </form>
+            
             <div>
-
-            {/* toggle view */}
-            {/* <div className='cursor-pointer mb-4 place-self-end'>
-              {toggleView ? (
-                <ViewListIcon fontSize="large" onClick="setListView"/>
-                ) : (
-                <Grid4x4Icon fontSize="large" onClick="setGridView"/>
-                )}
-            </div> */}
-
-            <div>
-
-            {/* map the search results in a grid pattern*/}
-            <Masonry 
-              breakpointCols = {breakpointColumnsObj}
-              className="flex -ml-4 w-auto gap-4 "
-              columnClassName='pl-4 bg-clip-padding'
-            >
-              {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) =>  {
-                const detailUrl = `/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}`;
-                return (
-                  <div key={artwork.id}>
-                    <ArtCard
-                      artwork={artwork}
-                      detailUrl={detailUrl}  // pass URL as a prop to card component for search string persistence!!
-                    />
-                  </div>
-                );
-              })}
-            </Masonry>
-
+              {/* map the search results in a grid pattern*/}
+              {viewMode === 'grid' ? (
+              <Masonry 
+                breakpointCols = {breakpointColumnsObj}
+                className="flex -ml-4 w-auto gap-4 "
+                columnClassName='pl-4 bg-clip-padding'
+              >
+                {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) =>  {
+                  const detailUrl = `/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}&view=${viewMode}`;
+                  return (
+                    <div key={artwork.id}>
+                      <ArtCard
+                        artwork={artwork}
+                        detailUrl={detailUrl}  // pass URL as a prop to card component for search string persistence!!
+                      />
+                    </div>
+                  );
+                })}
+              </Masonry>
+            ) : (
+              <div>
+                {Array.isArray(paginationData.currentItems) && paginationData.currentItems.length > 0 && paginationData.currentItems.map((artwork) =>  {
+                  const detailUrl = `/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}&view=${viewMode}`;
+                  return (
+                    <div key={artwork.id}>
+                      <ArtList
+                        artwork={artwork}
+                        detailUrl={detailUrl}  // pass URL as a prop to card component for search string persistence!!
+                      />
+                    </div>
+                  );
+                })}  
+              </div>
+              )}
             </div>
 
            {paginationData.totalPages > 1 && (
@@ -271,7 +333,7 @@ const clearFilters = () => {
               </button> 
             </div>
            )}
-           </div>
+          </div>
             
         </div>
     </section> 
@@ -279,41 +341,3 @@ const clearFilters = () => {
 }
 
 export default Browse;
-
-
-  // const [searchTerm, setsearchTerm] = useState('');
-  // const [showFilters, setShowFilters] = useState(false)
-  // const [artist, setArtist] = useState('');
-  // const [medium, setMedium] = useState('');
-  // const [currentPage, setCurrentPage] = useState(1);
-  // // const [itemsPerPage, setItemsPerPage] = useState(5);
-  // const ITEMS_PER_PAGE = 5;
-
-
-                //   <div key={artwork.id} className='bg-grey-800 rounded-lg overflow-hidden mb-8 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 '>
-                //   <Link 
-                //     to={`/detail/${artwork.id}?source=${artwork.source}&q=${encodeURIComponent(searchTerm)}&artist=${encodeURIComponent(artist)}&medium=${encodeURIComponent(medium)}&page=${currentPage}`}
-                //   >
-                //     <ArtCard 
-                //       artwork={artwork}
-                //       searchTerm={searchTerm}
-                //       artist={artist}
-                //       medium={medium}
-                //       page={currentPage}
-                //     />
-                //   </Link>
-                // </div>
-
-                //                   {/* <label htmlFor="source-select" className='text-sm block semi-bold px-1'>Sources</label>
-                //   <select id="source-select" className='border rounded px-2 py-1 bg-[var(--bg-accent)]'>--Slect a source--
-                //     <option value="Metropolitan Museum of Art">Metropolitan Museum of Art</option>
-                //     <option value="Art Institute of Chicago">Art Institute of Chicago</option>
-                //     <option value="The Smithsonian">The Smithsonian</option>
-                //   </select> */}
-
-                //                   {/* <div className='flex flex-wrap gap-2'>
-                //    <label htmlFor="" className='text-sm block semi-bold px-1'>Sources</label>
-                //   <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Metropolitan Museum of Art</button>
-                //   <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>Art Institute of Chicago</button>
-                //   <button className='rounded-full transition-colors border px-2 bg-[var(--bg-accent)]'>The Smithsonian</button>
-                // </div> */}

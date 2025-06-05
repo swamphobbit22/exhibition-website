@@ -42,7 +42,7 @@ const UserCollectionsContent = () => {
     
   return (
     <div className='mb-10'>
-          <h2 className='text-center text-3xl font-semibold mb-10 text-[var(--text-primary)]'>Your Saved Collections</h2>  
+          <h2 className='text-center text-3xl font-semibold mb-10 mt-8 text-[var(--text-primary)]'>Your Saved Collections</h2>  
         
           {collectionsLoading ? ( 
             <p className='text-center mt-10'>Loading collections...</p>

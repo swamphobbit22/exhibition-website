@@ -66,10 +66,10 @@ if (!isOpen) return null;
       exit={{ opacity: 0 }}
       className='fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50'
     >
-      <div className='bg-[var(--bg-primary)] rounded-lg w-full max-w-md p-6 relative'>
+      <div className='bg-[var(--bg-primary)] rounded-lg w-full max-w-md p-6 relative border-[var(--border-accent)] border-2'>
         <button
           onClick={onClose}
-          className='absolute top-4 right-4 font-bold text-[var(--text-primary)] hover:text-[var(--accent-secondary)]'
+          className='absolute top-4 right-4 font-bold text-[var(--text-primary)] hover:text-[var(--accent-secondary)] cursor-pointer'
         >
           <CloseIcon className='w-5 h-5'/>
         </button>
@@ -109,7 +109,7 @@ if (!isOpen) return null;
           <button 
             type='submit'
             disabled={loading}
-            className='w-full bg-[var(--accent-primary)] font-bold text-[var(--button-text)] py-2 rounded-lg hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
+            className='w-full bg-[var(--accent-primary)] font-bold text-[var(--button-text)] py-2 rounded-lg hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50 cursor-pointer'
             >
             {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Create Account'}  
           </button>
@@ -117,7 +117,7 @@ if (!isOpen) return null;
 
         <button
           onClick={() => setisLogin(!isLogin)}
-          className='mt-4 text-sm text-[var(--text-primary)] hover:text-[var(--text-accent)]'
+          className='mt-4 text-sm text-[var(--text-primary)] hover:text-[var(--text-accent)] cursor-pointer'
         >
           {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
         </button>

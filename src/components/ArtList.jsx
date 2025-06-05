@@ -12,7 +12,7 @@ import{removeFavourite} from '../utils/favouritesUtils'
 import { toast } from 'react-hot-toast';
 
 
-const ArtCard = ({ artwork, detailUrl }) => {
+const ArtList = ({ artwork, detailUrl }) => {
   const {user, isAuthenticated} = useUserStore();
   const { isArtworkInCollection, collections } = useCollectionStore();
   const { addToFavourites, isFavourited, fetchUserFavourites } = useFavouritesStore();
@@ -30,7 +30,9 @@ const ArtCard = ({ artwork, detailUrl }) => {
     }, [user?.id, fetchUserFavourites]);
   
     if(!artwork) return null;
-    
+    // if (!isAuthenticated) return null;    
+  
+     
     const handleAddToFavourites = async () => {
     
       if(!user) {
@@ -50,7 +52,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
   
   return (
     <>
-        <div className='bg-[var(--bg-primary)] rounded-lg mb-6 dark:border-2 border-[var(--border-secondary)] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
+        <div className='flex flex-col md:flex-row lg:flex-row items-center gap-3 p-3 border-b bg-[var(--bg-primary)] rounded-lg mb-6 dark:border-2 border-[var(--border-secondary)] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
           {imageUrl ? (
             <Link to={detailUrl}>
               <motion.img 
@@ -59,47 +61,52 @@ const ArtCard = ({ artwork, detailUrl }) => {
                 initial={{ y:20, opacity: 0 }}
                 animate={{ y:0,  opacity: 1 }}
                 transition={{ duratation: 0.3 }}
-                className='w-full h-72 object-cover transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110' 
+                className='w-28 h-26 object-cover rounded transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110' 
               />
             </Link>
             ) : (
-            <div className="w-full h-64 bg-[var(--bg-primary)] flex items-center justify-center">
+            <div className="w-20 h-20 bg-[var(--bg-primary)] flex items-center justify-center">
               <p className="text-[var(--text-primary)]">No image available</p>
             </div>
             )}
-          <div className='flex bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)]'>
-              <button className='bg-[var(--bg-accent)] w-full border-r-2 border-[var(--border-accent)]'>
-              <span className='font-bold text-[var(--text-primary)] '>{artwork.repository}</span>
+
+            <div className='w-full md:w-5/8 text-center  text-sm lg:text-lg text-[var(--text-primary)] p-2 lg:ml-10  border-2 border-[var(--border-accent)] bg-[var(--bg-elevated)] rounded'>
+                <h3 className=' text-center font-semibold text-[var(--text-accent)]'>{stripHtmlTags(artwork.title || 'Unknown Title')} </h3>
+                <span className='font-semibold text-[var(--text-secondary)] italic'>{artwork.artist || 'Unknown Artist'}</span> <br />
+                <span className='font-semibold text-[var(--text-muted)]'>{artwork.medium || 'N/A'}</span> 
+            </div>
+
+            <div 
+              id="repo-button-heart-container" 
+              className='w-full md:w-[30%] flex flex-col gap-4 self-start'
+            >
+            <div className='flex bg-[var(--bg-primary)] '>
+              <button className='bg-[var(--bg-primary)] w-full p-4'>
+                <span className='font-semibold text-[var(--text-secondary)] text-sm lg:text-md'>{artwork.repository}</span>
               </button>
 
-                  {/* add to favourites */}
-                  <button className='mx-2 cursor-pointer'>
+              {/* add to favourites */}
+                 <button className='mx-2 cursor-pointer'>
                     <FavoriteIcon 
-                      fontSize='large'
-                      onClick={async() => {
-                        const currentlyFavourited = isFavourited(artwork.id);
+                    fontSize='large'
+                    onClick={async() => {
+                    const currentlyFavourited = isFavourited(artwork.id);
 
-                        if(currentlyFavourited) {
-                          await removeFavourite(artwork.id, user.id)
-                        } else {
-                          await handleAddToFavourites()                         
-                        }
-                      }}
-                    style={{ color: isInFavourites ? 'red' : 'gray' }}
-                    />    
-                  </button>
-
-              </div>
-                <div className='bg-[var(--bg-primary)] text-[var(--text-primary)] p-2'>
-                <h3>Title: {stripHtmlTags(artwork.title || 'Unknown Title')}</h3>
-                <p>Artist: {artwork.artist || 'Unknown Artist'}</p>
-                <p>Medium: {artwork.medium || 'N/A'}</p>
+                    if(currentlyFavourited) {
+                        await removeFavourite(artwork.id, user.id)
+                    } else {
+                        await handleAddToFavourites()                         
+                    }
+                    }}
+                   style={{ color: isInFavourites ? 'red' : 'gray' }}
+                 />    
+               </button>
               </div>
 
               {isAuthenticated && (
                 <div className='flex justify-center'>
                   <button
-                    className={`place-self-center w-1/2 my-4 rounded-full font-semibold py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                    className={`place-self-center w-4/5 rounded-full font-semibold py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
                     onClick={async (e) => {
                       e.stopPropagation();
                       e.preventDefault();
@@ -115,6 +122,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
                 </div>
               )}
             </div>
+            </div>
           <div>
         </div>
       <ArtModal 
@@ -126,4 +134,4 @@ const ArtCard = ({ artwork, detailUrl }) => {
   )
 }
 
-export default ArtCard;
+export default ArtList;

@@ -10,8 +10,12 @@ function transformMetApi(data) {
         artist: data.artistDisplayName,
         medium: data.medium,
         source: 'met',
-        period: data.period,
+        period: data.objectDate,
         description: stripHtmlTags(data.elementDescription),
+        culture: data.culture,
+        classification: data.classification,
+        dimensions: data.dimensions,
+        resourceUrl: data.objectURL,
     }
 }
 
@@ -25,8 +29,12 @@ function transformSmithApi(data) {
         artist: data.content?.freetext?.name?.[0]?.content || 'Unknown',
         medium: data.content?.freetext?.physicalDescription?.[0]?.content,
         source: 'smithsonian',
-        period: data.content?.freetext?.date?.[0]?.content,
-        description: stripHtmlTags(data.content?.freetext?.notes?.[1]?.content)
+        period: data.content?.freetext?.date?.[0]?.content || null,
+        description: stripHtmlTags(data.content?.freetext?.notes?.[1]?.content),
+        culture: data.content?.freetext?.culture?.content || 'Culture unknown',
+        classification: data.content?.freetext?.objectType?.content || 'Classification unknown',
+        dimensions: data.content?.freetext?.physicalDescription?.content || 'Dimensions unknown',
+        resourceUrl: data.content?.descriptiveNonRepeating?.record_link || 'URL not available',
     }
 }
 
@@ -40,8 +48,12 @@ function transformSmithDetailApi(data) {
         artist: artwork.content?.freetext?.name?.[0]?.content || 'Unknown Artist',
         medium: artwork.content?.freetext?.physicalDescription?.[0]?.content,
         source: 'smithsonian',
-        period: artwork.content?.freetext?.date?.[0]?.content,
-        description: stripHtmlTags(artwork.content?.freetext?.notes?.[1]?.content)
+        period: artwork.content?.freetext?.date?.[0]?.content || null,
+        description: stripHtmlTags(artwork.content?.freetext?.notes?.[1]?.content),
+        culture: artwork.content?.freetext?.culture?.content || 'culture unknown',
+        classification: artwork.content?.freetext?.objectType?.content || 'Classification unknown',
+        dimensions: artwork.content?.freetext?.physicalDescription?.content || 'Dimensions unknown',
+        resourceUrl: artwork.content?.descriptiveNonRepeating?.record_link || 'URL not available',
     }
 }
 
@@ -60,6 +72,8 @@ function transformChicagoApi(data) {
      ? `https://www.artic.edu/iiif/2/${imageId}/full/400,/0/default.jpg`
      : null;
 
+    const resourceUrl = `https://www.artic.edu/artworks/${data.id}`
+
     return {
         id: data.id,
         title: stripHtmlTags(data.title),
@@ -70,6 +84,10 @@ function transformChicagoApi(data) {
         source: 'chicago',
         period: data.date_display,
         description: stripHtmlTags(data.description),
+        culture: data.culture,
+        classification: data.classification_title,
+        dimensions: data.dimensions,
+        resourceUrl: resourceUrl,
     }
 }
 

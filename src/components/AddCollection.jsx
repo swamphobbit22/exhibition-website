@@ -42,22 +42,23 @@ const AddCollection = () => {
   };
 
   return (
-  
-    <form id="collection" onSubmit={handleCreateNewCollection} className="w-full flex flex-col gap-2 mt-4">
-      <input
-        type="text"
-        value={newName}
-        onChange={(e) => setNewName(e.target.value)}
-        placeholder="New collection name"
-        className="w-full rounded-md font-semibold border-2 border-[var(--border-accent)] bg-[var(--bg-accent)] text-[var(--text-primary)] pl-2 py-1"
-      />
-      <button
-        type="submit"
-        className="w-full rounded-full bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] px-2 py-1"
-      >
-        Create Collection
-      </button>
-    </form>
+    
+      <form id="collection" onSubmit={handleCreateNewCollection} className="w-full flex flex-col gap-2 mt-4">
+        <input
+          type="text"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+          placeholder="New collection name"
+          className="w-full rounded-md font-semibold border-2 border-[var(--border-accent)] bg-[var(--bg-accent)] text-[var(--text-primary)] pl-2 py-1"
+        />
+        <button
+          type="submit"
+          className="w-full rounded-full bg-[var(--accent-secondary)] text-[var(--button-text)] hover:bg-[var(--accent-primary)] px-2 py-1"
+        >
+          Create Collection
+        </button>
+      </form>
+   
   )
 }
 

@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { shuffleArray } from "../utils/shuffle";
 import { fetchCombinedArtworks } from "../service/getAllArtworks";
-// import  ArtCard  from '../components/ArtCard';
-// import  Masonry from 'react-masonry-css';
 import themesArray from '../data/themes';
 import { Carousel } from "../components/Carousel";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -13,7 +11,7 @@ const theme = themesArray[new Date().getDate() % themesArray.length];
 //to do - create a separate component to store the themes array!! store it in local storage
 
 const Showcase = () => {
-  
+   
     const { data:showcaseResults, isLoading, error} = useQuery({
     queryKey: ['showcaseTheme'],
     queryFn: async () => {  
@@ -22,10 +20,14 @@ const Showcase = () => {
     }
   })
 
-  if(isLoading) return <div className="pt-28 flex justify-center items-center min-h-screen"><ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader></div>;
+
+  if(isLoading) return 
+  <div className="pt-28 flex justify-center items-center min-h-screen">
+    <ClipLoader color="#ffa600" size={64} className="mr-2">
+      </ClipLoader>
+  </div>
   if(error) return <div className="pt-28 flex justify-center">Error loading artwork: {error.message}</div>
   if(!showcaseResults) return <div className="pt-28 flex justify-center">No artwork found</div>;
-
 
   return (
     <section id="showcase"  className="bg-[var(--bg-primary)]">
@@ -47,6 +49,14 @@ const Showcase = () => {
       <div className="text-[var(--text-primary)] leading-6 max-w-4xl mx-auto mb-20">
         {theme.description}
       </div>
+
+      {/* {isLoading && (
+      <div className="flex flex-col pt-10 justify-center items-center text-[var(--text-primary)]">
+        <ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>
+        <p className='text-lg font-medium'>{loadingMessage}</p>
+      </div>
+      )} */}
+
       <div className="mb-10 text-[var(--text-primary)]">
         {Array.isArray(showcaseResults) && showcaseResults.length > 0 && (
           <Carousel items={showcaseResults}/>

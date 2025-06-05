@@ -76,7 +76,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
 
         <select 
           onChange={handleSelect} 
-          className=' text-[var(--text-primary)] bg-[var(--bg-accent)] hover:bg-[var(--accent-secondary)] w-full pl-2 py-1 rounded-md font-semibold border-2 border-[var(--border-accent)]'
+          className='appearance-none focus:outline-none focus:ring-0 text-[var(--text-primary)] bg-[var(--bg-accent)] w-full pl-2 py-1 rounded-md font-semibold border-2 border-[var(--border-accent)]'
           >
             <option value="Select_collection"> -- Select a collection -- </option>
             {collections.map((collection) => (<option value={collection.id}>{collection.name}</option>))}
@@ -99,7 +99,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
             e.stopPropagation();
             handleSubmit();
           }} 
-          className='w-full rounded-full bg-[var(--accent-secondary)] py-1 font-semibold text-[var(--button-text)] hover:bg-[var(--accent-primary)]'
+          className='w-full rounded-full bg-green-400 py-1 font-semibold text-[var(--button-text)] hover:bg-[var(--accent-primary)] cursor-pointer'
           > 
           Add to collection
           </button>

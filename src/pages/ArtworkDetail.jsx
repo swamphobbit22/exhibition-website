@@ -17,14 +17,15 @@ const ArtworkDetail = () => {
     } else if (from === 'userhome') {
         backLink = {to: '/dashboard/home', label: 'Back to Favourites'};
     } else {
-        backLink = {to: `/browse${window.location.search}`, label: 'Back to Search'};
+        const currentParams = new URLSearchParams(window.location.search);
+        backLink = {to: `/browse?${currentParams.toString()}`, label: 'Back to Search'}
+        // backLink = {to: `/browse${window.location.search}`, label: 'Back to Search'};
     }
    
     const { data, isLoading, error} = useQuery({
         queryKey: ['artwork', id, source],
         queryFn: async () => await fetchArtworkById(id, source)
         // console.log(results, 'results from artwork detail')
-        // return results;
     })
 
     if(isLoading) return <div className="pt-20 flex justify-center">Loading...</div>;

@@ -28,16 +28,16 @@ const [showCollections, setShowCollections] = useState(false);
 
           {/* View collections */}
           <button
-          onClick={() => setShowCollections(prev => !prev)}
-          className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)]'
+            onClick={() => setShowCollections(prev => !prev)}
+            className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'
           >
-          {showAddCollection? 'Hide View Collections' : 'View Collections'} 
+            {showCollections? 'Hide Collections' : 'View Collections'} 
           </button>
 
           {/* Create a colleciton */}
           <button
             onClick={() => setShowAddCollection(prev => !prev)}
-            className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)]'
+            className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'
             >
             {showAddCollection? 'Hide Create Collection' : 'View Create Collection'} 
           </button>
@@ -45,18 +45,18 @@ const [showCollections, setShowCollections] = useState(false);
           {/* Show/hide favouriets */}
           <button  
           onClick={() => setShowfavourites(prev => !prev)}
-          className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)]'
+          className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'
           >
           {showFavourites ? 'Hide Favourites' : 'View Favourites'}
           </button>
           
           {/* reset password */}
-          <button className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)]'>
+          <button className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'>
             Reset Password
           </button>
 
           {/* delete account */}
-          <button className="rounded-full px-3 py-2 font-bold bg-red-600 hover:bg-red-700">
+          <button className="rounded-full px-3 py-2 font-bold bg-red-600 hover:bg-red-700 cursor-pointer">
             Delete Account
           </button>
 

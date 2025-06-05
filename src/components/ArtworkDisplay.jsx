@@ -58,7 +58,7 @@ const ArtworkDisplay = ({data, backLink}) => {
 
   return (
     <section id='detail' className="min-h-screen pt-28 bg-[var(--bg-primary)] ">
-      <div className="pb-10 flex items-center flex-col mx-20 ">
+      <div className="pb-10 flex items-center flex-col mx-4 lg:mx-20 ">
 
         <div className="place-self-start">
         {backLink && (
@@ -71,32 +71,60 @@ const ArtworkDisplay = ({data, backLink}) => {
         )}
         </div>
 
-        <div className="mt-6 grid gird-cols-1 md:grid-cols-2 max-w-md md:max-w-4xl lg:max-w-5xl bg-[var(--bg-elevated)] border-2 border-[var(--border-primary)] gap-4 ">
+        <div className="mt-6 p-4 grid grid-cols-1 md:grid-cols-2 max-w-md md:max-w-4xl lg:max-w-5xl bg-[var(--bg-elevated)] border-2 border-[var(--border-primary)] gap-4 ">
           <div className="max-w-4xl p-4 bg-[var(--bg-card)] border-2 border-[var(--border-secondary)] relative">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center text-[var(--text-primary)]">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center text-[var(--text-accent)]">
               {stripHtmlTags(data.title)}
             </h2> 
             <h3 className="font-serif md:text-xl sm:text-3xl font-semibold mb-6 text-center italic text-[var(--text-primary)]">
               {stripHtmlTags(data.artist) || 'Artist unknown'}
             </h3>
             <hr className="mb-1 mt-2 text-[var(--text-accent)] w-2/3 mx-auto"/>
-            <p className="text-[var(--text-primary)] font-semibold max-w-3xl mx-auto mb-2 mt-4 pl-2">
-              {data.period || 'No date available '}
+
+            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto  mt-4 pl-2">
+              Date:  
+              <span className='text-[var(--text-primary)]'> {data.period || 'No date available '}</span>
             </p> 
-            <p className="text-[var(--text-primary)] max-w-3xl mx-auto mb-2 mt-4 pl-2">
-              {data.medium || 'Medium unknown'}
+
+            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto  pl-2">
+              Culture: 
+              <span className='text-[var(--text-primary)]'> {data.culture || 'Information unavailable'}</span>
             </p>
+
+            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto  pl-2 mb-2">
+              Classification: 
+              <span className='text-[var(--text-primary)]'> {data.classification || 'Information unavailable'}</span>
+            </p>
+
+            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto pl-2 mb-2">
+              Medium: <br />
+              <span className='text-[var(--text-primary)]'> {data.medium || 'Medium unknown'}</span>
+            </p>
+
+            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto pl-2 mb-2">
+              Dimensions: <br />
+              <span className='text-[var(--text-primary)]'> {data.dimensions || 'Dimensions unknown'}</span>
+            </p>
+
             {/* <hr className="mb-4 mt-4 text-[var(--text-accent)] w-2/3 mx-auto"/>  */}
-            <p className="max-w-4xl  text-[var(--text-primary)] pl-2 mt-6">
-              {data.description || 'no description available'}
+            <p className="text-[var(--text-secondary)] bg- max-w-3xl mx-auto mb-10 pl-2">
+              Description: <br />
+              <span className='text-[var(--text-primary)]'>{data.description || 'No description available'}</span>
             </p>
+
+            {/* <p>Resource Url: {data.resourceUrl || 'url unavailable'}</p> */}
             
-            <p className='absolute bottom-2 text-[var(--text-primary)]'>{data.repository}</p>
+            <span className='pl-2 absolute bottom-2  font-semibold'>
+              {/* {data.repository}  */}
+              <a href={data.resourceUrl} target="_blank" rel="noopener noreferrer" className='text-[var(--text-secondary)] hover:text-[var(--accent-hover)] cursor-pointer'>
+                View on the {data.repository}
+              </a>
+            </span>
           </div>
           
-          <div className="p-2 border-2 border-[var(--border-secondary)] flex justify-center items-center">
+          <div className="p-2  border-2 border-[var(--border-secondary)] flex justify-center items-center rounded-lg">
             <img 
-            className="bg-shadow place-self-center"
+            className="bg-shadow place-self-center object-fit"
             src={data.imageUrl} alt={data.title || 'Artwork'} />  
           </div>
 
@@ -139,30 +167,23 @@ const ArtworkDisplay = ({data, backLink}) => {
                   )}
                 </div> 
 
-                {/* share link */}
-                {/* <button 
-                onClick={() => {}}
-                className='text-[var(--text-muted)] hover:text-[var(--accent-hover)] '> */}
-                  
-                  {/* <ShareButton /> */}
-
-                  {/* <ShareIcon fontSize='large'/> */}
-                {/* add share */}
-                {/* </button> */}
                 <ShareButton 
                   title={data.title}
                   url={`${window.location.origin}/detail/${data.id}?source=${data.source}`}
                 />
+
               <div>
             </div>
           </div>
         </div>
       </div>
+
         <ArtModal 
           isOpen={showArtModal} 
           onClose={() => setShowArtModal(false)}
           artwork={data}
         />
+
     </section>
   )
 }

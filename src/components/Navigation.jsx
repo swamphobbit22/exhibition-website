@@ -124,7 +124,7 @@ const Navigation = () => {
                       <hr className="my-1 border-[var(--border-secondary)]" />
                       <button
                         onClick={handleSignOut}
-                        className="flex items-center gap-2 w-full px-4 py-2 text-left text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                        className="flex items-center gap-2 w-full px-4 py-2 text-left text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
@@ -135,7 +135,7 @@ const Navigation = () => {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors p-2 rounded-md"
+                  className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors p-2 rounded-md cursor-pointer"
                 >
                   <User className="w-6 h-6" />
                   <span className="text-lg">Sign In</span>
