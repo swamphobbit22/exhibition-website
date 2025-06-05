@@ -20,18 +20,20 @@ const Browse = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [artist, setArtist] = useState(searchParams.get('artist') || '');
   const [medium, setMedium] = useState(searchParams.get('medium') || '');
+  const [source, setSource] = useState(searchParams.get('source') || '');
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
   const [viewMode, setViewMode] = useState(searchParams.get('view') || 'grid');
   const [loadingMessage, setLoadingMessage] = useState("Loading...")
+
   // const [itemsPerPage, setItemsPerPage] = useState(5); change to this if user decides to change the number returned
   const ITEMS_PER_PAGE = 9;
 
 
 
   const { data:searchResults, isLoading, error, refetch } = useQuery({
-    queryKey: ['artworks', searchTerm, artist, medium],
-    queryFn: () => fetchCombinedArtworks(searchTerm, artist, medium),
-    enabled: !!searchTerm.trim(), 
+    queryKey: ['artworks', searchTerm, artist, medium, source],
+    queryFn: () => fetchCombinedArtworks(searchTerm, artist, medium, source),
+    enabled: !!(searchTerm.trim() || artist.trim() || medium.trim()),
     staleTime: 5 * 60* 1000,
   })
 
@@ -43,12 +45,13 @@ const Browse = () => {
     if (searchTerm) params.q = searchTerm;
     if(artist) params.artist = artist;
     if(medium) params.medium = medium;
+    if(source) params.source = source;
     if(currentPage > 1) params.page = currentPage;
     if(viewMode !== 'grid') params.view = viewMode;
 
     setSearchParams(params);
 
-  }, [searchTerm, artist, medium, currentPage, setSearchParams, viewMode])
+  }, [searchTerm, artist, medium, source, currentPage, setSearchParams, viewMode])
 
   useEffect(() => {
     let timers = [];
@@ -94,9 +97,12 @@ const Browse = () => {
     window.scrollTo({ top:0, behavior: 'smooth'});
   }, [currentPage])
 
+
   const handleSubmitSearch =  (e) => {
     e.preventDefault();
-    if(!searchTerm.trim()) return; 
+    // if(!searchTerm.trim() || artist.trim() || medium.trim() || source.trim()) return; 
+    if(!searchTerm.trim() && !artist.trim() && !medium.trim()) return;
+
     setCurrentPage(1)
     refetch();
   }
@@ -110,8 +116,9 @@ const Browse = () => {
   };
 
 const clearFilters = () => {
-  setArtist(''),
-  setMedium('')
+  setArtist('');
+  setMedium('');
+  setSource('');
   //also set the repository/museum - do it later
 }
 
@@ -193,7 +200,7 @@ const clearFilters = () => {
                   type="text" 
                   value={artist}
                   onChange={(e) => setArtist(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
                   className="w-full p-2 border rounded bg-[var(--bg-accent)]"
                   />
                 </div>
@@ -202,12 +209,14 @@ const clearFilters = () => {
                   <input type="text" 
                   value={medium}
                   onChange={(e) => setMedium(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
                   className="w-full p-2 border rounded bg-[var(--bg-accent)]"
                   />
                 </div>
                 <div className='flex flex-col gap-2'>
                   <SourcesDropdown />
                 </div>
+
                 <div className='md:col-span-3 flex justify-center'>
                   <button
                     type='button'
@@ -237,7 +246,7 @@ const clearFilters = () => {
               )}
 
               {/* toggle view */}
-              <div className='cursor-pointer mb-4 flex justify-end'> 
+              <div className='right-0 cursor-pointer mb-4 flex justify-end'> 
                 {viewMode === 'grid' ? (
                   <ViewListIcon 
                     fontSize="large" 

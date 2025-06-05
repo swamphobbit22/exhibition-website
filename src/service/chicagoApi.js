@@ -7,6 +7,7 @@ const chicagoApi = async(query) => {
     const response = await axios.get(`${baseUrl}/artworks/search`, {
         params: {
             q: query,
+            limit: 100,
             fields: 
             'id,title,artist_title,date_display,medium_display,dimensions,image_id,alt_image_ids,api_link,description',
             

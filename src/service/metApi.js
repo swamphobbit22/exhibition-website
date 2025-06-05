@@ -50,7 +50,7 @@ const getArtWorks = async(objectIds) => {
 
 export{metApi, getMetArtWorkById, getArtWorks}
 
-
+// added in the limit to 100
 
 // const artworks = await Promise.all(objectIds.slice(0, 20).map((id) => getMetArtWorkById(id)));
 

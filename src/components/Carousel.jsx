@@ -39,42 +39,32 @@ export const Carousel = ({ items }) => {
           return (
             <div
             key={artwork.id}
-            className={`text-center md:transition-all md:duration-500 md:ease-in-out transition-discrete flex flex-col
+            className={`text-center md:transition-all md:duration-500 md:ease-in-out transition-discrete flex flex-col border-2 rounded border-[var(--border-accent)]
               ${i === 1 ? 'scale-125 z-10 opacity-100 shadow-2xl brightness-110' 
               : 'scale-90 opacity-10 brightness-65 hidden md:block'
               }`}
             >
-              <div className='flex-shrink-0'>
+              <div className='flex-shrink-0 '>
                 <Link to={`/detail/${artwork.id}?source=${artwork.source}&from=showcase`}>
               <img 
                 src={artwork.imageUrl} 
                 alt={artwork.title}
-                className='w-60 h-48 md:w-96 md:h-72 object-cover rounded shadow object-center'
+                className='w-full h-64 p-4 md:w-96 md:h-72 object-cover rounded shadow object-center'
               />
               </Link>
               </div>
               
               {/* check positioning of details and teh forward/back arrows */}
-
-              <div className='bg-[var(--bg-card)] max-w-96 h-auto flex flex-col justify-start '>
+              <div className='bg-[var(--bg-card)] w-full md:max-w-96 h-auto flex flex-col justify-start '>
                 {/* title/artist data */}
-                <h4 className='mt-2 text-[var(--text-primary)] p-2'>
-                    
-                  <span className='font-semibold'> {artwork.title}</span>
-                </h4>
+                <h4 className='mt-2 text-md text-[var(--text-primary)] p-2 font-semibold'>{artwork.title}</h4>
                 <hr className='w-1/2 text-center mx-auto text-[var(--text-primary)]'/>
-
                 <div className='flex flex-col text-left p-2'>
-                <p className='text-[var(--text-primary)]'>
-                  Artist: 
-                  <span className=''> {artwork.artist || 'Unknown'}</span>
-                </p>
-                  <p>Date:
-                   <span> {artwork.period || 'No date available'}</span>
+                  <p className='text-[var(--text-secondary)] text-sm '>Artist: 
+                    <span className=''> {artwork.artist || 'Unknown'}</span></p>
+                  <p className='text-[var(--text-secondary)] text-sm'>Date:<span> {artwork.period || 'No date available'}</span>
                   </p>
-                <p className=''>Description: {artwork.description ? truncate(artwork.description) : 'No description available'}
-
-                </p>
+                  <p className='text-[var(--text-secondary)] text-sm '>Description: {artwork.description ? truncate(artwork.description) : 'No description available'}</p>
                 </div>
                 <hr />
                 <div className='text-xs italic py-2 bg-[var(--bg-accent)]'>{artwork.repository || 'Source unavailable'}</div>
