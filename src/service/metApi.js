@@ -17,7 +17,10 @@ const getMetArtWorkById = async(objectId) => {
    const res = await axios.get(`${baseUrl}/objects/${objectId}`);
    return res.data;
   } catch (error) {
-    console.warn(`Failed to fetch artwork ${objectId}:`, error.message);
+
+    if (error.response?.status !== 404) {
+      console.warn(`Failed to fetch artwork ${objectId}:`, error.message);
+    }
     return null;
   }
 }
@@ -51,13 +54,3 @@ const getArtWorks = async(objectIds) => {
 export{metApi, getMetArtWorkById, getArtWorks}
 
 // added in the limit to 100
-
-// const artworks = await Promise.all(objectIds.slice(0, 20).map((id) => getMetArtWorkById(id)));
-
-
-// const getArtWorks = async(objectIds) => {
-//   if(!Array.isArray(objectIds)) return [];
-
-//   const artworks = await Promise.all(objectIds.map((id) => getMetArtWorkById(id)));
-//   return artworks.filter((artwork) => artwork && artwork.primaryImage)
-//  }

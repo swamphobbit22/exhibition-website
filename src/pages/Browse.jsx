@@ -8,9 +8,12 @@ import  Masonry  from 'react-masonry-css';
 import { fetchCombinedArtworks } from '../service/getAllArtworks'
 import { getPaginationData, getPageNumbers } from "../utils/pagination";
 import ClipLoader from "react-spinners/ClipLoader";
-import  SourcesDropdown  from '../components/SourcesDropdown'
+// import  SourcesDropdown  from '../components/SourcesDropdown'
 import ViewListIcon from '@mui/icons-material/ViewList';
 import Grid4x4Icon from '@mui/icons-material/Grid4x4';
+import { sortedByDate, sortedByField, sortedByNumber } from '../utils/sortBy';
+import {SortDropdown, InstituteDropdown} from '../components/SortDropdown';
+import {toast}  from 'react-hot-toast';
 
 
 
@@ -23,9 +26,10 @@ const Browse = () => {
   const [source, setSource] = useState(searchParams.get('source') || '');
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || 1);
   const [viewMode, setViewMode] = useState(searchParams.get('view') || 'grid');
-  const [loadingMessage, setLoadingMessage] = useState("Loading...")
-
-  // const [itemsPerPage, setItemsPerPage] = useState(5); change to this if user decides to change the number returned
+  const [loadingMessage, setLoadingMessage] = useState("Loading...");
+  const [sortMethod, setSortMethod] = useState ('none'); //keep current view as default
+  const [allArtworks, setAllArtworks] = useState([]);
+  
   const ITEMS_PER_PAGE = 9;
 
 
@@ -37,7 +41,11 @@ const Browse = () => {
     staleTime: 5 * 60* 1000,
   })
 
-
+  useEffect(() => {
+    if(searchResults) {
+      setAllArtworks(searchResults);
+    }
+  }, [searchResults]),
 
   // for search persistence + to stop viewMode resetting each time
   useEffect(() => {
@@ -52,6 +60,7 @@ const Browse = () => {
     setSearchParams(params);
 
   }, [searchTerm, artist, medium, source, currentPage, setSearchParams, viewMode])
+
 
   useEffect(() => {
     let timers = [];
@@ -73,24 +82,68 @@ const Browse = () => {
     };
   },[isLoading]);
 
+  // sorting
+  const sortedArtworks = useMemo(() => {  
+    let result;
 
+    switch(sortMethod) {
+      case 'artistNameAsc':
+        return sortedByField(allArtworks, 'artist', 'asc');
+      case 'artistNameDesc':
+        return sortedByField(allArtworks, 'artist', 'desc');
+      case 'titleAsc':
+        return sortedByField(allArtworks, 'title', 'asc');
+      case 'titleDesc':
+        return sortedByField(allArtworks, 'title', 'desc');
+      case 'repoAsc':
+        return sortedByField(allArtworks, 'repository', 'asc');
+      case 'repoDesc':
+        return sortedByField(allArtworks, 'repository', 'desc');
+      case 'met':
+      case 'smithsonian':
+      case 'chicago':
+        result = allArtworks.filter(artwork => artwork.source === sortMethod);
+        return result.length > 0 ? result : allArtworks;
+      default:
+        return allArtworks;
+    }
+  }, [sortMethod, allArtworks]);
+
+  //check if filtering result is empty and get some toast
+  useEffect(() => {
+    const isFiltering = ['met', 'chicago', 'smith'].includes(sortMethod);
+    if (isFiltering) {
+      const filtered = allArtworks.filter(artwork => artwork.source === sortMethod)
+      if (filtered.length === 0)
+     { toast("No artworks found for selected museum. Showing all results.");}
+    }
+  }, [sortMethod, allArtworks]);
+
+  // pagination
   const paginationData = useMemo(() => {
-    if(!searchResults) {
+    // replaced searchResults with sortedArtworks
+    if(!sortedArtworks || sortedArtworks.length === 0) {
       return {
         currentItems: [],
         totalPages: 0,
         hasNextPage: false, 
         hasPreviousPage: false,
+        totalItems: 0,
       }
     }
 
-    return getPaginationData(searchResults, currentPage, ITEMS_PER_PAGE);
-  }, [searchResults, currentPage, ITEMS_PER_PAGE])
+    // removed searchResults and replaced with sortedArtworks
+    return getPaginationData(sortedArtworks, currentPage, ITEMS_PER_PAGE);
+  }, [sortedArtworks, currentPage, ITEMS_PER_PAGE])
   
 
   const pageNumbers = useMemo(() => {
     return getPageNumbers(paginationData.totalPages, currentPage);
   }, [paginationData, currentPage])
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [sortMethod])
 
 
   useEffect(() => {
@@ -100,7 +153,6 @@ const Browse = () => {
 
   const handleSubmitSearch =  (e) => {
     e.preventDefault();
-    // if(!searchTerm.trim() || artist.trim() || medium.trim() || source.trim()) return; 
     if(!searchTerm.trim() && !artist.trim() && !medium.trim()) return;
 
     setCurrentPage(1)
@@ -115,11 +167,9 @@ const Browse = () => {
     500: 1
   };
 
-const clearFilters = () => {
-  setArtist('');
-  setMedium('');
-  setSource('');
-  //also set the repository/museum - do it later
+  const clearFilters = () => {
+  setSortMethod('');
+  // setAllArtworks('')
 }
 
 
@@ -144,7 +194,7 @@ const clearFilters = () => {
           </div>
 
           <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8'>
-            {/* search box */}
+            {/* search box and clear button*/}
             <div className='relative flex-1'>
               <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-primary)] w-5 h-5 '/>
               <input 
@@ -156,15 +206,18 @@ const clearFilters = () => {
                 className="pl-10 px-4 py-2 bg-[var(--bg-accent)] border-[var(--border-accent)] border-2 rounded-lg w-full text-[var(--primary)] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)]"
                 aria-label='Search artwork'
               />
-            {searchTerm && (
+              {searchTerm && (
                 <button
-                onClick={() => setsearchTerm('')}
+                onClick={() => {
+                  setsearchTerm('');
+                  setAllArtworks('');
+                }}
                 className='absolute right-3 top-1/2 -translate-y-1/2 px-3 py-1 rounded-full font-semibold text-[var(--text-secondary)] bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)] hover:bg-[var(--accent-accent)]'
                 aria-label='clear search'
                 >clear</button>
               )}
             </div>
-
+              
             {/* filter button */}
             <button
               type='button'
@@ -182,39 +235,28 @@ const clearFilters = () => {
               disabled={isLoading}
               className='flex items-center px-6 py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
               >
-                {/* add a spinner to the button when artworks load */}
-                {isLoading ? (
-                  <Loader2Icon className='w-5 h-5 animate-spin'/>
-                ): (
-                  <span>Search</span>
-                )}
+              {/* button spinner*/}
+              {isLoading ? (
+                <Loader2Icon className='w-5 h-5 animate-spin'/>
+              ): (
+                <span>Search</span>
+              )}
             </button>
           </div>
 
             {/* display the filters */}
             {showFilters && (
-              <div className="bg-[var(--bg-secondary)] p-4 rounded-b shadow-md mt-1 grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
+              <div className="bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)] p-4 rounded-b shadow-md mt-1 grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
+                <label htmlFor="" className="block text-md font-semibold mb-1">Sort
+                  <SortDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
+                </label>
                 <div>
-                  <label htmlFor="" className="block text-sm font-semibold mb-1">Artist</label>
-                  <input 
-                  type="text" 
-                  value={artist}
-                  onChange={(e) => setArtist(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
-                  className="w-full p-2 border rounded bg-[var(--bg-accent)]"
-                  />
+                  <label htmlFor="" className="block text-md font-semibold mb-1">Sort by Repository
+                    <InstituteDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
+                  </label>
                 </div>
-                <div>
-                  <label htmlFor="" className="block text-sm font-semibold mb-1">Medium</label>
-                  <input type="text" 
-                  value={medium}
-                  onChange={(e) => setMedium(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
-                  className="w-full p-2 border rounded bg-[var(--bg-accent)]"
-                  />
-                </div>
-                <div className='flex flex-col gap-2'>
-                  <SourcesDropdown />
+
+                <div className='flex flex-col gap-2'>    
                 </div>
 
                 <div className='md:col-span-3 flex justify-center'>
@@ -223,12 +265,12 @@ const clearFilters = () => {
                     onClick={clearFilters}
                     className='text-[var(--text-primary)] text-sm flex items-center gap-1 hover:text-[var(--accent-hover)] transition-colors'
                   >
-                    <X className='w-4 h-4'/>Clear Filters
+                    <X className='w-4 h-4'/>Clear Sort Options
                   </button>
                 </div>
                 </div> 
             )
-          }             
+          }              
             
             {error && (
               <div className='text-red-400'>
@@ -237,15 +279,12 @@ const clearFilters = () => {
             )}
             </form>
 
-            {/* results */}
-            <div className='flex flex-row justify-between mx-4 lg:mx-auto'>
-              {paginationData.totalItems > 0 && (
-                <div className="text-sm text-[var(--text-secondary)]">
-                  Showing {paginationData.totalItems} results
-                </div>
-              )}
-
-              {/* toggle view */}
+            {/* display number of resulst and grid/list toggle */}
+            {paginationData.totalItems > 0 && (
+            <div className='flex flex-row justify-between mx-4 mt-4 lg:mx-auto'>
+              <div className="text-sm text-[var(--text-secondary)]">
+                Showing {paginationData.totalItems} results
+              </div>
               <div className='right-0 cursor-pointer mb-4 flex justify-end'> 
                 {viewMode === 'grid' ? (
                   <ViewListIcon 
@@ -262,11 +301,12 @@ const clearFilters = () => {
                   )}
               </div>
             </div>
+            )}
 
           <div>
             {isLoading && (
               <div className="flex flex-col pt-10 justify-center items-center text-[var(--text-primary)]">
-                <ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>
+                <ClipLoader color="#ffa600" size={64} className="mr-2 mb-8"></ClipLoader>
                 <p className='text-lg font-medium'>{loadingMessage}</p>
               </div>
             )}
@@ -318,8 +358,6 @@ const clearFilters = () => {
               >
                 Previous
               </button> 
-
-              
               {pageNumbers.map((num) => (
                 <button
                 type='button'
@@ -342,8 +380,7 @@ const clearFilters = () => {
               </button> 
             </div>
            )}
-          </div>
-            
+          </div>  
         </div>
     </section> 
   )
