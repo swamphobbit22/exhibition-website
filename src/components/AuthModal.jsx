@@ -9,6 +9,8 @@ const [isLogin, setisLogin] = useState(true);
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [loading, setLoading] = useState(false);
+const [showPasswordReset, setShowPasswordReset] = useState(false);
+const [resetEmail, setResetEmail] = useState('');
 
 
 const handleSubmit = async(e) => {
@@ -57,6 +59,22 @@ const handleSubmit = async(e) => {
 };
 
 if (!isOpen) return null;
+
+
+const handlePasswordReset = async (e) => {
+  e.preventDefault();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+    redirectTo: `${window.location.origin}/reset-password`
+  });
+
+  if (error) {
+    alert('Error sending reset email: ' + error.message);
+  } else {
+    alert('Check your email for the reset link!');
+    setShowPasswordReset(false);
+  }
+};
     
   return (
     // login/signup modal
@@ -121,6 +139,40 @@ if (!isOpen) return null;
         >
           {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
         </button>
+
+        {!showPasswordReset ? (
+          <button
+            type="button"
+            onClick={() => setShowPasswordReset(true)}
+            className='text-sm text-blue-500 hover:underline ml-8'
+          >
+            Forgot your password?
+          </button>
+        ) : (
+          <div className='mt-4 p-4 border border-[var(--border-accent)] rounded'>
+            <h3 className='text-[var(--text-primary)] font-semibold'>Reset Password</h3>
+            <input 
+              type="email"
+              placeholder='Enter your email'
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+              className='w-full p-2 text-[var(--text-secondary)] border rounded border-[var(--border-secondary)] bg-[var(--bg-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-secondary)] mb-2'
+            />
+            <button
+              onClick={handlePasswordReset}
+              className='bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] px-4 py-2 rounded-lg mt-2'
+            >
+              Send Reset Link
+            </button>
+                        <button
+              onClick={() => setShowPasswordReset(false)}
+              className='ml-4 text-[var(--text-accent) font-semibold]'
+            >
+              Cancel
+            </button>
+          </div>
+
+        )}
       </div>
     </motion.div>
   )

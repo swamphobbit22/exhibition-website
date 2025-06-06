@@ -17,7 +17,37 @@ const useUserStore = create((set, get) => ({
 
     // get the collections if user already signedin
     if(session?.user) {
-      useCollectionStore.getState().fetchUserCollections(session.user.id)
+       const userId = session.user.id;
+
+       supabase
+      .from('profiles')
+      .upsert({ id: userId }, { onConflict: 'id'})
+      .catch((error) => console.error('Profile upsert error:', error));
+
+       supabase
+        .from('profiles')
+        .select('deleted_at')
+        .eq('id', userId)
+        .single()
+        .then(({ data: profile, error }) => {
+        if (error) {
+          console.error('Profile fetch error', error);
+          return;
+        }
+        
+        if(profile?.deleted_at) {
+          // User is soft deleted - sign them out
+          supabase.auth.signOut();
+          set({
+            user: null,
+            isAuthenticated: false
+          });
+        return;
+      }
+    });
+      
+    
+    useCollectionStore.getState().fetchUserCollections(userId);
     }
   })
 

@@ -55,7 +55,7 @@ const UserCollectionsContent = () => {
                 collections.map(collection => (
                   <div 
                     key={collection.id}
-                    className="border-2 text-[var(--text-secondary)] bg-shadow w-full h-64 md:w-64 md:h-64 rounded-lg p-4 flex flex-col justify-between relative overflow-hidden cursor-pointer"
+                    className="border-2 text-[var(--text-secondary)] bg-shadow max-w-full h-64 md:w-72 md:h-64 rounded-lg p-4 flex flex-col justify-between relative overflow-hidden cursor-pointer"
                     onClick={() => navigate(`/dashboard/collection/${collection.id}`)}
                     style={{
                       backgroundImage: collection.previewArtwork?.imageUrl 

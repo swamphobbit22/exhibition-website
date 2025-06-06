@@ -10,6 +10,7 @@ import ArtworkDetail from './pages/ArtworkDetail'
 import Collection from './pages/dashboard/Collection'
 import UserHome from "./pages/dashboard/UserHome"
 import useUserStore from "./store/useUserStore"
+import ResetPassword from './pages/ResetPassword'
 
 function App() {
   const initialise = useUserStore(state => state.initialise)
@@ -34,6 +35,7 @@ function App() {
           <Route path="/dashboard/home" element={<UserHome />} />
           <Route path="/dashboard/collections" element={<UserCollections />} />
           <Route path="/dashboard/collection/:id" element={<Collection />} />  
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>   
         </div>
     </BrowserRouter>

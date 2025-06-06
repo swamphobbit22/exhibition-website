@@ -8,7 +8,7 @@ import  AddCollection  from './AddCollection'
 
 const ArtModal = ({ isOpen, onClose, artwork}) => {
     const { user, isAuthenticated} = useUserStore();
-    const { createCollection, collections, collectionsLoading, fetchUserCollections, addArtworkToCollection } = useCollectionStore();
+    const { collections, fetchUserCollections, addArtworkToCollection } = useCollectionStore();
     const [selectCollection, setSelectCollection] = useState('');
 
 
@@ -36,7 +36,10 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         thumbnail_url: artwork.imageUrl,
         notes: '',
         source: artwork.source,
+        
       });
+
+      console.log("Current user:", useUserStore.getState().user?.id)
 
       if (success) {
         toast.success('Artwork added to collection')
@@ -79,7 +82,8 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
           className='appearance-none focus:outline-none focus:ring-0 text-[var(--text-primary)] bg-[var(--bg-accent)] w-full pl-2 py-1 rounded-md font-semibold border-2 border-[var(--border-accent)]'
           >
             <option value="Select_collection"> -- Select a collection -- </option>
-            {collections.map((collection) => (<option value={collection.id}>{collection.name}</option>))}
+            {collections.map((collection) => (<option key={collection.id} value={collection.id}>{collection.name}</option>))}
+            {console.log('options:', collections)}
         </select>
     
         <button

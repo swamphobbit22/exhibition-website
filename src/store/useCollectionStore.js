@@ -135,6 +135,7 @@ const useCollectionStore = create((set, get) => ( {
                 thumbnail_url: artworkData.thumbnail_url,
                 notes: artworkData.notes || null,
                 source: artworkData.source || null,
+                
             }])
 
             if(error) {

@@ -98,7 +98,7 @@ const Navigation = () => {
                     className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors p-2 rounded-md"
                   >
                     <User className="w-6 h-6" />
-                    <span className="text-md">{user?.email}</span>
+                    <span className="text-sm lg:text-md">{user?.email}</span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
                   
