@@ -182,7 +182,7 @@ const Browse = () => {
           className='relative'
           >
           <div className="text-center mb-8">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-[var(--text-accent)]">
               Discover  Art From Around the World
             </h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto font-semibold text-lg mb-4">
@@ -251,7 +251,7 @@ const Browse = () => {
                   <SortDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
                 </label>
                 <div>
-                  <label htmlFor="" className="block text-md font-semibold mb-1">Sort by Repository
+                  <label htmlFor="" className="block text-md font-semibold mb-1">Filter by Repository
                     <InstituteDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
                   </label>
                 </div>

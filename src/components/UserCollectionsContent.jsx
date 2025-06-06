@@ -42,12 +42,12 @@ const UserCollectionsContent = () => {
     
   return (
     <div className='mb-10'>
-          <h2 className='text-center text-3xl font-semibold mb-10 mt-8 text-[var(--text-primary)]'>Your Saved Collections</h2>  
+          <h2 className='text-center text-3xl font-semibold mb-10 mt-8  text-[var(--text-accent)]'>Your Saved Collections</h2>  
         
           {collectionsLoading ? ( 
             <p className='text-center mt-10'>Loading collections...</p>
           ): (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-6 gap-4 mx-4 sm:mx-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mx-4 sm:mx-10 p-10">
               {collections.length === 0 ? ( 
                 <p className='text-center text-[var(--text-primary)] text-lg'>You don't have any collections yet!</p>
               ) : (

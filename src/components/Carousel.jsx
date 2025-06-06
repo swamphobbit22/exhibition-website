@@ -24,7 +24,7 @@ export const Carousel = ({ items }) => {
     console.log(items)
 
   return (
-    <div className="relative w-full md:max-w-7xl mx-auto flex items-center justify-center mt-10 mb-24 px-12 md:px-4 ">
+    <div className="relative w-full md:max-w-7xl mx-auto flex items-center justify-center mt-10 mb-24 px-12 md:px-4">
       {/* previous button */}
       <button 
         onClick={prevSlide}
@@ -44,29 +44,29 @@ export const Carousel = ({ items }) => {
               : 'scale-90 opacity-10 brightness-65 hidden md:block'
               }`}
             >
-              <div className='flex-shrink-0 '>
+              <div className='flex-shrink-0 bg-[var(--bg-secondary)] rounded-t-lg'>
                 <Link to={`/detail/${artwork.id}?source=${artwork.source}&from=showcase`}>
               <img 
                 src={artwork.imageUrl} 
                 alt={artwork.title}
-                className='w-full h-64 p-4 md:w-96 md:h-72 object-cover rounded shadow object-center'
+                className='w-full h-64 p-4 md:w-96 md:h-72 object-cover rounded-lg shadow object-center'
               />
               </Link>
               </div>
               
               {/* check positioning of details and teh forward/back arrows */}
-              <div className='bg-[var(--bg-card)] w-full md:max-w-96 h-auto flex flex-col justify-start '>
+              <div className='bg-[var(--bg-card)] border-[var(--border-secondary)] border-t-2 w-full md:max-w-96 h-auto flex flex-col justify-start '>
                 {/* title/artist data */}
-                <h4 className='mt-2 text-md text-[var(--text-primary)] p-2 font-semibold'>{artwork.title}</h4>
-                <hr className='w-1/2 text-center mx-auto text-[var(--text-primary)]'/>
+                <h4 className='text-md text-[var(--text-primary)] pt-2 pb-1 font-semibold'>{artwork.title}</h4>
+                <hr className='w-1/2 text-center mx-auto text-[var(--text-accent)]'/>
                 <div className='flex flex-col text-left p-2'>
                   <p className='text-[var(--text-secondary)] text-sm '>Artist: 
-                    <span className=''> {artwork.artist || 'Unknown'}</span></p>
-                  <p className='text-[var(--text-secondary)] text-sm'>Date:<span> {artwork.period || 'No date available'}</span>
+                    <span className='font-semibold'> {artwork.artist || 'Unknown'}</span></p>
+                  <p className='text-[var(--text-secondary)] text-sm'>Date:<span className='font-semibold'> {artwork.period || 'No date available'}</span>
                   </p>
-                  <p className='text-[var(--text-secondary)] text-sm '>Description: {artwork.description ? truncate(artwork.description) : 'No description available'}</p>
+                  <p className='text-[var(--text-secondary)] text-sm '>Description: <span className='font-semibold'> {artwork.description ? truncate(artwork.description) : 'No description available'}</span></p>
                 </div>
-                <hr />
+                <hr className='text-[var(--text-accent)] opacity-50'/>
                 <div className='text-xs italic py-2 bg-[var(--bg-accent)]'>{artwork.repository || 'Source unavailable'}</div>
               </div>
 

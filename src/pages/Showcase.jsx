@@ -31,7 +31,7 @@ const Showcase = () => {
   return (
     <section id="showcase"  className="bg-[var(--bg-primary)] p-4">
     <div className="relative w-full min-h-screen pt-28 flex items-center flex-col text-[var(--text-primary)] ">
-      <h2 className="font-serif md:text-4xl text-2xl font-bold mb-4 text-center">The Daily Showcase</h2>   
+      <h2 className="font-serif md:text-4xl text-2xl font-bold mb-4 text-center text-[var(--text-accent)]">The Daily Showcase</h2>   
         <span className="text-[var(--text-primary)] leading-6  md:max-w-4xl mx-auto mb-4">
             Each day, we pull together a small collection of artworks based on a 
             random theme or era — anything from ancient tools to abstract painting. 
@@ -48,7 +48,7 @@ const Showcase = () => {
 
       {isLoading && (
       <div className="flex flex-col pt-10 justify-center items-center text-[var(--text-primary)]">
-        <ClipLoader color="#ffa600" size={64} className="mr-2"></ClipLoader>
+        <ClipLoader color="#c19a6b" size={64} className="mr-2"></ClipLoader>
         <p className='text-lg font-medium'>Loading...</p>
       </div>
       )}
