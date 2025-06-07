@@ -27,7 +27,7 @@ const [showCollections, setShowCollections] = useState(false);
 
         <hr className='bg-[var(--accent-secondary)] h-1 rounded-full w-4/8 mx-auto my-10'/>
 
-        <div className='flex flex-col max-w-full md:flex-row gap-4 justify-center my-6'>
+        <div className='flex flex-col max-w-full md:flex-row gap-4 justify-center my-6 px-10'>
           {/* View collections */}
           <button
             onClick={() => setShowCollections(prev => !prev)}
