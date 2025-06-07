@@ -8,7 +8,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import  AuthModal  from './AuthModal'
 import  useUserStore  from '../store/useUserStore'
 import { toast } from 'react-hot-toast'
-import logo from '../assets/Logo1.png'
+// import logo from '../assets/Logo1.png'
 import { ThemeToggle } from './ThemeToggle';
 
 

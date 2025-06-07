@@ -57,7 +57,7 @@ const ArtworkDisplay = ({data, backLink}) => {
 
 
   return (
-    <section id='detail' className="min-h-screen pt-28 bg-[var(--bg-primary)] ">
+    <section id='detail' className="min-h-screen pt-28 bg-[var(--bg-primary)] max-w-full">
       <div className="pb-10 flex items-center flex-col mx-4 lg:mx-20 ">
 
         <div className="place-self-start">
@@ -128,7 +128,7 @@ const ArtworkDisplay = ({data, backLink}) => {
             src={data.imageUrl} alt={data.title || 'Artwork'} />  
           </div>
 
-          <div className="w-full text-[var(--text-primary)] px-4 flex flex-row">
+          <div className="w-full text-[var(--text-primary)] px-4 flex flex-col md:flex-row">
             <div className="mr-4">
               {isAuthenticated && (
                 <div className='flex justify-center'>

@@ -34,7 +34,7 @@ export default function ShareButton({title, url}) {
   const linkedinShareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title)}`;
 
   return (
-    <div className="flex flex-row items-center space-x-4">
+    <div className="flex flex-row items-center justify-between max-w-full">
       {/* Web Share / Copy Link */}
       <button onClick={handleShare} className="px-3 sm:text-sm rounded-full  hover:bg-[var(--accent-hover)]">
         <Share2 className="h-5 w-5 md:h-6 md:w-6 lg:h-6 lg:w-6  text-[var(--text-accent)]" />
