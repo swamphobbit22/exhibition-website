@@ -129,7 +129,7 @@ const ArtworkDisplay = ({data, backLink}) => {
               {isAuthenticated && (
                 <div className='flex justify-center'>
                   <button
-                    className={`place-self-center w-52 my-4 rounded-full py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                    className={`place-self-center w-52 my-4 rounded-full text-sm md:text-base font-semibold py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
                       onClick={async (e) => {
                       e.stopPropagation();
                       e.preventDefault();
