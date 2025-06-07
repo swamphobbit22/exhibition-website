@@ -31,7 +31,7 @@ const Home = () => {
           initial={{ y:20, opacity:0 }}
           animate={{y:0, opacity:1 }}
           transition={{ delay: 0.2}}
-          className='text-5xl md:text-7xl font-bold mb-6 text-[var(--text-primary)]'
+          className='text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-[var(--text-primary)]'
           >
             Art & Artifacts 
             <p></p>A Journey Through Time

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import useUserStore from "../store/useUserStore";
 import useCollectionStore from "../store/useCollectionStore";
 import { toast } from 'react-hot-toast';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const UserCollectionsContent = () => {
     const { user, isAuthenticated} = useUserStore();
@@ -45,7 +46,10 @@ const UserCollectionsContent = () => {
           <h2 className='text-center text-3xl font-semibold mb-10 mt-8  text-[var(--text-accent)]'>Your Saved Collections</h2>  
         
           {collectionsLoading ? ( 
-            <p className='text-center mt-10'>Loading collections...</p>
+            
+            <p className='text-center mt-10'>
+              <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8"></ClipLoader>
+              <br />Loading collections...</p>
           ): (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mx-4 sm:mx-10 p-10">
               {collections.length === 0 ? ( 

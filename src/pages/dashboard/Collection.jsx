@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import useCollectionStore from '../../store/useCollectionStore';
 import useUserStore from '../../store/useUserStore';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Collection = () => {
     const { id } = useParams();
@@ -52,7 +53,9 @@ const Collection = () => {
 
             <div >
             {collectionsLoading ? (
-                <div className="text-center text-[var(--text-primary)]">Loading artworks...</div>
+                <div className="text-center text-[var(--text-primary)]">
+                    <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8"></ClipLoader>
+                    <br />Loading artworks...</div>
             ) : currentCollectionArtworks.length === 0 ? (
                 <div className="text-center text-[var(--text-primary)]">
                     <p>This collection is empty</p>

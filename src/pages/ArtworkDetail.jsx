@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query";
 import { fetchArtworkById } from "../service/getArtworkById";
 import ArtworkDisplay from "../components/ArtworkDisplay";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const ArtworkDetail = () => {
     const { id } = useParams();
@@ -28,9 +29,16 @@ const ArtworkDetail = () => {
         // console.log(results, 'results from artwork detail')
     })
 
-    if(isLoading) return <div className="pt-20 flex justify-center">Loading...</div>;
-    if(error) return <div className="pt-20 flex justify-center">Error loading artwork: {error.message}</div>
-    if(!data) return <div className="pt-20 flex justify-center">No artwork found</div>;
+    if(isLoading) return 
+    <div className="pt-60 flex justify-center items-center text-center">
+      <p className='text-center mt-10'>
+        <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8"></ClipLoader>
+        <br />
+        Loading artwork...
+      </p> 
+    </div>;
+    if(error) return <div className="pt-60 flex justify-center items-center">Error loading artwork: {error.message}</div>
+    if(!data) return <div className="pt-60 flex justify-center items-center">No artwork found</div>;
 
     return <ArtworkDisplay data={data} backLink={backLink}/>
  

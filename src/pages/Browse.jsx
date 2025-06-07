@@ -306,7 +306,7 @@ const Browse = () => {
           <div>
             {isLoading && (
               <div className="flex flex-col pt-10 justify-center items-center text-[var(--text-primary)]">
-                <ClipLoader color="#ffa600" size={64} className="mr-2 mb-8"></ClipLoader>
+                <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8"></ClipLoader>
                 <p className='text-lg font-medium'>{loadingMessage}</p>
               </div>
             )}

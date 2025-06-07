@@ -140,6 +140,7 @@ const handlePasswordReset = async (e) => {
           {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
         </button>
 
+        {/* for password reset */}
         {!showPasswordReset ? (
           <button
             type="button"

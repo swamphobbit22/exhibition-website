@@ -49,7 +49,7 @@ const Navigation = () => {
 
   return (
    <>
-      <nav className="fixed hidden md:flex top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)]">
+      <nav className="fixed hidden md:hidden lg:flex top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 w-full">
           <div className="flex items-center justify-between h-16">
             
@@ -62,7 +62,7 @@ const Navigation = () => {
               <span className="text-3xl font-bold text-[var(--text-primary)]">Museum</span>
             </Link>
             
-            <div className="flex items-center space-x-8 text-[var(--text-primary)]">
+            <div className="flex items-center space-x-8 md:space-x-4 text-[var(--text-primary)]">
               <NavLink 
                 to="/showcase" 
                 className={({ isActive }) => 
@@ -149,7 +149,7 @@ const Navigation = () => {
 
       {/* Mobile Nav */}
       <div className="lg:hidden">
-        <div className="fixed top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]/80">
+        <div className="fixed top-0 w-full  backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]/80">
           <div className="flex items-center justify-between px-4 h-16">
             <Link to="/" className="flex items-center space-x-1" onClick={closeMobileNav}>
               <MuseumTwoToneIcon fontSize='large' color='inherit' text='white'/>
@@ -164,7 +164,7 @@ const Navigation = () => {
               className="p-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors"
               aria-label="Toggle menu"
             >
-              {isMobOpen ? <X className='w-6 h-6'/> : <Menu className='w-6 h-6'/>}
+              {isMobOpen ? <X  className='w-6 h-6'/> : <Menu className='w-6 h-6'/>}
             </button>
           </div>
         </div>
@@ -179,7 +179,7 @@ const Navigation = () => {
 
         {/* Mobile nav overlay */}
         <div
-          className={`fixed top-0 right-0 z-50 h-full w-3/4 bg-[var(--bg-primary)] shadow-lg transform transition-transform ease-in-out duration-300 ${
+          className={`fixed top-0 right-0 z-50 h-full sm:w-1/2 md:w-1/4 bg-[var(--bg-primary)] shadow-lg transform transition-transform ease-in-out duration-300 ${
             isMobOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

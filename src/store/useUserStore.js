@@ -22,7 +22,7 @@ const useUserStore = create((set, get) => ({
        supabase
       .from('profiles')
       .upsert({ id: userId }, { onConflict: 'id'})
-      .catch((error) => console.error('Profile upsert error:', error));
+      .then((error) => console.error('Profile upsert error:', error));
 
        supabase
         .from('profiles')
