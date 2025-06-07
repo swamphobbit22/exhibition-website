@@ -52,7 +52,7 @@ const ArtList = ({ artwork, detailUrl }) => {
   
   return (
     <>
-        <div className='flex flex-col md:flex-row lg:flex-row items-center gap-3 p-3 border-b bg-[var(--bg-primary)] rounded-lg mb-6 dark:border-2 border-[var(--border-secondary)] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer'>
+        <div className='flex flex-col md:flex-row lg:flex-row items-center gap-3 p-3 border-b bg-[var(--bg-primary)] rounded-lg mb-6 dark:border-2 border-[var(--border-secondary)] overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 '>
           {imageUrl ? (
             <Link to={detailUrl}>
               <motion.img 
@@ -70,10 +70,13 @@ const ArtList = ({ artwork, detailUrl }) => {
             </div>
             )}
 
-            <div className='w-full md:w-5/8 text-center  text-sm lg:text-lg text-[var(--text-primary)] p-2 lg:ml-10  border-2 border-[var(--border-accent)] bg-[var(--bg-elevated)] rounded'>
+            
+            <div className='w-full md:w-5/8 text-center  text-sm lg:text-lg text-[var(--text-primary)] p-2 lg:ml-10  border-2 border-[var(--border-accent)] bg-[var(--bg-elevated)] rounded cursor-pointer'>
+              <Link to={detailUrl}>
                 <h3 className=' text-center font-semibold text-[var(--text-accent)]'>{stripHtmlTags(artwork.title || 'Unknown Title')} </h3>
                 <span className='font-semibold text-[var(--text-secondary)] italic'>{artwork.artist || 'Unknown Artist'}</span> <br />
                 <span className='font-semibold text-[var(--text-muted)]'>{artwork.medium || 'N/A'}</span> 
+              </Link>
             </div>
 
             <div 
@@ -81,9 +84,9 @@ const ArtList = ({ artwork, detailUrl }) => {
               className='w-full md:w-[30%] flex flex-col gap-4 self-start'
             >
             <div className='flex bg-[var(--bg-primary)] '>
-              <button className='bg-[var(--bg-primary)] w-full p-4'>
+              <div className='bg-[var(--bg-primary)] w-full p-4 text-center'>
                 <span className='font-semibold text-[var(--text-secondary)] text-sm lg:text-md'>{artwork.repository}</span>
-              </button>
+              </div>
 
               {/* add to favourites */}
                  <button className='mx-2 cursor-pointer'>

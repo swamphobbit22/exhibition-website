@@ -62,6 +62,7 @@ const Browse = () => {
   }, [searchTerm, artist, medium, source, currentPage, setSearchParams, viewMode])
 
 
+  // loading messages
   useEffect(() => {
     let timers = [];
 
@@ -162,7 +163,7 @@ const Browse = () => {
   // breakpoints for my masonry grid
   const breakpointColumnsObj = {
     default: 3,
-    1024: 2,
+    1100: 2,
     700: 1,
     500: 1
   };
@@ -197,9 +198,12 @@ const Browse = () => {
             {/* search box and clear button*/}
             <div className='relative flex-1'>
               <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-primary)] w-5 h-5 '/>
+              <label htmlFor="search-input" className="sr-only">Search this site</label>
               <input 
-                type="text"
-                placeholder='Search for artwork'
+                id="search-input"
+                type="search"
+                name="q"
+                placeholder='Search...'
                 value={searchTerm} 
                 onChange={(e) => setsearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}
@@ -231,6 +235,7 @@ const Browse = () => {
             {/* search button */}
             <button 
               type='submit' 
+              aria-label='submit search'
               onClick={handleSubmitSearch}
               disabled={isLoading}
               className='flex items-center px-6 py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
@@ -239,7 +244,7 @@ const Browse = () => {
               {isLoading ? (
                 <Loader2Icon className='w-5 h-5 animate-spin'/> 
               ): (
-                <span>Search</span>
+                <span className='text-center'>Search</span>
               )}
             </button>
           </div>
@@ -247,7 +252,7 @@ const Browse = () => {
             {/* display the filters */}
             {showFilters && (
               <div className="bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)] p-4 rounded-b shadow-md mt-1 grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
-                <label htmlFor="" className="block text-md font-semibold mb-1">Sort
+                <label className="block text-md font-semibold mb-1">Sort
                   <SortDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
                 </label>
                 <div>
@@ -262,6 +267,7 @@ const Browse = () => {
                 <div className='md:col-span-3 flex justify-center'>
                   <button
                     type='button'
+                    aria-label='clear sort and filters'
                     onClick={clearFilters}
                     className='text-[var(--text-primary)] text-sm flex items-center gap-1 hover:text-[var(--accent-hover)] transition-colors'
                   >
@@ -288,13 +294,15 @@ const Browse = () => {
               <div className='right-0 cursor-pointer mb-4 flex justify-end'> 
                 {viewMode === 'grid' ? (
                   <ViewListIcon 
-                    fontSize="large" 
+                    fontSize="large"
+                    aria-label='List view'
                     onClick={() => setViewMode('list')}
                     className="text-[var(--text-accent)] hover:text-[var(--accent-secondary)]"
                   />
                   ) : (
                   <Grid4x4Icon 
                     fontSize="large" 
+                    aria-label='grid-view'
                     onClick={() => setViewMode('grid')}
                     className="text-[var(--text-accent)] hover:text-[var(--accent-secondary)]"
                   />

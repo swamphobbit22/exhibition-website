@@ -1,14 +1,12 @@
-import { useState, useRef, useEffect} from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Images, User, LogOut, X, Menu, ChevronDown} from 'lucide-react'
-import MuseumTwoToneIcon from '@mui/icons-material/MuseumTwoTone';
-// import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import { useState, useRef, useEffect} from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Images, User, LogOut, X, Menu, ChevronDown} from 'lucide-react';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import HomeIcon from '@mui/icons-material/Home';
-import  AuthModal  from './AuthModal'
-import  useUserStore  from '../store/useUserStore'
-import { toast } from 'react-hot-toast'
-// import logo from '../assets/Logo1.png'
+import MuseumOutlinedIcon from '@mui/icons-material/MuseumOutlined';
+import  AuthModal  from './AuthModal';
+import  useUserStore  from '../store/useUserStore';
+import { toast } from 'react-hot-toast';
 import { ThemeToggle } from './ThemeToggle';
 
 
@@ -55,9 +53,8 @@ const Navigation = () => {
             
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 mt-2 mb-2 flex-shrink-0">
-              <MuseumTwoToneIcon fontSize='large' color='inherit' text='white'/>
+              <MuseumOutlinedIcon  color='inherit'  style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} />
               <span className="text-3xl font-bold text-[var(--text-primary)]">MuseoNet</span>
-              {/* <img src={logo} alt="logo" className='w-14 h-10 md:w-38 md:h-20 max-w-full max-h-full'/> */}
               <span className="text-3xl font-bold text-[var(--text-primary)]">Virtual</span>
               <span className="text-3xl font-bold text-[var(--text-primary)]">Museum</span>
             </Link>
@@ -98,7 +95,7 @@ const Navigation = () => {
                     className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--accent-hover)] transition-colors p-2 rounded-md"
                   >
                     <User className="w-6 h-6" />
-                    <span className="text-sm lg:text-md">{user?.email}</span>
+                    <span className="text-md lg:text-md font-semibold">{user?.email}</span>
                     <ChevronDown className={`w-4 h-4 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
                   
@@ -110,7 +107,8 @@ const Navigation = () => {
                         className="flex items-center gap-2 px-4 py-2 text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors"
                         onClick={() => setIsUserDropdownOpen(false)}
                       >
-                        <HomeIcon className="w-4 h-4" />
+                        <HomeIcon 
+                        className="w-4 h-4" />
                         Dashboard
                       </NavLink>
                       <NavLink 
@@ -152,9 +150,8 @@ const Navigation = () => {
         <div className="fixed top-0 w-full  backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]/80">
           <div className="flex items-center justify-between px-4 h-16">
             <Link to="/" className="flex items-center space-x-1" onClick={closeMobileNav}>
-              <MuseumTwoToneIcon fontSize='large' color='inherit' text='white'/>
+              <MuseumOutlinedIcon  color='inherit'  style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} />
               <span className="text-lg font-bold text-[var(--text-primary)]">MuseoNet</span>
-              {/* <img src={logo} alt="logo" className='w-14 h-10 md:w-38 md:h-20 max-w-full max-h-full'/> */}
               <span className="text-lg font-bold text-[var(--text-primary)]">Virtual</span>
               <span className="text-lg font-bold text-[var(--text-primary)]">Museum</span>
             </Link>
@@ -212,7 +209,7 @@ const Navigation = () => {
 
             {isAuthenticated ? (
               <div className="flex flex-col space-y-3 mt-6 pt-6 border-t border-[var(--border-secondary)]">
-                <div className="text-sm text-[var(--text-secondary)] mb-2">
+                <div className="text-sm font-semibold text-[var(--text-secondary)] mb-2">
                   {user?.email}
                 </div>
                 

@@ -11,6 +11,7 @@ import Collection from './pages/dashboard/Collection'
 import UserHome from "./pages/dashboard/UserHome"
 import useUserStore from "./store/useUserStore"
 import ResetPassword from './pages/ResetPassword'
+import Footer from './components/Footer'
 
 function App() {
   const initialise = useUserStore(state => state.initialise)
@@ -37,6 +38,7 @@ function App() {
           <Route path="/dashboard/collection/:id" element={<Collection />} />  
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>   
+        <Footer />
         </div>
     </BrowserRouter>
 

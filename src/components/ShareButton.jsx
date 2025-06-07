@@ -11,8 +11,8 @@ export default function ShareButton({title, url}) {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: title || "Artwork",
-        text: "Check out this artwork!",
+        title: title || "MuseoNet Artwork",
+        text: "Check out this artwork on MuseoNet Virtual Museum!",
         url: shareUrl,
       })
       .then(() => console.log("Shared successfully!"))
@@ -36,23 +36,23 @@ export default function ShareButton({title, url}) {
   return (
     <div className="flex flex-row items-center justify-between max-w-full">
       {/* Web Share / Copy Link */}
-      <button onClick={handleShare} className="px-3 sm:text-sm rounded-full  hover:bg-[var(--accent-hover)]">
-        <Share2 className="h-6 w-6 md:h-6 md:w-6 lg:h-6 lg:w-6  text-[var(--text-accent)]" />
+      <button aria-label="share this page" onClick={handleShare} className="px-3 py-3 sm:text-sm rounded-full  hover:bg-[var(--accent-secondary)]">
+        <Share2 className="h-6 w-6 md:h-6 md:w-6 lg:h-6 lg:w-6  text-[var(--text-primary)]" />
       </button>
 
       {/* X (Twitter) */}
-      <a href={xShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]">
-        <FaXTwitter className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-accent)]"/>
+      <a href={xShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]" aria-label="Share on X (Twitter)">
+        <FaXTwitter className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-primary)]"/>
       </a>
 
       {/* Facebook */}
-      <a href={facebookShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]">
-        <FaFacebook className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8  text-[var(--text-accent)]" />
+      <a href={facebookShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]" aria-label="Share on Facebook">
+        <FaFacebook className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8  text-[var(--text-primary)]" />
       </a>
 
       {/* LinkedIn */}
-      <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]">
-        <FaLinkedin className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-accent)]" />
+      <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]" aria-label="Share on X (Twitter)">
+        <FaLinkedin className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-primary)]" />
       </a>
     </div>
   );

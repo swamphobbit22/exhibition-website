@@ -9,7 +9,6 @@ import useFavouritesStore from '../store/useFavouritesStore';
 import {removeArtworkFromAllCollections} from '../utils/collectionUtils'
 import{removeFavourite} from '../utils/favouritesUtils'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ShareIcon from '@mui/icons-material/Share';
 import ShareButton from './ShareButton';
 import { toast } from 'react-hot-toast';
 
@@ -22,10 +21,6 @@ const ArtworkDisplay = ({data, backLink}) => {
   const inCollection = isArtworkInCollection(data.id)
   const isInFavourites = isFavourited(data.id)
 
-  // console.log('Current favourites array:', useFavouritesStore.getState().favourites); 
-  // console.log('Looking for object_id:', data.id); 
-  // console.log(isInFavourites, '<<< is in favourites')
-
   useEffect(() => {
   if (user?.id) {
     fetchUserFavourites(user.id);
@@ -33,9 +28,6 @@ const ArtworkDisplay = ({data, backLink}) => {
   }, [user?.id, fetchUserFavourites]);
 
   if(!data) return null;
-  // if (!isAuthenticated) return null;    
-
-
   
   const handleAddToFavourites = async () => {
   
@@ -57,7 +49,7 @@ const ArtworkDisplay = ({data, backLink}) => {
 
 
   return (
-    <section id='detail' className="min-h-screen pt-28 bg-[var(--bg-primary)] max-w-full">
+    <section id='artwork-detail' className="min-h-screen pt-28 bg-[var(--bg-primary)] max-w-full">
       <div className="pb-10 flex items-center flex-col mx-4 lg:mx-20 ">
 
         <div className="place-self-start">
@@ -72,7 +64,7 @@ const ArtworkDisplay = ({data, backLink}) => {
         </div>
 
         <div className="mt-6 p-4 grid grid-cols-1 md:grid-cols-2 max-w-md md:max-w-4xl lg:max-w-5xl bg-[var(--bg-elevated)] border-2 border-[var(--border-primary)] gap-4 ">
-          <div className="max-w-4xl p-4 pb-2 bg-[var(--bg-card)] border-2 border-[var(--border-secondary)] relative">
+          <div id="artwork-details" className="max-w-4xl p-4 bg-[var(--bg-card)] border-2 border-[var(--border-secondary)] flex flex-col min-h-96">
             <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center text-[var(--text-accent)]">
               {stripHtmlTags(data.title)}
             </h2> 
@@ -81,47 +73,50 @@ const ArtworkDisplay = ({data, backLink}) => {
             </h3>
             <hr className="mb-1 mt-2 text-[var(--text-accent)] w-2/3 mx-auto"/>
 
-            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto  mt-4 pl-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl mt-4 pl-2 ">
               Date:  
               <span className='text-[var(--text-primary)]'> {data.period || 'No date available '}</span>
             </p> 
 
-            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto  pl-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl pl-2">
               Culture: 
               <span className='text-[var(--text-primary)]'> {data.culture || 'Information unavailable'}</span>
             </p>
 
-            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto  pl-2 mb-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl pl-2 mb-2">
               Classification: 
               <span className='text-[var(--text-primary)]'> {data.classification || 'Information unavailable'}</span>
             </p>
 
-            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto pl-2 mb-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl pl-2 mb-2">
               Medium: <br />
               <span className='text-[var(--text-primary)]'> {data.medium || 'Medium unknown'}</span>
             </p>
 
-            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto pl-2 mb-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl pl-2 mb-2">
               Dimensions: <br />
               <span className='text-[var(--text-primary)]'> {data.dimensions || 'Dimensions unknown'}</span>
             </p>
 
-            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto mb-2 pl-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl pb-12 pl-2">
               Description: <br />
               <span className='text-[var(--text-primary)]'>{data.description || 'No description available'}</span>
             </p>
             
-            <span className='mt-4 pl-2 block font-normal border-2 border-[var(--border-accent)] bg-[var(--bg-accent)]'>
+            <div className='flex-grow'></div>
+            <span className='mt-4 font-normal border-2 border-[var(--border-accent)] bg-[var(--bg-accent)]'>
               <a href={data.resourceUrl} target="_blank" rel="noopener noreferrer" className='text-[var(--text-secondary)] hover:text-[var(--accent-hover)] cursor-pointer mt-4'>
                 View on the {data.repository}
               </a>
             </span>
           </div>
           
-          <div className="p-2  border-2 border-[var(--border-secondary)] flex justify-center items-center rounded-lg">
+          <div id='artwork-image' className="border-2 border-[var(--border-secondary)] flex flex-col justify-center items-center rounded-lg">
             <img 
-            className="bg-shadow place-self-center object-fit"
+            aria-label={data.title || 'Artwork image'}
+            className="px-2 pt-2 bg-shadow place-self-center object-fit transition-transform duration-600 hover:scale-130 ease-in-out cursor-pointer"
             src={data.imageUrl} alt={data.title || 'Artwork'} />  
+            <span className='mt-4 pb-2 text-[var(--text-accent)]'>Hover over the image to make it bigger</span>
           </div>
 
           <div className="w-full text-[var(--text-primary)] px-4 flex flex-col md:flex-row">
@@ -129,7 +124,8 @@ const ArtworkDisplay = ({data, backLink}) => {
               {isAuthenticated && (
                 <div className='flex justify-center'>
                   <button
-                    className={`place-self-center w-52 my-4 rounded-full text-sm md:text-base font-semibold  px-2 py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                    className={`place-self-center w-52 my-4 rounded-full text-sm md:text-base font-semibold  px-1 py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                      aria-label='add or remove from collection'
                       onClick={async (e) => {
                       e.stopPropagation();
                       e.preventDefault();
@@ -147,6 +143,7 @@ const ArtworkDisplay = ({data, backLink}) => {
                       <button className='ml-3 cursor-pointer'>
                         <FavoriteIcon 
                           fontSize='large'
+                          aria-label='favourites icon'
                           onClick={async() => {
                             const currentlyFavourited = isFavourited(data.id);
 
