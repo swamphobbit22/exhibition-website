@@ -72,7 +72,7 @@ const ArtworkDisplay = ({data, backLink}) => {
         </div>
 
         <div className="mt-6 p-4 grid grid-cols-1 md:grid-cols-2 max-w-md md:max-w-4xl lg:max-w-5xl bg-[var(--bg-elevated)] border-2 border-[var(--border-primary)] gap-4 ">
-          <div className="max-w-4xl p-4 bg-[var(--bg-card)] border-2 border-[var(--border-secondary)] relative">
+          <div className="max-w-4xl p-4 pb-2 bg-[var(--bg-card)] border-2 border-[var(--border-secondary)] relative">
             <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-4 text-center text-[var(--text-accent)]">
               {stripHtmlTags(data.title)}
             </h2> 
@@ -106,16 +106,12 @@ const ArtworkDisplay = ({data, backLink}) => {
               <span className='text-[var(--text-primary)]'> {data.dimensions || 'Dimensions unknown'}</span>
             </p>
 
-            {/* <hr className="mb-4 mt-4 text-[var(--text-accent)] w-2/3 mx-auto"/>  */}
-            <p className="text-[var(--text-secondary)] bg-pink-200 max-w-3xl mx-auto mb-2 pl-2">
+            <p className="text-[var(--text-secondary)] max-w-3xl mx-auto mb-2 pl-2">
               Description: <br />
               <span className='text-[var(--text-primary)]'>{data.description || 'No description available'}</span>
             </p>
-
-            {/* <p>Resource Url: {data.resourceUrl || 'url unavailable'}</p> */}
             
-            <span className='mt-4 pl-2 absolute bottom-2  font-semibold'>
-              {/* {data.repository}  */}
+            <span className='mt-4 pl-2 block font-normal border-2 border-[var(--border-accent)] bg-[var(--bg-accent)]'>
               <a href={data.resourceUrl} target="_blank" rel="noopener noreferrer" className='text-[var(--text-secondary)] hover:text-[var(--accent-hover)] cursor-pointer mt-4'>
                 View on the {data.repository}
               </a>
