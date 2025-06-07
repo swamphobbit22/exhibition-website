@@ -51,7 +51,7 @@ const UserCollectionsContent = () => {
               <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8"></ClipLoader>
               <br />Loading collections...</p>
           ): (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mx-4 sm:mx-10 p-10 ">
+            <div className="max-w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mx-4 md:mx-10 ">
               {collections.length === 0 ? ( 
                 <p className='text-center text-[var(--text-primary)] text-lg'>You don't have any collections yet!</p>
               ) : (
@@ -72,8 +72,8 @@ const UserCollectionsContent = () => {
 
                   {/* <div className="absolute inset-0 bg-black bg-opacity-10"></div> */}
 
-                  <div className='relative z-10'>
-                    <h4 className="text-lg font-bold text-center text-[var(--text-primary)] ">{collection.name}</h4>
+                  <div className='relative z-10 bg-[var(--bg-accent)]/70 w-auto place-self-center rounded p-2'>
+                    <h4 className="text-md md:text-lg font-bold text-center text-[var(--text-primary)] ">{collection.name}</h4>
                     <p className="text-sm text-center text-[var(--text-primary)] font-semibold mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  
                   </div>
                     <button
