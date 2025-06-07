@@ -37,22 +37,22 @@ export default function ShareButton({title, url}) {
     <div className="flex flex-row items-center justify-between max-w-full">
       {/* Web Share / Copy Link */}
       <button onClick={handleShare} className="px-3 sm:text-sm rounded-full  hover:bg-[var(--accent-hover)]">
-        <Share2 className="h-5 w-5 md:h-6 md:w-6 lg:h-6 lg:w-6  text-[var(--text-accent)]" />
+        <Share2 className="h-6 w-6 md:h-6 md:w-6 lg:h-6 lg:w-6  text-[var(--text-accent)]" />
       </button>
 
       {/* X (Twitter) */}
       <a href={xShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]">
-        <FaXTwitter className="h-5 w-5 md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-accent)]"/>
+        <FaXTwitter className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-accent)]"/>
       </a>
 
       {/* Facebook */}
       <a href={facebookShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]">
-        <FaFacebook className="h-5 w-5 md:h-8 md:w-8 lg:h-8 lg:w-8  text-[var(--text-accent)]" />
+        <FaFacebook className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8  text-[var(--text-accent)]" />
       </a>
 
       {/* LinkedIn */}
       <a href={linkedinShareUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full hover:bg-[var(--accent-secondary)]">
-        <FaLinkedin className="h-5 w-5 md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-accent)]" />
+        <FaLinkedin className="h-6 w-6  md:h-8 md:w-8 lg:h-8 lg:w-8 text-[var(--text-accent)]" />
       </a>
     </div>
   );

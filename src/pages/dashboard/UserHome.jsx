@@ -17,20 +17,21 @@ const [showCollections, setShowCollections] = useState(false);
   return (
 
     <section id="home" className='pt-28 pb-8 min-h-screen flex flex-col items-center bg-[var(--bg-primary)]'>
-      <div className='px-2 mb-2 md:w-full'>
-        <h2 className='text-2xl text-[var(--text-secondary)] italic text-center mb-4'>Hello {user?.email}</h2>
+      <div className='mb-2 max-w-full'>
+        <h2 className='md:text-2xl text-[var(--text-secondary)] italic text-center mb-4'>Hello {user?.email}</h2>
         <h3 className='text-3xl text-[var(--text-accent)] font-bold text-center mb-6'>Welcome to Your Dashboard</h3>
-        <p className=' text-[var(--text-secondary)] text-center'>
+        <p className='mx-2 text-[var(--text-secondary)] text-center'>
           Here you can manage your account, 
           create and view your collections and change your settings
         </p>
-        <hr className='bg-[var(--accent-secondary)] h-1 rounded-full w-4/8 mx-auto my-10'/>
-        <div className='flex flex-col sm:flex-row gap-4 justify-center my-6'>
 
+        <hr className='bg-[var(--accent-secondary)] h-1 rounded-full w-4/8 mx-auto my-10'/>
+
+        <div className='flex flex-col max-w-full md:flex-row gap-4 justify-center my-6 mx-2'>
           {/* View collections */}
           <button
             onClick={() => setShowCollections(prev => !prev)}
-            className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'
+            className='rounded-full  px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'
           >
             {showCollections? 'Hide Collections' : 'View Collections'} 
           </button>

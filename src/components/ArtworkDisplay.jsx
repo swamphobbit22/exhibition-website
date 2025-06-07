@@ -107,16 +107,16 @@ const ArtworkDisplay = ({data, backLink}) => {
             </p>
 
             {/* <hr className="mb-4 mt-4 text-[var(--text-accent)] w-2/3 mx-auto"/>  */}
-            <p className="text-[var(--text-secondary)] bg- max-w-3xl mx-auto mb-10 pl-2">
+            <p className="text-[var(--text-secondary)] bg-pink-200 max-w-3xl mx-auto mb-2 pl-2">
               Description: <br />
               <span className='text-[var(--text-primary)]'>{data.description || 'No description available'}</span>
             </p>
 
             {/* <p>Resource Url: {data.resourceUrl || 'url unavailable'}</p> */}
             
-            <span className='pl-2 absolute bottom-2  font-semibold'>
+            <span className='mt-4 pl-2 absolute bottom-2  font-semibold'>
               {/* {data.repository}  */}
-              <a href={data.resourceUrl} target="_blank" rel="noopener noreferrer" className='text-[var(--text-secondary)] hover:text-[var(--accent-hover)] cursor-pointer'>
+              <a href={data.resourceUrl} target="_blank" rel="noopener noreferrer" className='text-[var(--text-secondary)] hover:text-[var(--accent-hover)] cursor-pointer mt-4'>
                 View on the {data.repository}
               </a>
             </span>
