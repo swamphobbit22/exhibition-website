@@ -27,7 +27,7 @@ const [showCollections, setShowCollections] = useState(false);
 
         <hr className='bg-[var(--accent-secondary)] h-1 rounded-full w-4/8 mx-auto my-10'/>
 
-        <div className='flex flex-col max-w-full md:flex-row gap-4 justify-center my-6 mx-2'>
+        <div className='flex flex-col max-w-full md:flex-row gap-4 justify-center my-6'>
           {/* View collections */}
           <button
             onClick={() => setShowCollections(prev => !prev)}
@@ -65,7 +65,7 @@ const [showCollections, setShowCollections] = useState(false);
       </div>   
 
       {showAddCollection &&  
-        <div className='relative flex w-full max-w-md flex-col gap-4 rounded-lg border-2 border-[var(--border-accent)] bg-[var(--bg-primary)] p-6 mt-10'> 
+        <div className='relative flex max-w-full md:w-full md:max-w-md flex-col gap-4 rounded-lg border-2 border-[var(--border-accent)] bg-[var(--bg-primary)] p-6 mt-10'> 
         <AddCollection />    
         </div>
       }
