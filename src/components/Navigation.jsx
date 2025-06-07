@@ -179,7 +179,7 @@ const Navigation = () => {
 
         {/* Mobile nav overlay */}
         <div
-          className={`fixed top-0 right-0 z-50 h-full sm:w-1/2 md:w-1/4 bg-[var(--bg-primary)] shadow-lg transform transition-transform ease-in-out duration-300 ${
+          className={`fixed top-0 right-0 z-50 h-full w-3/4 md:w-1/4 bg-[var(--bg-primary)] shadow-lg transform transition-transform ease-in-out duration-300 ${
             isMobOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

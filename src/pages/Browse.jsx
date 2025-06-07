@@ -237,7 +237,7 @@ const Browse = () => {
               >
               {/* button spinner*/}
               {isLoading ? (
-                <Loader2Icon className='w-5 h-5 animate-spin'/>
+                <Loader2Icon className='w-5 h-5 animate-spin'/> 
               ): (
                 <span>Search</span>
               )}
