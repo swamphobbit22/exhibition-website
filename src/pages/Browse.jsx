@@ -241,7 +241,7 @@ const Browse = () => {
               >
               {/* button spinner*/}
               {isLoading ? (
-                <Loader2Icon className='w-5 h-5 animate-spin'/> 
+                <Loader2Icon className='w-5 h-5 animate-spin' aria-label='Searching'/> 
               ): (
                 <span className='text-center font-semibold '>Search</span>
               )}
@@ -252,11 +252,11 @@ const Browse = () => {
             {/* display the filters */}
             {showFilters && (
               <div className="bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)] p-4 rounded-b shadow-md mt-1 grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
-                <label className="block text-md font-semibold mb-1">Sort
+                <label className="block text-md font-semibold mb-1" aria-label='Sort results dropdown'>Sort
                   <SortDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
                 </label>
                 <div>
-                  <label htmlFor="" className="block text-md font-semibold mb-1">Filter by Repository
+                  <label htmlFor="" className="block text-md font-semibold mb-1" aria-label='sort results by repository dropdown'>Filter by Repository
                     <InstituteDropdown sortMethod={sortMethod} setSortMethod={setSortMethod} />
                   </label>
                 </div>
@@ -302,7 +302,7 @@ const Browse = () => {
                   ) : (
                   <Grid4x4Icon 
                     fontSize="large" 
-                    aria-label='grid-view'
+                    aria-label='grid view'
                     onClick={() => setViewMode('grid')}
                     className="text-[var(--text-accent)] hover:text-[var(--accent-secondary)]"
                   />
@@ -314,7 +314,7 @@ const Browse = () => {
           <div>
             {isLoading && (
               <div className="flex flex-col pt-10 justify-center items-center text-[var(--text-primary)]">
-                <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8"></ClipLoader>
+                <ClipLoader color="#c19a6b" size={64} className="mr-2 mb-8" aria-label='Loading artworks'></ClipLoader>
                 <p className='text-lg font-medium'>{loadingMessage}</p>
               </div>
             )}
@@ -360,6 +360,7 @@ const Browse = () => {
             <div className='w-full flex flex-wrap justify-center items-center gap-2 pb-4'>
               <button 
               type='button'
+              aria-label='Previous page'
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={!paginationData.hasPreviousPage}
               className='text-xs md:text-md px-2 py-1 md:px-3 md:py-2 bg-[var(--accent-primary)] rounded disabled:opacity-50 font-bold cursor-pointer'
@@ -369,6 +370,7 @@ const Browse = () => {
               {pageNumbers.map((num) => (
                 <button
                 type='button'
+                aria-label={`Page ${num}`}
                   key={num}
                   onClick={() => setCurrentPage(num)}
                   className={`text-xs md:text-md px-2 py-1 md:px-3 md:py-2 rounded cursor-pointer border-2 ${num === currentPage ? 'bg-[var(--accent-primary)] text-[var(--text-primary)]' : 'bg-[var(--bg-accent)] text-[var(--text-secondary)]'}`}
@@ -380,6 +382,7 @@ const Browse = () => {
 
                 <button 
                 type='button'
+                aria-label='Next page'
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={!paginationData.hasNextPage}
                 className="text-xs md:text-md px-2 py-1 md:px-3 md:py-2 bg-[var(--accent-primary)] rounded disabled:opacity-50 font-bold cursor-pointer"

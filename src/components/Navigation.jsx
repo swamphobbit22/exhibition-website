@@ -54,7 +54,7 @@ const Navigation = () => {
           <div className="flex items-center justify-between h-16 w-full">
             <div className='flex items-center flex-shrink-0'>
               {/* Logo */}
-              <Link to="/" className="flex items-center space-x-2 mt-2 mb-2">
+              <Link to="/" aria-label='Home page' className="flex items-center space-x-2 mt-2 mb-2">
                 <MuseumOutlinedIcon  color='inherit'  style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} />
                 <span className="md:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">MuseoNet</span>
                 <span className="md:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">Virtual</span>
@@ -91,7 +91,7 @@ const Navigation = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <Link to={'/help'}>
+              <Link to={'/help'} aria-label='help'>
                 <HelpIcon style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} className='cursor-pointer'/>
               </Link>
               
@@ -269,7 +269,7 @@ const Navigation = () => {
             <div className='mt-6 pt-6 border-t border-[var(--border-secondary)]'>
               <ThemeToggle />
            
-              <Link to={'/help'}>
+              <Link to={'/help'} aria-label='help'>
                 <HelpIcon style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} className='cursor-pointer ml-4'/>
               </Link>
             </div>
