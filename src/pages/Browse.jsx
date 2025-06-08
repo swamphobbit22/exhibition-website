@@ -218,7 +218,7 @@ const Browse = () => {
                 }}
                 className='absolute right-3 top-1/2 -translate-y-1/2 px-3 py-1 rounded-full font-semibold text-[var(--text-secondary)] bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)] hover:bg-[var(--accent-accent)]'
                 aria-label='clear search'
-                >clear</button>
+                >Clear</button>
               )}
             </div>
 
@@ -227,10 +227,10 @@ const Browse = () => {
               <button
                 type='button'
                 onClick={() => setShowFilters(!showFilters)}
-                className=''
+                className='ml-4'
                 aria-label='Show filters'
                 >
-                <Filter className='w-5 h-5'/>
+                <Filter className='w-6 h-6'/>
               </button>
             
             {/* search button */}
@@ -239,7 +239,7 @@ const Browse = () => {
               aria-label='submit search'
               onClick={handleSubmitSearch}
               disabled={isLoading}
-              className='flex items-center justify-center w-2/3 px-3 py-1 md:px-6 md:py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
+              className='flex items-center justify-center w-2/3 mr-4 px-3 py-1 md:px-6 md:py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
               >
               {/* button spinner*/}
               {isLoading ? (
