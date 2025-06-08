@@ -1,7 +1,7 @@
 export default function Attribution() {
   return (
     <section className=" bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
-        <div className="pt-32 max-w-3xl mx-auto text-sm leading-relaxed">
+        <div className="px-2 pt-32 max-w-3xl mx-auto text-sm leading-relaxed">
         <h1 className="text-xl font-semibold mb-4">Data Sources and Attribution</h1>
 
         <p>

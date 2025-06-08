@@ -8,13 +8,13 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="m-2 rounded-full bg-gray-100 dark:bg-black text-gray-800 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+      className="m-2 rounded-full bg-[var(--bg-primary)] dark:bg-black text-gray-800 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
       aria-label="Toggle theme"
     >
       {theme === 'light' ? (
         <DarkModeIcon className="w-8 h-8 text-white bg-black rounded-full m-2" />
       ) : (
-        <LightModeIcon className="w-8 h-8 text-yellow-300 bg-sky-400 rounded-full m-2" />
+        <LightModeIcon className="w-8 h-8 text-white bg-black rounded-full m-2" />
       )}
     </button>
   );

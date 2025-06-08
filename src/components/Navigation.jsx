@@ -4,6 +4,7 @@ import { Images, User, LogOut, X, Menu, ChevronDown} from 'lucide-react';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import HomeIcon from '@mui/icons-material/Home';
 import MuseumOutlinedIcon from '@mui/icons-material/MuseumOutlined';
+import HelpIcon from '@mui/icons-material/Help';
 import  AuthModal  from './AuthModal';
 import  useUserStore  from '../store/useUserStore';
 import { toast } from 'react-hot-toast';
@@ -48,22 +49,25 @@ const Navigation = () => {
   return (
    <>
       <nav className="fixed hidden md:hidden lg:flex top-0 w-full backdrop-blur-lg z-50 py-2 border-b-2 border-[var(--border-secondary)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 w-full">
-          <div className="flex items-center justify-between h-16">
-            
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2 mt-2 mb-2 flex-shrink-0">
-              <MuseumOutlinedIcon  color='inherit'  style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} />
-              <span className="text-3xl font-bold text-[var(--text-primary)]">MuseoNet</span>
-              <span className="text-3xl font-bold text-[var(--text-primary)]">Virtual</span>
-              <span className="text-3xl font-bold text-[var(--text-primary)]">Museum</span>
-            </Link>
-            
-            <div className="flex items-center space-x-8 md:space-x-4 text-[var(--text-primary)]">
+        <div className="max-w-8xl mx-auto sm:px-6 lg:px-10 w-full">
+          
+          <div className="flex items-center justify-between h-16 w-full">
+            <div className='flex items-center flex-shrink-0'>
+              {/* Logo */}
+              <Link to="/" className="flex items-center space-x-2 mt-2 mb-2">
+                <MuseumOutlinedIcon  color='inherit'  style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} />
+                <span className="md:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">MuseoNet</span>
+                <span className="md:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">Virtual</span>
+                <span className="md:text-2xl lg:text-3xl font-bold text-[var(--text-primary)]">Museum</span>
+              </Link>
+            </div>
+
+            <div className='flex-1 flex justify-center '>
+            <div className="flex items-center space-x-8 md:space-x-4 lg:space-x-12 text-[var(--text-primary)] lg:mr-30">
               <NavLink 
                 to="/showcase" 
                 className={({ isActive }) => 
-                  `text-xl transition-colors ${isActive 
+                  `md:text-lg lg:text-xl transition-colors ${isActive 
                     ? 'text-[var(--text-accent)]' 
                     : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
                   }`
@@ -75,7 +79,7 @@ const Navigation = () => {
               <NavLink 
                 to="/browse"  
                 className={({ isActive }) => 
-                  `text-xl transition-colors ${isActive 
+                  `md:text-lg lg:text-xl transition-colors ${isActive 
                     ? 'text-[var(--text-accent)]' 
                     : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
                   }`
@@ -84,8 +88,14 @@ const Navigation = () => {
                 Search
               </NavLink>
             </div>
+            </div>
 
             <div className="flex items-center space-x-4">
+              <Link to={'/help'}>
+                <HelpIcon style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} className='cursor-pointer'/>
+              </Link>
+              
+
               <ThemeToggle />
               
               {isAuthenticated ? (
@@ -119,6 +129,8 @@ const Navigation = () => {
                         <CollectionsIcon className="w-4 h-4" />
                         Collections
                       </NavLink>
+
+                      
                       <hr className="my-1 border-[var(--border-secondary)]" />
                       <button
                         onClick={handleSignOut}
@@ -139,9 +151,11 @@ const Navigation = () => {
                   <span className="text-lg">Sign In</span>
                 </button>
               )}
+              
             </div>
 
           </div>
+          
         </div>
       </nav>
 
@@ -251,9 +265,13 @@ const Navigation = () => {
                 Sign In
               </button>
             )}
-            
+
             <div className='mt-6 pt-6 border-t border-[var(--border-secondary)]'>
               <ThemeToggle />
+           
+              <Link to={'/help'}>
+                <HelpIcon style={{ color: '#d4af8c' }} sx={{ fontSize: 40 }} className='cursor-pointer ml-4'/>
+              </Link>
             </div>
           </nav>
         </div>

@@ -19,12 +19,30 @@ const handleSubmit = async(e) => {
 
   try {
     if(isLogin) {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data: signInData, error } = await supabase.auth.signInWithPassword({
         email, 
         password,
       });
       if (error) throw error;
+      //check for soft delete
+      const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('deleted_at')
+      .eq('id', signInData.user.id)
+      .single();
+      
+      if(profileError) {
+        throw profileError;
+      }
+
+      if(profile?.deleted_at) {
+        //sign then out
+        await supabase.auth.signOut();
+        throw new Error('This account has been deleted');
+      }
+
       toast.success('Successfully signed in!')
+      
     } else {
       const { data, error } = await supabase.auth.signUp({
         email, 
