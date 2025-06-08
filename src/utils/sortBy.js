@@ -11,8 +11,6 @@ export const sortedByField = (array, field, order = 'asc') => {
     return order === 'desc' ? sortedArray.toReversed() : sortedArray;
 };
 
-
-
 export const sortedByNumber = (array, field, order = 'asc') => {
     const sortedArray = array.toSorted((a, b) => a[field] - b[field]);
     return order === 'desc' ? sortedArray.toReversed() : sortedArray;
@@ -25,4 +23,4 @@ export const sortedByDate = (array, field, order='asc') => {
         return dateA - dateB //put in some error checking
     });
     return order === 'desc' ? sortedArray.toReversed() : sortedArray;
-}
+};

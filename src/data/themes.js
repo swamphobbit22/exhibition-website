@@ -32,8 +32,8 @@
     description: 'From about 3500–500 BCE, Mesopotamian art includes relief carvings, clay tablets with cuneiform, votive statues, and cylinder seals. Civilizations like the Sumerians, Akkadians, and Assyrians focused on rulers and gods.'
   },
   {
-    name: 'Norse Mythology',
-    description: 'Rooted in Viking Age Scandinavia (c. 800–1100 CE), Norse art features runestones, weapons, animal interlace designs, and carvings of gods like Odin and Thor. Art is often found on ships, jewelry, and wood panels.'
+    name: 'Mythology',
+    description: 'Works inspired by myths, legends, and folklore from various cultures, including gods, heroes, and traditional stories passed down through generations.' 
   },
   {
     name: 'Byzantine',
@@ -125,43 +125,10 @@
   },
   {
     name: 'Viking',
-    description: ''
+    description: 'Viking Age Scandinavia (c. 800–1100 CE), Norse art features runestones, weapons, animal interlace designs, and carvings of gods like Odin and Thor. Art is often found on ships, jewelry, and wood panels.'
   },
 
 
 ];
 
 export default themesArray;
-
-
-    // 'Neolithic',
-    // 'Impressionism',
-    // 'Africa',
-    // 'Samurai',
-    // 'Silk Road',
-    // 'Ancient Egypt',
-    // 'China',
-    // 'Mesopotamia',
-    // 'Norse Mythology',
-    // 'Byzantine',
-    // 'Aztec',
-    // 'Inuit',
-    // 'Medieval Europe',
-    // 'Aboriginal Australia',
-    // 'Baroque',
-    // 'Mayan',
-    // 'Rococo',
-    // 'Native American',
-    // 'Mughal India',
-    // 'Gothic',
-    // 'Persian Empire',
-    // 'Art Nouveau',
-    // 'Caribbean',
-    // 'Industrial Revolution',
-    // 'Celtic',
-    // 'Colonial America',
-    // 'Edo Japan',
-    // 'Baseball',
-    // 'Football',
-    // 'Horses',
-    // 'Animals',

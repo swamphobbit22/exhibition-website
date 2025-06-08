@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const SortDropdown = ({ sortMethod, setSortMethod}) => {
   return (
     <div>

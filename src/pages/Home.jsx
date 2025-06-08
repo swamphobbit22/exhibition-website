@@ -65,7 +65,7 @@ const Home = () => {
           
         </motion.div>
         <div className='bg-orange-900 px-2'>
-          <span className='text-[var(--text-primary)] '>Painting: Heitere Gebirgslandschaft by Paul Klee, 1929</span>
+          <span className='text-[var(--text-primary)] text-sm'>Painting: Heitere Gebirgslandschaft by Paul Klee, 1929</span>
         </div>
     </section>
   )

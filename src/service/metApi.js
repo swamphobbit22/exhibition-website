@@ -53,4 +53,3 @@ const getArtWorks = async(objectIds) => {
 
 export{metApi, getMetArtWorkById, getArtWorks}
 
-// added in the limit to 100

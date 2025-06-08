@@ -24,7 +24,7 @@ const handleSubmit = async(e) => {
         password,
       });
       if (error) throw error;
-      //check for soft delete
+      //check that soft delete has been added before authorising
       const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('deleted_at')

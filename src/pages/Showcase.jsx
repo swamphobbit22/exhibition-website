@@ -9,11 +9,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const theme = themesArray[new Date().getDate() % themesArray.length];
 
-//to do - create a separate component to store the themes array!! store it in local storage
-
 const Showcase = () => {
-    // const [loadingMessage, setLoadingMessage] = useState("Loading...");
-   
+
     const { data:showcaseResults, isLoading, error} = useQuery({
     queryKey: ['showcaseTheme'],
     queryFn: async () => {  
@@ -22,11 +19,6 @@ const Showcase = () => {
     }
   })
 
-
-  // if(isLoading) return <div className="pt-28 flex justify-center items-center min-h-screen"><ClipLoader color="#ffa600" size={64} className="mr-2">Loading showcase...</ClipLoader>
-  // </div>
-  // if(error) return <div className="pt-28 flex justify-center">Error loading artwork: {error.message}</div>
-  // if(!showcaseResults) return <div className="pt-28 flex justify-center">No artwork found</div>;
 
   return (
     <section id="showcase"  className="bg-[var(--bg-primary)] p-4">

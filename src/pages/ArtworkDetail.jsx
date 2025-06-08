@@ -26,7 +26,6 @@ const ArtworkDetail = () => {
     const { data, isLoading, error} = useQuery({
         queryKey: ['artwork', id, source],
         queryFn: async () => await fetchArtworkById(id, source)
-        // console.log(results, 'results from artwork detail')
     })
 
     if(isLoading) return 

@@ -24,3 +24,5 @@ const MediumDropdown = () => {
 }
 
 export default MediumDropdown;
+
+// Not used

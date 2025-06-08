@@ -50,9 +50,3 @@ function App() {
 }
 
 export default App
-
-        {/* <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button> */}
-
-        // bg-gradient-to-br from-gray-900 to-gray-700 text-white

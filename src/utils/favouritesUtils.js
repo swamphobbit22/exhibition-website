@@ -5,7 +5,6 @@ export const removeFavourite = async ( artworkId, userId) => {
   const { fetchUserFavourites, deleteFavourite } = useFavouritesStore.getState();
 
   const success = await deleteFavourite(artworkId, userId);
-  // console.log('Delete success:', success);
 
   if (success) {
     await fetchUserFavourites(userId);

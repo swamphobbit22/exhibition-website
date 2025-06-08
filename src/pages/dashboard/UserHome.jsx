@@ -52,11 +52,6 @@ const [showCollections, setShowCollections] = useState(false);
           {showFavourites ? 'Hide Favourites' : 'View Favourites'}
           </button>
           
-          {/* reset password */}
-          {/* <button className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'>
-            Reset Password
-          </button> */}
-
           {/* delete account */}
           <DeleteAccountButton />
 

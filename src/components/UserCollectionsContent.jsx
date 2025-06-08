@@ -26,7 +26,6 @@ const UserCollectionsContent = () => {
         return;
       }
     
-
       if(window.confirm(`Are you sure you want to delete "${collection.name}"? This action cannot be undone`)) {
 
       const success = await deleteCollection(collection.id);
@@ -69,9 +68,6 @@ const UserCollectionsContent = () => {
                       backgroundPosition: 'center'
                     }}
                   >
-
-                  {/* <div className="absolute inset-0 bg-black bg-opacity-10"></div> */}
-
                   <div className='relative z-10 bg-[var(--bg-accent)]/70 w-auto place-self-center rounded p-2'>
                     <h4 className="text-md md:text-lg font-bold text-center text-[var(--text-primary)] ">{collection.name}</h4>
                     <p className="text-sm text-center text-[var(--text-primary)] font-semibold mt-1">Created: {new Date(collection.created_at).toLocaleDateString()}</p>  

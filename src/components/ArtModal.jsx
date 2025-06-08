@@ -50,14 +50,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
       }
     };
 
-
-    // console.log(selectCollection, 'selected collection')
-
-    // console.log(artwork?.id, 'artwork ID in modal');
-
-
     if (!isOpen) return null;
-    // console.log(collections, 'collections in art modal')
 
   return (
     <motion.div

@@ -16,10 +16,6 @@ const DeleteAccountButton = () => {
 
         const { error } = await supabase
             .from('profiles')
-            // .upsert({ 
-            //   id: user.id, 
-            //   deleted_at: new Date().toISOString() 
-            // })
             .update({ deleted_at: new Date().toISOString() })
             .eq('id', user.id)
 
@@ -37,4 +33,4 @@ const DeleteAccountButton = () => {
 
 }
 
-export default DeleteAccountButton
+export default DeleteAccountButton;

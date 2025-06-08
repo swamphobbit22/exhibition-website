@@ -14,13 +14,11 @@ const chicagoApi = async(query) => {
         }
     })
 
-    // limit: 10
     return response.data.data;
 }
 
 //return the image url instead of the binary data - so not axios get
 const getApiImageUrl = (image_id, alt_image_ids) => {
-    // if(!image_id) return null;
     let image;
 
     if(image_id){
@@ -44,8 +42,4 @@ const getChicagoArtWorkById = async (id) => {
     }
 }
 
-export { chicagoApi, getApiImageUrl, getChicagoArtWorkById }
-
-
-
-// removed: limit: 10
+export { chicagoApi, getApiImageUrl, getChicagoArtWorkById };

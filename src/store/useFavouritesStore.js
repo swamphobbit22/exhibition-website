@@ -13,7 +13,6 @@ const useFavouritesStore = create ((set, get) => ({
     // remove from favourites
     // isfavourited
 
-
     addToFavourites: async (objectId, userId, source, title, image_url) => {
 
         
@@ -89,7 +88,6 @@ const useFavouritesStore = create ((set, get) => ({
     },
 
     deleteFavourite: async (objectId, userId) => {
-        // console.log('deleteFavourite called with:', { objectId, userId });
         set({favouritesLoading: true, error: null})
 
         try {
@@ -98,8 +96,6 @@ const useFavouritesStore = create ((set, get) => ({
             .delete()
             .eq('object_id', objectId)
             .eq('user_id', userId)
-
-            // console.log('Supabase delete error:', error);
 
             if(error) {
                 throw error;

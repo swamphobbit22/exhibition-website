@@ -1,6 +1,8 @@
-## Technical Documentation
+# Technical Documentation
 
-MuseoNet Virtual Museum
+## MuseoNet Virtual Museum
+
+**Overview**
 
 The virtual museum is built with React (plain JavaScript), using Vite and a Supabase backend. The app is hosted on Vercel (https://exhibition-website-flax.vercel.app/).
 
@@ -18,12 +20,12 @@ React Query: Used for handling external API data. It handles caching, background
 
 Zustand: Manages state related to the user and collections. Data is split into separate stores to keep things clear and maintainable.
 
-Considerations
+**Considerations**
 
 Throughout the project, I’ve focused on:
-Keeping concerns separated for easier maintenance and future scaling
+- Keeping concerns separated for easier maintenance and future scaling
 
-Writing clean, readable code
+- Writing clean, readable code
 
-Avoiding unnecessary complexity
+- Avoiding unnecessary complexity
 

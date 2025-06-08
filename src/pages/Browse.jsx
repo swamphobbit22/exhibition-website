@@ -8,10 +8,9 @@ import  Masonry  from 'react-masonry-css';
 import { fetchCombinedArtworks } from '../service/getAllArtworks'
 import { getPaginationData, getPageNumbers } from "../utils/pagination";
 import ClipLoader from "react-spinners/ClipLoader";
-// import  SourcesDropdown  from '../components/SourcesDropdown'
 import ViewListIcon from '@mui/icons-material/ViewList';
 import Grid4x4Icon from '@mui/icons-material/Grid4x4';
-import { sortedByDate, sortedByField, sortedByNumber } from '../utils/sortBy';
+import { sortedByField } from '../utils/sortBy';
 import {SortDropdown, InstituteDropdown} from '../components/SortDropdown';
 import {toast}  from 'react-hot-toast';
 
@@ -110,7 +109,7 @@ const Browse = () => {
     }
   }, [sortMethod, allArtworks]);
 
-  //check if filtering result is empty and get some toast
+  //check if filtering result is empty and set toast msg
   useEffect(() => {
     const isFiltering = ['met', 'chicago', 'smith'].includes(sortMethod);
     if (isFiltering) {
@@ -170,7 +169,6 @@ const Browse = () => {
 
   const clearFilters = () => {
   setSortMethod('');
-  // setAllArtworks('')
 }
 
 
@@ -287,7 +285,7 @@ const Browse = () => {
             )}
             </form>
 
-            {/* display number of resulst and grid/list toggle */}
+            {/* display number of results and grid/list toggle */}
             {paginationData.totalItems > 0 && (
             <div className='flex flex-row justify-between mx-4 mt-4 lg:mx-auto'>
               <div className="text-sm text-[var(--text-secondary)]">
@@ -322,7 +320,7 @@ const Browse = () => {
             )}
             
             <div>
-              {/* map the search results in a grid pattern*/}
+              {/* map the search results in a grid pattern and list view*/}
               {viewMode === 'grid' ? (
               <Masonry 
                 breakpointCols = {breakpointColumnsObj}
@@ -394,6 +392,6 @@ const Browse = () => {
         </div>
     </section> 
   )
-}
+};
 
 export default Browse;

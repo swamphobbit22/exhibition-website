@@ -6,12 +6,10 @@ import { transformMetApi, transformChicagoApi, transformSmithDetailApi } from '.
 export async function fetchArtworkById(id, source) {
   if (source === 'met') {
     const raw = await getMetArtWorkById(id);
-    // console.log('Met raw data:', raw);
     return transformMetApi(raw)
   }
   if (source === 'smithsonian') {
     const raw = await getSmithArtWorkById(id);
-    //  console.log('Smithsonian raw data:', raw);
   if (!raw) {
       throw new Error('No data returned from Smithsonian API');
     }
@@ -19,7 +17,6 @@ export async function fetchArtworkById(id, source) {
   }
     if (source === 'chicago'){
     const raw = await getChicagoArtWorkById(id);
-    // console.log('Chicago raw data:', raw);
     return transformChicagoApi(raw);
   }
 

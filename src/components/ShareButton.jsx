@@ -2,12 +2,8 @@ import { Share2 } from "lucide-react";
 import { FaFacebook, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
 
 export default function ShareButton({title, url}) {
-  // current url needs changing to source url
-  // const currentUrl = window.location.href; 
-
   const shareUrl = url || window.location.href;
   
-
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({

@@ -45,9 +45,6 @@ const smithApi = async(query) => {
   
     const resultsWithImages = processedResults.filter(item => item.smithsonianImageUrl);
 
-    // console.log('results with images:', resultsWithImages.length) 
-    // console.log("Processed Smithsonian results:", processedResults)
-    //return processedResults;
     return resultsWithImages;
 };
 

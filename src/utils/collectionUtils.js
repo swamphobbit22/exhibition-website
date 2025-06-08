@@ -3,7 +3,6 @@ import { toast } from 'react-hot-toast';
 
 export const removeArtworkFromAllCollections = async (artworkId, userId) => {
     const {collections, removeArtworkFromCollection, fetchUserCollections} = useCollectionStore.getState();
-    // console.log(collections, 'collections')
 
     //locate collection firts
     const collectionsWithArtwork = collections.filter(col => col.collection_artwork?.some(art => art.object_id === artworkId));

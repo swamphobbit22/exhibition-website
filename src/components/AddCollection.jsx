@@ -59,8 +59,7 @@ const AddCollection = () => {
           Create Collection
         </button>
       </form>
-      </div>
-   
+    </div>
   )
 }
 

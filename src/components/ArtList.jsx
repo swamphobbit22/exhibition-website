@@ -31,8 +31,6 @@ const ArtList = ({ artwork, detailUrl }) => {
     }, [user?.id, fetchUserFavourites]);
   
     if(!artwork) return null;
-    // if (!isAuthenticated) return null;    
-  
      
     const handleAddToFavourites = async () => {
     

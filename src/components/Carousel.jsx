@@ -54,7 +54,6 @@ export const Carousel = ({ items }) => {
               </Link>
               </div>
               
-              {/* check positioning of details and teh forward/back arrows */}
               <div className='bg-[var(--bg-card)] border-[var(--border-secondary)] border-t-2 w-full md:max-w-96 h-auto flex flex-col justify-start '>
                 {/* title/artist data */}
                 <h4 className='text-md text-[var(--text-primary)] pt-2 pb-1 font-semibold'>{artwork.title}</h4>
@@ -69,16 +68,6 @@ export const Carousel = ({ items }) => {
                 <hr className='text-[var(--text-accent)] opacity-50'/>
                 <div className='text-xs italic py-2 bg-[var(--bg-accent)]'>{artwork.repository || 'Source unavailable'}</div>
               </div>
-
-              {/* description box */}
-              {/* <div className='bg-gray-600 mt-2 rounded-sm text-sm flex flex-col items-center max-w-96 p-2 mb-10'> 
-                <div>{artwork.period || 'No date available'}</div>
-                <br />
-                <div>{artwork.description ? truncate(artwork.description) : 'No description available for this item'}</div>
-                <br />
-                <div className='text-xs italic'>{artwork.repository || 'Source unavailable'}</div>
-              </div> */}
-
             </div>
           );
         })}
@@ -94,6 +83,3 @@ export const Carousel = ({ items }) => {
    
   )
 }
-
-
-// top-1/2 transform -translate-y-1/2
