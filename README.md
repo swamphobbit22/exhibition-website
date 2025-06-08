@@ -178,7 +178,10 @@ To hide the favourites in the dashboard, click the 'Hide favourites' button.
 - User updates, such as adding artwork to colelctions also depends on your network speed/avaiability.
 
 
+## MuseoNet Virtual Museum
+The live website can be found here:
 
+ https://exhibition-website-flax.vercel.app/
 
 
 

@@ -12,6 +12,7 @@ import UserHome from "./pages/dashboard/UserHome"
 import useUserStore from "./store/useUserStore"
 import ResetPassword from './pages/ResetPassword'
 import Footer from './components/Footer'
+import Attribution from './components/Attribution'
 
 function App() {
   const initialise = useUserStore(state => state.initialise)
@@ -37,6 +38,7 @@ function App() {
           <Route path="/dashboard/collections" element={<UserCollections />} />
           <Route path="/dashboard/collection/:id" element={<Collection />} />  
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/attribution" element={<Attribution />}/>
         </Routes>   
         <Footer />
         </div>
