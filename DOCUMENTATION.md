@@ -20,12 +20,19 @@ React Query: Used for handling external API data. It handles caching, background
 
 Zustand: Manages state related to the user and collections. Data is split into separate stores to keep things clear and maintainable.
 
+**Users**
+users can set up an account and create their own collections as well as favourite items and share artworks. They can also delete their own account - this is permanent. Account deletion is a soft-delete for now, on the backend. A node.js script could be set up to run in vercel to make sure soft-deleted accounts are fully deleted periodically in Supabase.
+
 **Considerations**
 
 Throughout the project, I’ve focused on:
 - Keeping concerns separated for easier maintenance and future scaling
+- reusability
 
 - Writing clean, readable code
 
 - Avoiding unnecessary complexity
 
+
+**To run this project**
+Fork and clone the repo and run npm install. 
