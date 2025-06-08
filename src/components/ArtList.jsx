@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { stripHtmlTags } from '../utils/stripHtml';
+import {truncate} from '../utils/truncate'
 import  useUserStore  from '../store/useUserStore'
 import useCollectionStore from '../store/useCollectionStore';
 import useFavouritesStore from '../store/useFavouritesStore';
@@ -61,7 +62,7 @@ const ArtList = ({ artwork, detailUrl }) => {
                 initial={{ y:20, opacity: 0 }}
                 animate={{ y:0,  opacity: 1 }}
                 transition={{ duratation: 0.3 }}
-                className='w-28 h-26 object-cover rounded transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110' 
+                className='w-62 h-26 object-cover rounded transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110' 
               />
             </Link>
             ) : (
@@ -71,11 +72,11 @@ const ArtList = ({ artwork, detailUrl }) => {
             )}
 
             
-            <div className='w-full md:w-5/8 text-center  text-sm lg:text-lg text-[var(--text-primary)] p-2 lg:ml-10  border-2 border-[var(--border-accent)] bg-[var(--bg-elevated)] rounded cursor-pointer'>
+            <div className='w-full md:w-5/8 text-center text-sm md:text-lg text-[var(--text-primary)] px-2 lg:ml-10  border-2 border-[var(--border-accent)] bg-[var(--bg-elevated)] rounded cursor-pointer'>
               <Link to={detailUrl}>
-                <h3 className=' text-center font-semibold text-[var(--text-accent)]'>{stripHtmlTags(artwork.title || 'Unknown Title')} </h3>
-                <span className='font-semibold text-[var(--text-secondary)] italic'>{artwork.artist || 'Unknown Artist'}</span> <br />
-                <span className='font-semibold text-[var(--text-muted)]'>{artwork.medium || 'N/A'}</span> 
+                <h3 className=' text-sm md:text-lg text-center font-semibold text-[var(--text-accent)]'>{truncate(stripHtmlTags(artwork.title || 'Unknown Title'))} </h3>
+                <span className='text-xs md:text-sm font-semibold text-[var(--text-secondary)] italic'>{artwork.artist || 'Unknown Artist'}</span> <br />
+                <span className='text-xs md:text-sm font-semibold text-[var(--text-muted)]'>{artwork.medium || 'N/A'}</span> 
               </Link>
             </div>
 
@@ -84,7 +85,7 @@ const ArtList = ({ artwork, detailUrl }) => {
               className='w-full md:w-[30%] flex flex-col gap-4 self-start'
             >
             <div className='flex bg-[var(--bg-primary)] '>
-              <div className='bg-[var(--bg-primary)] w-full p-4 text-center'>
+              <div className='bg-[var(--bg-primary)] w-full md:p-4 text-center'>
                 <span className='font-semibold text-[var(--text-secondary)] text-sm lg:text-md'>{artwork.repository}</span>
               </div>
 

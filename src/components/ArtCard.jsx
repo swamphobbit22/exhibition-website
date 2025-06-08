@@ -69,7 +69,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
             )}
           <div className='flex bg-[var(--bg-secondary)] border-2 border-[var(--border-accent)]'>
               <button className='bg-[var(--bg-accent)] w-full border-r-2 border-[var(--border-accent)]'>
-              <span className='font-bold text-[var(--text-primary)] '>{artwork.repository}</span>
+              <span className='font-bold text-[var(--text-primary)] px-2'>{artwork.repository}</span>
               </button>
 
                   {/* add to favourites */}
@@ -99,7 +99,7 @@ const ArtCard = ({ artwork, detailUrl }) => {
               {isAuthenticated && (
                 <div className='flex justify-center'>
                   <button
-                    className={`place-self-center w-1/2 my-4 rounded-full font-semibold py-1 ${inCollection ? 'bg-red-500' : 'bg-green-400'} cursor-pointer`}
+                    className={`place-self-center w-1/2 my-4 rounded-full font-semibold py-1 ${inCollection ? 'bg-red-500 w-2/3' : 'bg-green-400'} cursor-pointer`}
                     onClick={async (e) => {
                       e.stopPropagation();
                       e.preventDefault();

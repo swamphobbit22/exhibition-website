@@ -122,7 +122,12 @@
   {
     name: 'Animals',
     description: 'Animal art ranges from prehistoric cave paintings to scientific illustrations and modern wildlife sculpture. It can reflect observation, symbolism, or human-animal relationships.'
-  }
+  },
+  {
+    name: 'Viking',
+    description: ''
+  },
+
 
 ];
 
