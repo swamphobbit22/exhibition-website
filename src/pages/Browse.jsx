@@ -221,32 +221,34 @@ const Browse = () => {
                 >clear</button>
               )}
             </div>
-              
-            {/* filter button */}
-            <button
-              type='button'
-              onClick={() => setShowFilters(!showFilters)}
-              className=''
-              aria-label='Show filters'
-              >
-              <Filter className='w-5 h-5'/>
-            </button>
 
+            <div className='flex justify-between md:gap-4'>
+              {/* filter button */}
+              <button
+                type='button'
+                onClick={() => setShowFilters(!showFilters)}
+                className=''
+                aria-label='Show filters'
+                >
+                <Filter className='w-5 h-5'/>
+              </button>
+            
             {/* search button */}
             <button 
               type='submit' 
               aria-label='submit search'
               onClick={handleSubmitSearch}
               disabled={isLoading}
-              className='flex items-center px-6 py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
+              className='flex items-center justify-center w-2/3 px-3 py-1 md:px-6 md:py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
               >
               {/* button spinner*/}
               {isLoading ? (
                 <Loader2Icon className='w-5 h-5 animate-spin'/> 
               ): (
-                <span className='text-center'>Search</span>
+                <span className='text-center font-semibold '>Search</span>
               )}
             </button>
+          </div>
           </div>
 
             {/* display the filters */}
