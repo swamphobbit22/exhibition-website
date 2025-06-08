@@ -9,7 +9,10 @@ This application is fully responsive across different display sizes: desktop, ta
 
 - Users do not need an account to browse artworks and artifacts.
 - Users can create an account to save favourite artworks and create their own collections
-- Buttons( such as add/remove artwork) aare displayed conditionally - depending on whether a user is logged in.
+- Buttons( such as add/remove artwork) are displayed conditionally - depending on whether a user is logged in.
+
+**Important**
+If there are any issues returning search results this can usually be resolved by refreshing the page or, where a user is logged in, simply logging out and in again.  
 
 ## Overview
 Users begin their journey from the home page where there is an 'Explore' button in the center of the screen. Clicking 'Explore' takes the user to the 'Showcase' page. Their is also a navigation bar at the top of the screen displaying the logo and name of the site - these are clickable back to the homepage. There are links for the daily showcase and search pages. There is also a light/dark theme toggle
@@ -73,7 +76,7 @@ These pages are not directly accessible from the navigation bar, instead the use
 
 When the users performs a search and returns the items either in a grid or list, they can click on the image (or image and description in list view), and this will open a details page. 
 
-the details page contains a bit more information about the item and includes:
+The details page contains a more information about the item and includes:
 - Title
 - Name of artist
 - Date
@@ -95,10 +98,84 @@ Finally, underneath the description the user will find 'share' icons:
 
 - there is also a conditional button (add/remove) and a favourites icon that appears when a user is logged in.
 
+- At the top of the 'details' page is a 'back' button - the name of this changes depending on the route the user takes to the details page. For example, if the user has come from the 'Showcase' page, then the back button will reflect this and say 'back to showcase'. So it will take the user back to whichever page they came from. 
+
 ### Theme toggle
+The theme toggle is situated along the navigation bar on larger devices and on smaller devices it appears in the expandable mobile menu. 
+The theme toggle switches between light and dark modes.
+The website will adopt the users preferred mode if they have one set on their device already.
+
+### Sign-in/ sign-up / Password reset
+This is situated along the navigation bar on the right on larger devices and in the expandable mobile menu on smaller devices. A sign up/in modal will pop up. Users can switch between them. 
+If in sign up mode there will be a link underneath to create an account and this will switch to the Sign-up option. 
+
+- When creating an accout the user will recieve an email confirmation and they will need to confirm the email before they can log in.
+
+#### Password reset: 
+- Also at the bottom of the sign-in modal is a password reset option. Clicking this will expand the modal to display the password reset options. An email will be sent to the user with a password reset link.
+
+## Logged In Users
+When a user logs in they will be able to add items to favourites, create their own collections and add artworks to their collections. They can also remove any of these individually or completely. 
+
+### Favourites
+User can add any item to their favourites. Items that have not been favourited appear grey and items that have been favourited are red. Users can favourite items returned in the search on the search page or when they click throught to the details page.
+- Items can be favourited or unfavourited by simply clicking the heart icon.
+
+### Collections
+Users can add any item to a collection. When a user is logged in the 'add' or 'remove' from favourites button will appear on each item that has been returned from the search or when the user clicks through to the details page. 
+
+- to add an item to a collection the user will first need to craete a collection.
+
+#### Create a collection and add artwork
+A collection can be created by two methods - from the user dashboard or abutton on the search results themselves:
+- The user can go to their dashboard from the dropdown menu and then click 'View Create Collection'. This will display the create collection input and button. Simply type a name for your collection and press create collection. If successful a popup message should appear at the top right. You can hide the create New Collection box by clicking the 'Hide Create Collection' button. 
+
+- Once a collection has been created, the user can then search for artworks or go to a details page (from search or showcase) and then simply add the artwork to the new collection.
+
+- Clicking 'Add to Collection' opens the 'Add Selected Artworks to Collection' modal. Choose a collection from the dropdown and click 'Add to Collection'.
+
+- The second method to create a collection is also available in this modal. Click the 'Create Collection' button, enter a name in the input, and click 'Create Collection'. The new collection will immediately appear in the first dropdown, so you can select it and add the artwork right away.
+
+- After an artwork is added, the modal will close and the artwork on the page will update with a red 'Remove from Collection' button. This update may be instant or take a moment, depending on your network. If it doesn't update straight away, navigating away and back will reflect the change.
+
+- To cancel the modal, click the 'X' in the top right corner.
+
+Artworks can be removed individually by clicking the red 'Remove from Collection' button. This will remove the artwork immediately, and the button will return to green. 
+
+## User Dashboard
+The user dashboard displays four buttons:
+- View collections
+- View Create Collection
+- View Favourites
+- Delete Account
+
+**View Collections**: 
+
+By clicking 'View Collections' the suer can view all of their saved collections. Each is shown in card form with the name of the collection, date created and a red 'delete' button. A collection can only be deleted if it is empty. I there are artworks inside the collection the user will need to remove each artwork and then delete the collection.
+
+The user can click into the collection to view their saved artworks and each artworked can be clicked to open the details page.
+
+The collections can be closed by clicking the 'Hide Collections' button - or it can remain open while you click the other buttons! 
+
+**View Create Collection**
+
+This opens the Create collection box (as already discussed). To hide it again, click 'Hide Create Collection' button.
+
+**View Favourites**
+
+This button displays your favourited items and includes, image, title, the source, and the date added to favourites. Clicking an image will open the details page for that image and you can navigate back to favourites from there. 
+
+At the top of your favourited items there is a button 'Clear all Favourites'. This will completely empty the favourites folder and cannot be undone. To remove an indiviual favourite, click on the image and unfavourite it in the details page. Go to the top to navigate back.
+
+To hide the favourites in the dashboard, click the 'Hide favourites' button.
+
+**Delete Account**
 
 
-### Sign-in/ sign-up
+## Further Information
+- Data is returned from external museum apis and may not always be available, as such, this website is not responsible for issues with 3rd party data.  
+- search speed can depend on your network and/or the availability of the 3rd party api.
+- User updates, such as adding artwork to colelctions also depends on your network speed/avaiability.
 
 
 
@@ -109,10 +186,3 @@ Finally, underneath the description the user will find 'share' icons:
 
 
 
-
-
-
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -42,8 +42,9 @@ const AddCollection = () => {
   };
 
   return (
-    
-      <form id="collection" onSubmit={handleCreateNewCollection} className="w-full flex flex-col gap-2 mt-4">
+    <div>
+      <h2 className='text-[var(--text-primary)] text-center'>Create a New Collection</h2>
+      <form id="collection" onSubmit={handleCreateNewCollection} className="w-full flex flex-col gap-2 mt-4">  
         <input
           type="text"
           value={newName}
@@ -58,6 +59,7 @@ const AddCollection = () => {
           Create Collection
         </button>
       </form>
+      </div>
    
   )
 }
