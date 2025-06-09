@@ -15,7 +15,7 @@ const Home = () => {
         initial={{ opacity: 0}}
         animate={{ opacity: 1}}
         exit={{ opacity: 0}}
-        className="relative min-h-screen flex items-center justify-center bg-[var(--bg-primary)] "
+        className="relative min-h-screen flex items-center justify-center bg-[var(--bg-primary)] py-8 md:py-12"
         >
           {/* background */}
           <div className="absolute inset-0 z-0" 
@@ -54,7 +54,7 @@ const Home = () => {
           initial={{ y:20, opacity: 0}}
           animate={{ y:0, opacity: 1}}
           transition={{ delay: 0.6 }}
-          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full'
+          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full mb-12'
           >
             <Link
               aria-label='Explore the artworks'
