@@ -15,7 +15,7 @@ const Home = () => {
         initial={{ opacity: 0}}
         animate={{ opacity: 1}}
         exit={{ opacity: 0}}
-        className="relative min-h-screen flex items-center justify-center bg-[var(--bg-primary)] py-8 md:py-12"
+        className="relative min-h-screen flex items-center justify-center bg-[var(--bg-primary)] py-12 md:py-12"
         >
           {/* background */}
           <div className="absolute inset-0 z-0" 
