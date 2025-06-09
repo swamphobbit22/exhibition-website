@@ -9,7 +9,7 @@ const Home = () => {
 
 
   return (
-    <section id="hero" className='bg-[var(--bg-primary)]'>
+    <section id="hero" className='bg-[var(--bg-primary)] min-h-screen'>
       {/* main section */}
         <motion.div 
         initial={{ opacity: 0}}
@@ -18,8 +18,6 @@ const Home = () => {
         className="relative min-h-screen flex items-center justify-center bg-[var(--bg-primary)] "
         >
           {/* background */}
-          {/* 
-          https://images.unsplash.com/photo-1734966901536-2da970db95ae?q=80&w=1983&auto=format&fit=crop&q=80&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D*/}
           <div className="absolute inset-0 z-0" 
             style={{
             backgroundImage: 'url(/Heitere_Gebirgslandschaft_by_Paul_Klee_1929.jpeg)',
@@ -56,7 +54,7 @@ const Home = () => {
           initial={{ y:20, opacity: 0}}
           animate={{ y:0, opacity: 1}}
           transition={{ delay: 0.6 }}
-          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full'
+          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full sm:pb-10'
           >
             <Link
               to='/showcase'
@@ -68,7 +66,7 @@ const Home = () => {
 
             <button
               onClick={() => setShowAuthModal(true)}
-              className="inline-flex items-center justify-center w-38 flex-shrink-0 font-semibold text-[var(--button-text)] hover:text-[var(--accent-hover)] transition-colors  py-4 rounded-full cursor-pointer border-2 border-[var(--border-primary)]"
+              className="inline-flex items-center justify-center w-40 flex-shrink-0 font-semibold text-[var(--button-text)] hover:text-[var(--accent-hover)] transition-colors  py-4 rounded-full cursor-pointer border-2 border-[var(--border-primary)]"
             >
             {/* <User className="w-5 h-5" /> */}
               <span className="text-lg">Sign Up</span>
