@@ -54,7 +54,7 @@ const Home = () => {
           initial={{ y:20, opacity: 0}}
           animate={{ y:0, opacity: 1}}
           transition={{ delay: 0.6 }}
-          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full sm:pb-16'
+          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full'
           >
             <Link
               aria-label='Explore the artworks'
