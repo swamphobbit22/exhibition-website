@@ -196,6 +196,19 @@ const Navigation = () => {
         >
           <nav className='flex flex-col p-6 pt-20'>
             <NavLink
+              to="/" 
+              className={({ isActive }) => 
+                `py-3 text-xl transition-colors ${isActive 
+                  ? 'text-[var(--text-accent)]' 
+                  : 'text-[var(--text-primary)] hover:text-[var(--accent-hover)]'
+                }`
+              }
+              onClick={closeMobileNav}
+            >
+              Home
+            </NavLink>
+            
+            <NavLink
               to="/showcase" 
               className={({ isActive }) => 
                 `py-3 text-xl transition-colors ${isActive 
