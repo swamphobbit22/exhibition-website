@@ -138,7 +138,9 @@ const ArtworkDisplay = ({data, backLink}) => {
                       >
                       {inCollection ? 'Remove from Collection' : 'Add to Collection'}
                     </button>
-
+                    </div>
+                  )}
+                </div> 
                       {/* add to favourites */}
                       <button className='ml-3 cursor-pointer'>
                         <FavoriteIcon 
@@ -156,10 +158,6 @@ const ArtworkDisplay = ({data, backLink}) => {
                         style={{ color: isInFavourites ? 'red' : 'gray' }}
                         />    
                       </button>
-                    </div>
-                  )}
-                </div> 
-
                 <ShareButton 
                   title={data.title}
                   url={`${window.location.origin}/detail/${data.id}?source=${data.source}`}

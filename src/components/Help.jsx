@@ -6,15 +6,16 @@ const Help = () => {
         <div className="px-2 pt-32 max-w-xl mx-auto text-sm leading-relaxed pb-6">
             <h2 className='text-3xl text-center pb-4 font-semibold'>Frequently Asked Questions</h2>
             <hr className='pb-4 text-[var(--text-accent)] '/>
+            <div className='mb-2 p-2 border-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]'>
+                <h3 className='text-lg'>Do I need an account to use the site?</h3>
+                <p className='text-[var(--text-secondary)]'>No — You do not need an account to use the site. You can browse, search, and view artwork without signing up. 
+                    However, creating an account will
+                    allow you to create your own collections, add artworks to your collections and add favourite items.</p>
+            </div>
 
             <div className='mb-2 p-2 border-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]'>
                 <h3 className='text-lg'>Why is the search sometimes slow or unresponsive?</h3>
                 <p className='text-[var(--text-secondary)]'>This can happen if you've been logged in for a while. Try refreshing the page, or if you're logged in, log out and back in again. That usually resolves it.</p>
-            </div>
-
-            <div className='mb-2 p-2 border-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]'>
-                <h3 className='text-lg'>Do I need an account to use the site?</h3>
-                <p className='text-[var(--text-secondary)]'>No — you can browse, search, and view artwork without signing up. An account is only needed if you want to save favourites or create collections.</p>
             </div>
 
             <div className='mb-2 p-2 border-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]'>

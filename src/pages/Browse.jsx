@@ -201,7 +201,7 @@ const Browse = () => {
                 id="search-input"
                 type="search"
                 name="q"
-                placeholder='Search...'
+                placeholder='Search by artist, title, period, or keyword'
                 value={searchTerm} 
                 onChange={(e) => setsearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSubmitSearch(e)}

@@ -44,7 +44,8 @@ const Home = () => {
           transition={{ delay: 0.4}}
           className='text-xl md:text-2xl text-[var(--text-primary)] mb-12 max-w-2xl mx-auto'
           >
-            Explore art & antiquities and build your own collections
+            <p className='pb-2 italic'>Explore art & antiquities</p>
+            <p>Sign up for a free account to create your own collections and add your favourite artworks</p>
           </motion.p>
 
           {/* button section */}
