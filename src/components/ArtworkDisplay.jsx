@@ -116,7 +116,7 @@ const ArtworkDisplay = ({data, backLink}) => {
             aria-label={data.title || 'Artwork image'}
             className="px-2 pt-2 bg-shadow place-self-center object-fit transition-transform duration-600 hover:scale-130 ease-in-out cursor-pointer"
             src={data.imageUrl} alt={data.title || 'Artwork'} />  
-            <span className='mt-4 pb-2 text-[var(--text-accent)] hidden sm:inline'>Hover over the image to make it bigger</span>
+            <span className='mt-4 pb-2 text-[var(--text-accent)] hidden [@media(hover:hover)]:inline'>Hover over the image to make it bigger</span>
           </div>
 
           <div className="w-full text-[var(--text-primary)] px-4 flex flex-col md:flex-row">
