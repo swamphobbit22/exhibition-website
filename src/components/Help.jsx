@@ -9,8 +9,7 @@ const Help = () => {
             <div className='mb-2 p-2 border-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]'>
                 <h3 className='text-lg'>Do I need an account to use the site?</h3>
                 <p className='text-[var(--text-secondary)]'>No — You do not need an account to use the site. You can browse, search, and view artwork without signing up. 
-                    However, creating an account will
-                    allow you to create your own collections, add artworks to your collections and add favourite items.</p>
+                However, creating an account willallow you to create your own collections, add artworks to your collections and add favourite items.</p>
             </div>
 
             <div className='mb-2 p-2 border-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 dark:border-2 border-[var(--border-secondary)] bg-[var(--bg-primary)]'>

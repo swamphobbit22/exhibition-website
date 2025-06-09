@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useQuery } from "@tanstack/react-query";
 import { shuffleArray } from "../utils/shuffle";
 import { fetchCombinedArtworks } from "../service/getAllArtworks";

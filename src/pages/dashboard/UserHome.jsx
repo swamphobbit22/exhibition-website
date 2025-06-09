@@ -21,8 +21,7 @@ const [showCollections, setShowCollections] = useState(false);
         <h2 className='md:text-2xl text-[var(--text-secondary)] italic text-center mb-4 md:mb-10 '>Hello {user?.email}</h2>
         <h3 className='text-3xl text-[var(--text-accent)] font-bold text-center mb-6'>Welcome to Your Dashboard</h3>
         <p className='mx-2 text-[var(--text-secondary)] text-center'>
-          Here you can manage your account, 
-          create and view your collections and change your settings
+          Here you can manage your account, create and view your collections and view your favourites
         </p>
 
         <hr className='bg-[var(--accent-secondary)] h-1 rounded-full w-4/8 mx-auto my-10'/>
@@ -41,7 +40,7 @@ const [showCollections, setShowCollections] = useState(false);
             onClick={() => setShowAddCollection(prev => !prev)}
             className='rounded-full px-3 py-2 font-bold bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] cursor-pointer'
             >
-            {showAddCollection? 'Hide Create Collection' : 'View Create Collection'} 
+            {showAddCollection? 'Hide Create Collection' : 'Create Collection'} 
           </button>
 
           {/* Show/hide favouriets */}
@@ -54,7 +53,7 @@ const [showCollections, setShowCollections] = useState(false);
           
           {/* delete account */}
           <DeleteAccountButton />
-
+      
         </div>
         <hr className='bg-[var(--accent-secondary)] h-1 rounded-full w-4/8 mx-auto my-10'/>
       </div>   
