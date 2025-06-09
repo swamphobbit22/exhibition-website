@@ -26,7 +26,7 @@ const Home = () => {
             filter: 'brightness(0.8)',
           }} />
 
-          <div className='relative z-10 text-center px-4'>
+          <div className='relative z-10 text-center px-4 sm:mt-8'>
           {/* Heading */}
           <motion.h1
           initial={{ y:20, opacity:0 }}
