@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { motion } from "framer-motion"
 import { ArrowRight } from 'lucide-react';
+import  AuthModal  from '../components/AuthModal';
 
 const Home = () => {
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
 
   return (
@@ -53,14 +56,23 @@ const Home = () => {
           initial={{ y:20, opacity: 0}}
           animate={{ y:0, opacity: 1}}
           transition={{ delay: 0.6 }}
+          className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 place-self-center md:w-full'
           >
             <Link
               to='/showcase'
-              className='inline-flex items-center space-x-2 bg-[var(--accent-primary)] text-[var(--button-text)] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[var(--accent-secondary)] transition-colors'
+              className='inline-flex items-center flex-shrink-0 space-x-2 bg-[var(--accent-primary)] text-[var(--button-text)] px-8 py-4 rounded-full text-lg font-semibold hover:bg-[var(--accent-secondary)] transition-colors'
             >
             <span>Explore</span>
             <ArrowRight className='w-5 h-5'/>
             </Link>
+
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="inline-flex items-center justify-center w-38 flex-shrink-0 font-semibold text-[var(--button-text)] hover:text-[var(--accent-hover)] transition-colors  py-4 rounded-full cursor-pointer border-2 border-[var(--border-primary)]"
+            >
+            {/* <User className="w-5 h-5" /> */}
+              <span className="text-lg">Sign Up</span>
+            </button>
           </motion.div>
           </div>
           
@@ -68,6 +80,12 @@ const Home = () => {
         <div className='bg-orange-900 px-2'>
           <span className='text-[var(--text-primary)] text-sm'>Painting: Heitere Gebirgslandschaft by Paul Klee, 1929</span>
         </div>
+
+        <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)}
+        defaultToSignUp={true}
+        />
     </section>
   )
 }

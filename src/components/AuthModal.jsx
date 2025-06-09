@@ -4,8 +4,8 @@ import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import CloseIcon from '@mui/icons-material/Close';
 
-const AuthModal = ({ isOpen, onClose}) => {
-const [isLogin, setisLogin] = useState(true);
+const AuthModal = ({ isOpen, onClose, defaultToSignUp = false}) => {
+const [isLogin, setisLogin] = useState(!defaultToSignUp);
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [loading, setLoading] = useState(false);
