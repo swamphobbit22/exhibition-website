@@ -9,7 +9,7 @@ const Home = () => {
 
 
   return (
-    <section id="hero" className='bg-[var(--bg-primary)] min-h-screen'>
+    <section id="hero" className='bg-[var(--bg-primary)]'>
       {/* main section */}
         <motion.div 
         initial={{ opacity: 0}}
