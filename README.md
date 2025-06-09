@@ -100,14 +100,16 @@ Finally, underneath the description the user will find 'share' icons:
 
 - At the top of the 'details' page is a 'back' button - the name of this changes depending on the route the user takes to the details page. For example, if the user has come from the 'Showcase' page, then the back button will reflect this and say 'back to showcase'. So it will take the user back to whichever page they came from. 
 
+### Help button
+A short help file containing some likely FAQs.
+
 ### Theme toggle
 The theme toggle is situated along the navigation bar on larger devices and on smaller devices it appears in the expandable mobile menu. 
 The theme toggle switches between light and dark modes.
 The website will adopt the users preferred mode if they have one set on their device already.
 
-### Sign-in/ sign-up / Password reset
-This is situated along the navigation bar on the right on larger devices and in the expandable mobile menu on smaller devices. A sign up/in modal will pop up. Users can switch between them. 
-If in sign up mode there will be a link underneath to create an account and this will switch to the Sign-up option. 
+## Sign-in/ sign-up / Password reset
+Users can sign up or sign in on the home page or via the option on the navigation bar on the right hand side on larger devices and in the expandable mobile menu on smaller devices. A sign up/in modal will pop up. Users can switch between them. If in sign up mode there will be a link underneath to create an account and this will switch to the Sign-up option. Sign up is with email and password.
 
 - When creating an account the user will receive an email confirmation and they will need to confirm the email before they can log in.
 
