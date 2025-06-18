@@ -32,7 +32,7 @@ const UserCollectionsContent = () => {
 
       if(success) {
         toast.success('Collection was deleted sucessfully')
-        console.log('Deleting collection: ', collection.id)
+
       } else {
         const { error } = useCollectionStore.getState();
         toast.error(error || 'Failed to delete the collection');

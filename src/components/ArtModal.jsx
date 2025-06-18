@@ -39,7 +39,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
         
       });
 
-      console.log("Current user:", useUserStore.getState().user?.id)
+      // console.log("Current user:", useUserStore.getState().user?.id)
 
       if (success) {
         toast.success('Artwork added to collection')
@@ -76,7 +76,7 @@ const ArtModal = ({ isOpen, onClose, artwork}) => {
           >
             <option value="Select_collection"> -- Select a collection -- </option>
             {collections.map((collection) => (<option key={collection.id} value={collection.id}>{collection.name}</option>))}
-            {console.log('options:', collections)}
+            
         </select>
     
         <button

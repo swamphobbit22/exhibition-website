@@ -21,7 +21,6 @@ export const Carousel = ({ items }) => {
       return (current + offset + total) % total;
     };
 
-    console.log(items)
 
   return (
     <div className="relative w-full md:max-w-7xl mx-auto flex items-center justify-center mt-10 mb-24 px-12 md:px-4">

@@ -17,11 +17,11 @@ const getMetArtWorkById = async(objectId) => {
    const res = await axios.get(`${baseUrl}/objects/${objectId}`);
    return res.data;
   } catch (error) {
-
-    if (error.response?.status !== 404) {
-      console.warn(`Failed to fetch artwork ${objectId}:`, error.message);
+    if(error.response && error.response.status === 404){
+      return null;
     }
-    return null;
+    console.error(`Unexpected error for artwork ${objectId}:`, error.message);
+    throw error;
   }
 }
 
