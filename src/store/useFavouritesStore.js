@@ -14,12 +14,14 @@ const useFavouritesStore = create ((set, get) => ({
     // isfavourited
 
     addToFavourites: async (objectId, userId, source, title, image_url) => {
-
+        // convert all ids to string (becauase the smithsonian is a string)
+        const stringId =  objectId.toString();
         
         if(!userId) {
             set({ error: 'Please sign in to create a collection'});
             return false;
         }
+
 
         set({ favouritesLoading: true, error: null})
 
@@ -27,7 +29,7 @@ const useFavouritesStore = create ((set, get) => ({
             const { data, error } = await supabase
             .from('favourites')
                 .insert([{
-                    object_id: objectId,
+                    object_id: stringId,
                     user_id: userId,
                     source: source,
                     title: title,
