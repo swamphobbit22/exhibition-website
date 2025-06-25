@@ -52,7 +52,7 @@
     description: 'Spanning 500–1400 CE, this period includes illuminated manuscripts, religious sculpture, Gothic cathedrals, and tapestries. Art was largely religious, commissioned by the Church or royalty, and symbolically rich.'
   },
   {
-    name: 'Aboriginal Australia',
+    name: 'Aboriginal',
     description: 'Art by Indigenous Australians, dating back 40,000+ years, includes rock paintings, bark art, and dot paintings. It’s deeply connected to the Dreamtime, with symbolic storytelling and maps of the land.'
   },
   {
@@ -127,7 +127,10 @@
     name: 'Viking',
     description: 'Viking Age Scandinavia (c. 800–1100 CE), Norse art features runestones, weapons, animal interlace designs, and carvings of gods like Odin and Thor. Art is often found on ships, jewelry, and wood panels.'
   },
-
+  {
+    name: 'Anasazi',
+    description: 'Ancestors of the modern Pueblo Indians, the Anasazi people flourished in the southwestern United States beginning about two thousand years ago. Ruins of their spectacular cliff dwellings and multistory towns of sandstone masonry are widely scattered in northern New Mexico, Arizona, and southern parts of Utah and Colorado.'
+  },
 
 ];
 
