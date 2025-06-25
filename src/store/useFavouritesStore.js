@@ -85,18 +85,20 @@ const useFavouritesStore = create ((set, get) => ({
     },
 
     isFavourited: (objectId) => {
+        const stringId = objectId.toString();
         const { favourites } = get();
-        return favourites.some(fav => fav.object_id === objectId);
+        return favourites.some(fav => fav.object_id === stringId);
     },
 
     deleteFavourite: async (objectId, userId) => {
+        const stringId = objectId.toString();
         set({favouritesLoading: true, error: null})
 
         try {
             const {error} = await supabase
             .from('favourites')
             .delete()
-            .eq('object_id', objectId)
+            .eq('object_id', stringId)
             .eq('user_id', userId)
 
             if(error) {
@@ -104,6 +106,7 @@ const useFavouritesStore = create ((set, get) => ({
             }
 
             set({favouritesLoading: false});
+            
             return true;
         } catch (error) {
             set({error: 'Failed to delete favourite - in useFavouritesStore', favouritesLoading: false});
