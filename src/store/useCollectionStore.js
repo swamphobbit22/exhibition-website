@@ -14,6 +14,7 @@ const useCollectionStore = create((set, get) => ( {
 
 
     createCollection: async (collectionName, userId) => {
+        
 
         if(!userId) {
             set({ error: 'Please sign in to create a collection'});
@@ -114,14 +115,16 @@ const useCollectionStore = create((set, get) => ( {
     },
 
     isArtworkInCollection: (objectId) => {
+        const stringId = objectId.toString();
         const collections = get().collections;
         return collections.some(col =>
-            col.collection_artwork?.some(art => art.object_id === objectId)
+            col.collection_artwork?.some(art => art.object_id === stringId)
         );
     },
 
 
     addArtworkToCollection: async (collectionId, artworkData) => {
+        const stringId = artworkData.objectId.toString();
         set({ collectionsLoading: true, error: null})
 
         try {
@@ -129,7 +132,7 @@ const useCollectionStore = create((set, get) => ( {
             .from('collection_artwork')
             .insert([{
                 collection_id: collectionId,
-                object_id: artworkData.object_id,
+                object_id: stringId,
                 object_title: artworkData.object_title,
                 source_url: artworkData.source_url,
                 thumbnail_url: artworkData.thumbnail_url,
@@ -171,7 +174,10 @@ const useCollectionStore = create((set, get) => ( {
                 const artworkWithDetails = await Promise.all(
                     data.map(async (artwork) => {
                         try {
-                            const fullArtwork = await fetchArtworkById(artwork.object_id, artwork.source);
+
+                            const stringId = artwork.object_id.toString();
+
+                            const fullArtwork = await fetchArtworkById(stringId, artwork.source);
                             return {
                                 ...fullArtwork,
                                 collectionArtworkId: artwork.id,
@@ -201,6 +207,7 @@ const useCollectionStore = create((set, get) => ( {
 
 
     removeArtworkFromCollection: async(collectionId, artworkId) => {
+        const stringId = artworkId.toString();
         set({ collectionsLoading: true, error: null})
 
         try {
@@ -208,7 +215,7 @@ const useCollectionStore = create((set, get) => ( {
             .from('collection_artwork')
             .delete()
             .eq('collection_id', collectionId)
-            .eq('object_id', artworkId)
+            .eq('object_id', stringId)
 
             if(error) {
                 throw error;
