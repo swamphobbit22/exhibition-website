@@ -20,8 +20,15 @@ const getMetArtWorkById = async(objectId) => {
 
    return res.data;
   } catch (error) {
-    if(error.response && error.response.status === 404){
-      return null;
+    if (error.response) {
+      if (error.response.status === 404) {
+        return null;
+      }
+      // Handle 500 errors specifically
+      if (error.response.status === 500) {
+        console.error(`Met API error for ${objectId}:`, error.response.data.error);
+        return null;
+      }
     }
     console.error(`Unexpected error for artwork ${objectId}:`, error.message);
     throw error;
