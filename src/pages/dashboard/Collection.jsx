@@ -31,7 +31,7 @@ const Collection = () => {
     const currentCollection = collections.find(c => c.id === parseInt(id));
 
     return (
-        <div className="min-h-screen pt-28 px-4 pb-10 bg-[var(--bg-primary)]">
+        <div className="min-h-screen pt-28 px-4 pb-10 bg-[var(--bg-primary)] mx-4">
             <div className="mb-6">
                 <button 
                     onClick={() => navigate('/dashboard/collections')}
