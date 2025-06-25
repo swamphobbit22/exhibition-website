@@ -214,7 +214,7 @@ const useCollectionStore = create((set, get) => ( {
         try {
             const {error} = await supabase
             .from('collection_artwork')
-            .delete()
+            .delete({ count: 'exact' })
             .eq('collection_id', collectionId)
             .eq('object_id', stringId)
 
