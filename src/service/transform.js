@@ -3,7 +3,7 @@ import { stripHtmlTags } from "../utils/stripHtml";
 function transformMetApi(data) {
     
     return {
-        id: data.objectID,
+        id: data.objectID.toString(),
         title: stripHtmlTags(data.title),
         repository: data.repository,
         imageUrl: data.primaryImageSmall,
@@ -22,7 +22,7 @@ function transformMetApi(data) {
 function transformSmithApi(data) {
 
     return {
-        id: data.id,
+        id: data.id.toString(),
         title: stripHtmlTags(data.content?.descriptiveNonRepeating?.title?.content) || 'Unknown Title', 
         repository: data.content?.freetext.dataSource?.[0]?.content || 'Smithsonian',
         imageUrl: data.content?.descriptiveNonRepeating?.online_media?.media?.[0]?.content,
@@ -41,7 +41,7 @@ function transformSmithApi(data) {
 function transformSmithDetailApi(data) {
     const artwork = data.response;
     return {
-        id: artwork.id,
+        id: artwork.id.toString(),
         title: stripHtmlTags(artwork.title),
         repository: artwork.content?.freetext?.dataSource?.[0]?.content || 'Smithsonian',
         imageUrl: artwork.content?.descriptiveNonRepeating?.online_media?.media?.[0]?.content,
@@ -75,7 +75,7 @@ function transformChicagoApi(data) {
     const resourceUrl = `https://www.artic.edu/artworks/${data.id}`
 
     return {
-        id: data.id,
+        id: data.id.toString(),
         title: stripHtmlTags(data.title),
         repository: 'Art Institute of Chicago',
         imageUrl: imageUrl,
