@@ -132,7 +132,7 @@ const useCollectionStore = create((set, get) => ( {
             .from('collection_artwork')
             .insert([{
                 collection_id: collectionId,
-                object_id: artworkData.objectId,
+                object_id: artworkData.object_id,
                 object_title: artworkData.object_title,
                 source_url: artworkData.source_url,
                 thumbnail_url: artworkData.thumbnail_url,
