@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 // const baseUrl = 'https://collectionapi.metmuseum.org/public/collection/v1';
+const artworkCache = new Map();
 
 const metApi = async(query) => {
       const searchResults = await axios.get(`/api/met`, {
@@ -12,13 +13,18 @@ const metApi = async(query) => {
       return searchResults.data;
     }
 
-const getMetArtWorkById = async(objectId) => {
-  try {
-   const res = await axios.get(`/api/met`, {
-    params: { id: objectId }
-   });
 
+
+const getMetArtWorkById = async(objectId) => {
+  if (artworkCache.has(objectId)) {
+    return artworkCache.get(objectId)
+  }
+
+  try {
+   const res = await axios.get(`/api/met`, {params: { id: objectId }});
+   artworkCache.set(objectId, res.data);
    return res.data;
+   
   } catch (error) {
     if (error.response) {
       if (error.response.status === 404) {
@@ -43,13 +49,21 @@ const getArtWorks = async(objectIds) => {
   
   for (let i = 0; i < objectIds.length; i += BATCH_SIZE) {
     const batch = objectIds.slice(i, i + BATCH_SIZE);
+
+    // delay added to help resolve metapi limiting issues
+    if (i > 0) await new Promise(resolve => setTimeout(resolve, 500));
+
     const batchResults = await Promise.allSettled(
-      batch.map(id => getMetArtWorkById(id))
+      batch.map(id => getMetArtWorkById(id).catch(() => null))
     );
     
     // Only keep successful results with images
     const validArtworks = batchResults
-      .filter(result => result.status === 'fulfilled' && result.value?.primaryImage)
+      .filter(result => 
+        result.status === 'fulfilled' && 
+        result.value?.primaryImage &&
+        result.value?.primaryImage.trim() !== ''
+      )
       .map(result => result.value);
     
     results.push(...validArtworks);
