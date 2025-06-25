@@ -208,19 +208,19 @@ const useCollectionStore = create((set, get) => ( {
 
     removeArtworkFromCollection: async(collectionId, artworkId) => {
         // const stringId = artworkId.toString();
-        console.log('🔍 Remove attempt:', { collectionId, artworkId,  artworkIdType: typeof artworkId });
+        // console.log('🔍 Remove attempt:', { collectionId, artworkId,  artworkIdType: typeof artworkId });
         set({ collectionsLoading: true, error: null})
 
         try {
             const {error} = await supabase
             .from('collection_artwork')
-            .delete({ count: 'exact' })
+            .delete()
             .eq('collection_id', collectionId)
             .eq('object_id', artworkId)
 
-            console.log('🗑️ Delete result:', { error, count });
+            // console.log('🗑️ Delete result:', { error, count });
 
-            console.log('Delete result:', { error });
+            // console.log('Delete result:', { error });
 
             if(error) {
                 throw error;
@@ -230,7 +230,7 @@ const useCollectionStore = create((set, get) => ( {
             return true;
 
         } catch (error) {
-             console.log('❌ Delete error:', error);
+            //  console.log('❌ Delete error:', error);
             set({error: 'Failed to remove artwork from collection', collectionsLoading: false});
             return false;
         }
