@@ -14,7 +14,7 @@ const useFavouritesStore = create ((set, get) => ({
     // isfavourited
 
     addToFavourites: async (objectId, userId, source, title, image_url) => {
-        // convert all ids to string (becauase the smithsonian is a string)
+        // convert all ids to string (becauase the smithsonian is a string) - this could now be removed as we are doing it in the transform functions
         const stringId =  objectId.toString();
         
         if(!userId) {

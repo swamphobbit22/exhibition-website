@@ -115,7 +115,6 @@ const useCollectionStore = create((set, get) => ( {
     },
 
     isArtworkInCollection: (objectId) => {
-        // const stringId = objectId.toString();
         const collections = get().collections;
         return collections.some(col =>
             col.collection_artwork?.some(art => art.object_id === objectId)
@@ -124,7 +123,6 @@ const useCollectionStore = create((set, get) => ( {
 
 
     addArtworkToCollection: async (collectionId, artworkData) => {
-        // const stringId = artworkData.objectId.toString();
         set({ collectionsLoading: true, error: null})
 
         try {
@@ -174,9 +172,6 @@ const useCollectionStore = create((set, get) => ( {
                 const artworkWithDetails = await Promise.all(
                     data.map(async (artwork) => {
                         try {
-
-                            // const stringId = artwork.object_id.toString();
-
                             const fullArtwork = await fetchArtworkById(artwork.object_id, artwork.source);
                             return {
                                 ...fullArtwork,
@@ -207,8 +202,6 @@ const useCollectionStore = create((set, get) => ( {
 
 
     removeArtworkFromCollection: async(collectionId, artworkId) => {
-        // const stringId = artworkId.toString();
-        // console.log('🔍 Remove attempt:', { collectionId, artworkId,  artworkIdType: typeof artworkId });
         set({ collectionsLoading: true, error: null})
 
         try {
@@ -218,10 +211,6 @@ const useCollectionStore = create((set, get) => ( {
             .eq('collection_id', collectionId)
             .eq('object_id', artworkId)
 
-            // console.log('🗑️ Delete result:', { error, count });
-
-            // console.log('Delete result:', { error });
-
             if(error) {
                 throw error;
             }
@@ -230,7 +219,6 @@ const useCollectionStore = create((set, get) => ( {
             return true;
 
         } catch (error) {
-            //  console.log('❌ Delete error:', error);
             set({error: 'Failed to remove artwork from collection', collectionsLoading: false});
             return false;
         }
