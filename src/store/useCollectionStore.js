@@ -208,6 +208,7 @@ const useCollectionStore = create((set, get) => ( {
 
     removeArtworkFromCollection: async(collectionId, artworkId) => {
         const stringId = artworkId.toString();
+        console.log('🔍 Remove attempt:', { collectionId, artworkId, stringId, artworkIdType: typeof artworkId });
         set({ collectionsLoading: true, error: null})
 
         try {
@@ -217,6 +218,10 @@ const useCollectionStore = create((set, get) => ( {
             .eq('collection_id', collectionId)
             .eq('object_id', stringId)
 
+            console.log('🗑️ Delete result:', { error, count });
+
+            console.log('Delete result:', { error });
+
             if(error) {
                 throw error;
             }
@@ -225,6 +230,7 @@ const useCollectionStore = create((set, get) => ( {
             return true;
 
         } catch (error) {
+             console.log('❌ Delete error:', error);
             set({error: 'Failed to remove artwork from collection', collectionsLoading: false});
             return false;
         }
