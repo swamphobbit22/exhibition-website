@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 // const baseUrl = 'https://collectionapi.metmuseum.org/public/collection/v1';
+//no longer used as it is now coming from serverless function in api/met
+
 const artworkCache = new Map();
 
 const metApi = async(query) => {
@@ -12,8 +14,6 @@ const metApi = async(query) => {
 
       return searchResults.data;
     }
-
-
 
 const getMetArtWorkById = async(objectId) => {
   if (artworkCache.has(objectId)) {
@@ -76,29 +76,3 @@ const getArtWorks = async(objectIds) => {
 
 
 export{metApi, getMetArtWorkById, getArtWorks}
-
-
-
-// original code - replaced due to met now blocking certain ip ranges
-// const metApi = async(query) => {
-//       const searchResults = await axios.get(`${baseUrl}/search`, {
-//         params: {
-//           q: query
-//         }
-//       })
-
-//       return searchResults.data;
-    // }
-
-// const getMetArtWorkById = async(objectId) => {
-//   try {
-//    const res = await axios.get(`${baseUrl}/objects/${objectId}`);
-//    return res.data;
-//   } catch (error) {
-//     if(error.response && error.response.status === 404){
-//       return null;
-//     }
-//     console.error(`Unexpected error for artwork ${objectId}:`, error.message);
-//     throw error;
-//   }
-// }
