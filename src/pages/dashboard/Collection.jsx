@@ -31,7 +31,7 @@ const Collection = () => {
     const currentCollection = collections.find(c => c.id === parseInt(id));
 
     return (
-        <div className="min-h-screen pt-28 px-4 pb-10 bg-[var(--bg-primary)] mx-4">
+        <div className="min-h-screen pt-28 px-4 md:px-8 pb-10 bg-[var(--bg-primary)] w-full">
             <div className="mb-6">
                 <button 
                     onClick={() => navigate('/dashboard/collections')}
@@ -61,7 +61,7 @@ const Collection = () => {
                     <p>This collection is empty</p>
                     <button 
                         onClick={() => navigate('/browse')}
-                        className="mt-4 px-6 py-2 bg-[var(--accent-primary)] text-[var(--button-text)] rounded-full hover:bg-[var(--accent-secondary)]"
+                        className="mt-4 px-6 py-2 bg-[var(--accent-primary)] text-[var(--button-text)] rounded-full hover:bg-[var(--accent-secondary)] text-center"
                     >
                         Browse Artworks to Add
                     </button>

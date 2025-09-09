@@ -26,7 +26,7 @@ function App() {
   return (
    
     <BrowserRouter>
-    <div className="min-h-screen --bg-primary dark:--bg-primary" >
+    <div className="min-h-screen --bg-primary dark:--bg-primary w-full" >
       <Navigation />
       <Toaster position='top-right' />
         <Routes>
