@@ -67,7 +67,7 @@ const Collection = () => {
                     </button>
                 </div>
             ) : (
-                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mx-2">
+                <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {currentCollectionArtworks.map((artwork) => (
                         <div key={artwork.id} className="bg-[var(--bg-accent)] rounded-lg shadow-md overflow-hidden border-2 border-[var(--border-primary)]">
                             <Link to={`/detail/${artwork.id}?source=${artwork.source}&from=collections`}>
