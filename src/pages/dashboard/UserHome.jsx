@@ -28,7 +28,8 @@ const fname = user.user_metadata?.name || user.user_metadata?.full_name || user?
 
     <section id="home" className='pt-28 md:pt-32 pb-8 min-h-screen flex flex-col items-center bg-[var(--bg-primary)]'>
       <div className='mb-2 max-w-full'>
-        <h2 className='md:text-2xl text-[var(--text-secondary)] italic text-center mb-4 md:mb-10 '>Hello {fname}</h2>
+        <h2 className='md:text-2xl text-[var(--text-secondary)] italic text-center mb-4 md:mb-10 '>Hello {fname}.</h2>
+        {/* <span className='text-[var(--text-secondary)] text-right'> You are logged in as: {user?.email}</span> */}
         <h3 className='text-3xl text-[var(--text-accent)] font-bold text-center mb-6'>Welcome to Your Dashboard</h3>
         <p className='mx-2 text-[var(--text-secondary)] text-center'>
           Here you can manage your account, create and view your collections and view your favourites
