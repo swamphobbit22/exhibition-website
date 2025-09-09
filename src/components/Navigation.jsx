@@ -19,6 +19,8 @@ const Navigation = () => {
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
+  // const avatar = user.user_metadata?.picture
+  // console.log(avatar)
 
   const handleSignOut = async () => {
     await signOut()
