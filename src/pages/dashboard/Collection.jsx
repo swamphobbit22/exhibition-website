@@ -35,7 +35,7 @@ const Collection = () => {
             <div className="mb-6">
                 <button 
                     onClick={() => navigate('/dashboard/collections')}
-                    className="mb-4 px-4 py-2 bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] rounded-full ml-10"
+                    className="mb-4 px-4 py-2 bg-[var(--accent-primary)] text-[var(--button-text)] hover:bg-[var(--accent-secondary)] rounded-full ml-10 cursor-pointer"
                 >
                     ← Back to Collections
                 </button>
