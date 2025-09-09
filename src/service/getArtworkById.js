@@ -6,6 +6,7 @@ import { transformMetApi, transformChicagoApi, transformSmithDetailApi } from '.
 export async function fetchArtworkById(id, source) {
   if (source === 'met') {
     const raw = await getMetArtWorkById(id);
+    // console.log('Raw API response:', raw);
     return transformMetApi(raw)
   }
   if (source === 'smithsonian') {

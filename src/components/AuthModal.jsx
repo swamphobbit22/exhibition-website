@@ -62,6 +62,7 @@ const handleSubmit = async(e) => {
       };
     }
 
+
     // reset everything
     onClose('');
     setEmail('');
@@ -150,6 +151,23 @@ const handlePasswordReset = async (e) => {
             {loading ? 'Loading...' : isLogin ? 'Sign in' : 'Create Account'}  
           </button>
         </form> 
+
+        {/* Google OAuth */}
+        <button
+          onClick={async () => {
+            const { error } = await supabase.auth.signInWithOAuth({
+              provider: 'google',
+            });
+            if(error) {
+              toast.error(error.message);
+            }
+          }}
+          className='w-full mt-4  border border-[var(--border-primary)] rounded-lg py-2 flex items-center justify-center gap-2 hover:bg-[var(--bg-accent)] transition-colors'
+        >
+          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5"/>
+          <span className="text-[var(--text-primary)] font-medium">Continue with Google</span>
+        </button>
+
 
         <button
           onClick={() => setisLogin(!isLogin)}
