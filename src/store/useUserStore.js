@@ -75,6 +75,10 @@ const useUserStore = create((set, get) => ({
     await supabase.auth.signOut()
     // clear it out
     useCollectionStore.getState().clearCollection?.()
+    set({
+      user: null,
+      isAuthenticated: false
+    })
   }
 }))
 
