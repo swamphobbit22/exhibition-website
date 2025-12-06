@@ -18,7 +18,7 @@ const chicagoApi = async(query) => {
 }
 
 //return the image url instead of the binary data - so not axios get
-const getApiImageUrl = (image_id, alt_image_ids, width = 843) => {
+const getApiImageUrl = (image_id, alt_image_ids) => {
     let image;
 
     if(image_id){
@@ -30,7 +30,7 @@ const getApiImageUrl = (image_id, alt_image_ids, width = 843) => {
     }
 
     //use serverless function
-    return `/api/artic-image/${image}/full/${width},`;
+    return `/api/artic-image?imageId=${image}`;
     // return `${imageUrl}/${image}/full/843,/0/default.jpg`;
     // const originalUrl = `${imageUrl}/${image}/full/843,/0/default.jpg`;
 
