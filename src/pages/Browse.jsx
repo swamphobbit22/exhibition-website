@@ -238,13 +238,13 @@ const Browse = () => {
               onClick={handleSubmitSearch}
               disabled={isLoading}
               className='flex items-center justify-center w-2/3 mr-4 px-3 py-1 md:px-6 md:py-2 space-x-2 text-[var(--button-text)] bg-[var(--accent-primary)] rounded-full hover:bg-[var(--accent-secondary)] transition-colors disabled:opacity-50'
-              >
+              > <span className='text-center font-semibold '>Search</span>
               {/* button spinner*/}
-              {isLoading ? (
+              {/* {isLoading ? (
                 <Loader2Icon className='w-5 h-5 animate-spin' aria-label='Searching'/> 
               ): (
                 <span className='text-center font-semibold '>Search</span>
-              )}
+              )} */}
             </button>
           </div>
           </div>
