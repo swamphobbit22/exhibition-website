@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseUrl = 'https://api.artic.edu/api/v1';
-const imageUrl = 'https://www.artic.edu/iiif/2';
+// const imageUrl = 'https://www.artic.edu/iiif/2';
 
 const chicagoApi = async(query) => {
     const response = await axios.get(`${baseUrl}/artworks/search`, {
