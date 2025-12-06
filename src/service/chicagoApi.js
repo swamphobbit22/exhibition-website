@@ -29,7 +29,11 @@ const getApiImageUrl = (image_id, alt_image_ids) => {
         return null;
     }
 
-    return `${imageUrl}/${image}/full/843,/0/default.jpg`;
+    // return `${imageUrl}/${image}/full/843,/0/default.jpg`;
+    const originalUrl = `${imageUrl}/${image}/full/843,/0/default.jpg`;
+    
+    return `https://api.allorigins.win/get?url=${encodeURIComponent(originalUrl)}`;
+
 }
 
 const getChicagoArtWorkById = async (id) => {
