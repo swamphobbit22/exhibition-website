@@ -1,4 +1,5 @@
 import { stripHtmlTags } from "../utils/stripHtml";
+import { getApiImageUrl } from "./chicagoApi";
 
 function transformMetApi(data) {
     
@@ -69,7 +70,8 @@ function transformChicagoApi(data) {
 
     //need to revisit the sizing as some images are unavailable at 843 and 600
     const imageUrl = imageId
-     ? `https://www.artic.edu/iiif/2/${imageId}/full/400,/0/default.jpg`
+    ? `/api/proxy?imageId=${imageId}&size=full/400,`
+    //  ? `https://www.artic.edu/iiif/2/${imageId}/full/400,/0/default.jpg`
      : null;
 
     const resourceUrl = `https://www.artic.edu/artworks/${data.id}`
@@ -78,7 +80,7 @@ function transformChicagoApi(data) {
         id: data.id.toString(),
         title: stripHtmlTags(data.title),
         repository: 'Art Institute of Chicago',
-        imageUrl: imageUrl,
+        imageUrl: imageUrl, //should come from proxy/chicago.js
         artist: data.artist_title,
         medium: data.medium_display,
         source: 'chicago',
