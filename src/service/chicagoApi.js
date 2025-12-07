@@ -31,7 +31,8 @@ const getApiImageUrl = (image_id, alt_image_ids) => {
 
     //use serverless function
     // return `/api/artic-image?imageId=${image}`;
-    return `${imageUrl}/${image}/full/843,/0/default.jpg`;
+    return `/api/proxy/chicago?imageId=${image}`;
+    // return `${imageUrl}/${image}/full/843,/0/default.jpg`;
     // const originalUrl = `${imageUrl}/${image}/full/843,/0/default.jpg`;
 
     // return `https://corsproxy.io/?${encodeURIComponent(originalUrl)}`;
