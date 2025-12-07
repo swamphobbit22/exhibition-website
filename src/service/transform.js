@@ -70,7 +70,7 @@ function transformChicagoApi(data) {
 
     //need to revisit the sizing as some images are unavailable at 843 and 600
     const imageUrl = imageId
-    ? `/api/proxy?imageId=${imageId}&size=full/400,`
+    ? `/api/proxy/chicago?imageId=${imageId}&size=full/400,`
     //  ? `https://www.artic.edu/iiif/2/${imageId}/full/400,/0/default.jpg`
      : null;
 
