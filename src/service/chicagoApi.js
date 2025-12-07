@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseUrl = 'https://api.artic.edu/api/v1';
-const imageUrl = 'https://www.artic.edu/iiif/2';
+// const imageUrl = 'https://www.artic.edu/iiif/2';
 
 const chicagoApi = async(query) => {
     const response = await axios.get(`${baseUrl}/artworks/search`, {
@@ -18,7 +18,7 @@ const chicagoApi = async(query) => {
 }
 
 //return the image url instead of the binary data - so not axios get
-const getApiImageUrl = (image_id, alt_image_ids) => {
+const getApiImageUrl = (image_id, alt_image_ids, width = 843) => {
     let image;
 
     if(image_id){
@@ -31,7 +31,9 @@ const getApiImageUrl = (image_id, alt_image_ids) => {
 
     //use serverless function
     // return `/api/artic-image?imageId=${image}`;
-    return `/api/proxy/chicago?imageId=${image}`;
+    // return `/api/proxy/chicago?imageId=${image}`;
+    return `/api/proxy/chicago?imageId=${image}&size=full/${width},`;
+    
     // return `${imageUrl}/${image}/full/843,/0/default.jpg`;
     // const originalUrl = `${imageUrl}/${image}/full/843,/0/default.jpg`;
 

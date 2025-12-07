@@ -47,6 +47,8 @@ const ArtCard = ({ artwork, detailUrl }) => {
         toast.error( error || 'Failed to add to favourites');
       }
     };
+
+    console.log('Image URL being used:', imageUrl);
   
   return (
     <>
