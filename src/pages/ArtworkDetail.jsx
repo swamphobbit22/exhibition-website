@@ -15,9 +15,9 @@ const ArtworkDetail = () => {
     if(from === 'collections') {
         backLink = {to: '/dashboard/collections', label: 'Back to Collections'};
     }  
-    else if (from === `${id}`) {
-        backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
-     }   
+    // else if (from === `${id}`) {
+    //     backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
+    //  }   
     else if (from === 'showcase') {
         backLink = {to: '/showcase', label: 'Back to Showcase'};
     } else if (from === 'userhome') {
@@ -27,11 +27,7 @@ const ArtworkDetail = () => {
         backLink = {to: `/browse?${currentParams.toString()}`, label: 'Back to Search'}
         // backLink = {to: `/browse${window.location.search}`, label: 'Back to Search'};
     }
-
-    // else if (from === 'collection/:id') {
-    //     backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
-    // }
-   
+  
     const { data, isLoading, error} = useQuery({
         queryKey: ['artwork', id, source],
         queryFn: async () => await fetchArtworkById(id, source)
