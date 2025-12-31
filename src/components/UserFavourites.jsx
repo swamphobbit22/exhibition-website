@@ -16,7 +16,8 @@ const { favourites,  favouritesLoading, fetchUserFavourites } = useFavouritesSto
     }
   }, [user?.id, fetchUserFavourites]);
 
-  if (!user?.id) return null;
+  // if (!user?.id) return null;
+  if (!isAuthenticated) return null;
 
   return (
       <div className='mb-10 lg:mx-10'>
