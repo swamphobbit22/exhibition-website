@@ -9,14 +9,15 @@ const ArtworkDetail = () => {
     const searchParams = new URLSearchParams(location.search);
     const source = searchParams.get('source');
     const from = searchParams.get('from');
+    // const num =searchParams.get('num');
 
     let backLink;
     if(from === 'collections') {
         backLink = {to: '/dashboard/collections', label: 'Back to Collections'};
-    } else if (from === 'collection/:id') {
+    }  
+    else if (from === `:id`) {
         backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
-    }
-    
+     }   
     else if (from === 'showcase') {
         backLink = {to: '/showcase', label: 'Back to Showcase'};
     } else if (from === 'userhome') {
@@ -26,6 +27,10 @@ const ArtworkDetail = () => {
         backLink = {to: `/browse?${currentParams.toString()}`, label: 'Back to Search'}
         // backLink = {to: `/browse${window.location.search}`, label: 'Back to Search'};
     }
+
+    // else if (from === 'collection/:id') {
+    //     backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
+    // }
    
     const { data, isLoading, error} = useQuery({
         queryKey: ['artwork', id, source],
