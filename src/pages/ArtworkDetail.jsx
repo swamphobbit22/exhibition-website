@@ -9,16 +9,14 @@ const ArtworkDetail = () => {
     const searchParams = new URLSearchParams(location.search);
     const source = searchParams.get('source');
     const from = searchParams.get('from');
-    // const num =searchParams.get('num');
+    const collectionId =searchParams.get('collectionId');
 
     let backLink;
-    if(from === 'collections') {
-        backLink = {to: '/dashboard/collections', label: 'Back to Collections'};
-    }  
-    // else if (from === `${id}`) {
-    //     backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
-    //  }   
-    else if (from === 'showcase') {
+    if(from === 'collection' && collectionId) {
+        backLink = {to: `/dashboard/collection/${collectionId}`, label: 'Back to Collection'};
+    } else if (from === 'collections') {
+        backLink = {to: '/dashboard/collections', label: 'Back to Collections'}
+    } else if (from === 'showcase') {
         backLink = {to: '/showcase', label: 'Back to Showcase'};
     } else if (from === 'userhome') {
         backLink = {to: '/dashboard/home', label: 'Back to Favourites'};
