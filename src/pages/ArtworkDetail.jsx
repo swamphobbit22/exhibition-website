@@ -13,7 +13,10 @@ const ArtworkDetail = () => {
     let backLink;
     if(from === 'collections') {
         backLink = {to: '/dashboard/collections', label: 'Back to Collections'};
-    } else if (from === 'showcase') {
+    } else if (from === '/dashboard/collection/:id') {
+        backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
+    }
+    else if (from === 'showcase') {
         backLink = {to: '/showcase', label: 'Back to Showcase'};
     } else if (from === 'userhome') {
         backLink = {to: '/dashboard/home', label: 'Back to Favourites'};
