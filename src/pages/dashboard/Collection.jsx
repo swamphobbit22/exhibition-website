@@ -29,6 +29,7 @@ const Collection = () => {
     
     // Find the current collection info
     const currentCollection = collections.find(c => c.id === parseInt(id));
+    // const collId = currentCollection?.id;
 
     return (
         <div className="min-h-screen pt-28 px-4 pb-10 bg-[var(--bg-primary)] w-full">
@@ -70,7 +71,7 @@ const Collection = () => {
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {currentCollectionArtworks.map((artwork) => (
                         <div key={artwork.id} className="bg-[var(--bg-accent)] rounded-lg shadow-md overflow-hidden border-2 border-[var(--border-primary)]">
-                            <Link to={`/detail/${artwork.id}?source=${artwork.source}&from=collections`}>
+                            <Link to={`/detail/${artwork.id}?source=${artwork.source}&from=collection`}> 
                             <img 
                                 src={artwork.imageUrl} 
                                 alt={artwork.title}
