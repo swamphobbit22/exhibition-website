@@ -6,7 +6,7 @@ import { removeAllFavourites } from '../utils/favouritesUtils'
 
 
 const UserFavourites = () => {
-const { user } = useUserStore()
+const { user, isAuthenticated } = useUserStore()
 const navigate = useNavigate();
 const { favourites,  favouritesLoading, fetchUserFavourites } = useFavouritesStore();
 
