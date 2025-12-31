@@ -183,7 +183,7 @@ This will delete the users account and cannot be undone.
 ## MuseoNet Virtual Museum
 The live website can be found here:
 
- https://exhibition-website-flax.vercel.app/
+ https://www.museonet.art
 
 
 
