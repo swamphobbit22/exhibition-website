@@ -15,7 +15,7 @@ const ArtworkDetail = () => {
     if(from === 'collections') {
         backLink = {to: '/dashboard/collections', label: 'Back to Collections'};
     }  
-    else if (from === `:id`) {
+    else if (from === `${id}`) {
         backLink = {to: `/dashboard/collection/${id}`, label: 'Back to Collection'}
      }   
     else if (from === 'showcase') {
