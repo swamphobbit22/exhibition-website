@@ -13,7 +13,8 @@ const [showCollections, setShowCollections] = useState(false);
 
 // const email = user?.email;
 // const name = user.user_metadata?.full_name;
-const fname = user.user_metadata?.name || user.user_metadata?.full_name || user?.email;
+// const fname = user.user_metadata?.name || user.user_metadata?.full_name || user?.email;
+const fname = user ? (user.user_metadata?.name || user.user_metadata?.full_name || user.email) : '';
 
 // console.log(email)
 // console.log(fname)
